@@ -73,8 +73,13 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = Customer::find($id);
+        $customer->user;
 
-        return view('customers.edit')->with('customer', $customer);
+        $users = User::pluck('name', 'id')->toArray();
+
+        return view('admin.customers.edit')
+            ->with('customer', $customer)
+            ->with(compact('users', $users));
     }
 
     /**
@@ -86,7 +91,18 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $customer = Customer::find($id);
+        $customer->fill($request->all());
+        $customer->save();
+        /*
+         *  $user->name = $request->name;
+         *  $user->email = $request->email;
+         *  $user->role = $request->role;
+        */
+
+        Flash::warning('EL Cliente ' . $customer->bs_name . ' ha sido editado con Exito!!');
+
+        return redirect()->route('customers.index');
     }
 
     /**

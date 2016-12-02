@@ -83,7 +83,7 @@
                             <div class="form-group">
                                 {{ Form::label('next_mng', 'Próxima Gestión', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-3">
-                                    {{ Form::date('next_mng', \Carbon\Carbon::now()->format('d/m/Y'), ['class' => 'form-control']) }}
+                                    {{ Form::date('next_mng', \Carbon\Carbon::now(), ['class' => 'form-control']) }}
                                 </div>
                             </div>
                             <hr>
