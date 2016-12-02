@@ -61,7 +61,12 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $managements = $customer->managements;
+
+        return view('admin.customers.show')
+            ->with('customer', $customer)
+            ->with(compact('managements', $managements));
     }
 
     /**
@@ -100,9 +105,9 @@ class CustomerController extends Controller
          *  $user->role = $request->role;
         */
 
-        Flash::warning('EL Cliente ' . $customer->bs_name . ' ha sido editado con Exito!!');
+        Flash::warning('EL Cliente ha sido editado con Exito!!');
 
-        return redirect()->route('customers.index');
+        return redirect()->route('customers.show', ['id' => $id]);
     }
 
     /**

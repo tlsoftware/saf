@@ -26,3 +26,10 @@ Route::get('/home', 'HomeController@index');
 Route::resource('users', 'UserController');
 
 Route::resource('customers', 'CustomerController');
+
+Route::get('/managements/create/{id}', 'ManagementController@create');
+
+Route::post('managements/store/{management}', [
+    'uses' => 'ManagementController@store',
+    'as'  => 'managements.store'
+]);

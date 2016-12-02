@@ -53,8 +53,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a>
-                                        <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a>
+                                        <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a>
                                     </td>
                                 </tr>
                             @endforeach
