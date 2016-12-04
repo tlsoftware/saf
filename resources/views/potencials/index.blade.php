@@ -5,15 +5,12 @@
         <div class="row">
             <div class="col-md-11 col-md-offset-0">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Dashboard</div>
+                    <div class="panel-heading">Formulario de Gestión (Clientes Potenciales)</div>
 
                     <div class="panel-body">
-                        <a href="{{ action('ManagementController@create', $customer->id) }}" class="btn btn-info">Agregar Gestion</a>
-                        <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-info">Editar Cliente</a>
-                        <hr>
-                        {!! Form::open(['route' => ['customers.show', $customer], 'method' => 'POST']) !!}
-                        <fieldset disabled>
+                        {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
                             <div class="form-horizontal">
+                                <fieldset disabled>
                                 <div class="form-group">
                                     {{ Form::label('rut', 'Rut', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-9">
@@ -33,25 +30,22 @@
                                         {{ Form::text('name', $customer->name, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
-
-                                <div class="form-group">
+                                </fieldset>
+                        <div class="form-group">
                                     {{ Form::label('contact_name', 'Persona de Contacto', ['class' => 'col-sm-2 control-label']) }}
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-4">
                                         {{ Form::text('contact_name', $customer->contact_name, ['class' => 'form-control']) }}
                                     </div>
-                                </div>
-
-                                <div class="form-group">
-                                    {{ Form::label('position', 'Cargo', ['class' => 'col-sm-2 control-label']) }}
-                                    <div class="col-sm-9">
-                                        {{ Form::text('position', $customer->position, ['class' => 'form-control']) }}
+                                    {{ Form::label('position', 'Cargo', ['class' => 'col-sm-1 control-label']) }}
+                                    <div class="col-sm-4">
+                                        {{ Form::text('position', $customer->position, ['class' => 'form-control', 'disabled']) }}
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     {{ Form::label('phone1', 'Teléfonos', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::text('phone1', $customer->phone1, ['class' => 'form-control']) }}
+                                        {{ Form::text('phone1', $customer->phone1, ['class' => 'form-control', 'disabled']) }}
                                     </div>
                                     <div class="col-sm-3">
                                         {{ Form::text('phone2', $customer->phone2, ['class' => 'form-control']) }}
@@ -63,7 +57,7 @@
                                 <div class="form-group">
                                     {{ Form::label('email1', 'Correo', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::text('email1', $customer->email1, ['class' => 'form-control']) }}
+                                        {{ Form::text('email1', $customer->email1, ['class' => 'form-control', 'disabled']) }}
                                     </div>
                                     <div class="col-sm-3">
                                         {{ Form::text('email2', $customer->email2, ['class' => 'form-control']) }}
@@ -73,48 +67,46 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{ Form::label('web', 'Pagina Web', ['class' => 'col-sm-2 control-label']) }}
+                                    {{ Form::label('web', 'Página Web', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-9">
-                                        {{ Form::text('web', $customer->web, ['class' => 'form-control']) }}
+                                        {{ Form::text('web', $customer->web, ['class' => 'form-control', 'disabled']) }}
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    {{ Form::label('user_id', 'Responsable', ['class' => 'col-sm-2 control-label']) }}
-                                    <div class="col-sm-9">
-                                        {{ Form::text('user_id', $customer->user->name, ['class' => 'form-control']) }}
+                                @if(Auth::user()->admin)
+                                    <div class="form-group">
+                                        {{ Form::label('user_id', 'Responsable', ['class' => 'col-sm-2 control-label']) }}
+                                        <div class="col-sm-9">
+                                            {{ Form::text('user_id', $customer->user->name, ['class' => 'form-control']) }}
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                                 <div class="form-group">
                                     {{ Form::label('next_mng', 'Próxima Gestión', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::text('next_mng', $customer->next_mng, ['class' => 'form-control']) }}
+                                        {{ Form::text('next_mng', Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y'), ['class' => 'form-control', 'disabled']) }}
+                                    </div>
+                                    {{ Form::label('dias', 'Días en Gestión', ['class' => 'col-sm-3 control-label']) }}
+                                    <div class="col-sm-3">
+                                        {{ Form::text('dias', Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($customer->created_at)), ['class' => 'form-control', 'disabled']) }}
                                     </div>
                                 </div>
                                 <hr>
-                                <hr>
                             </div>
-                        </fieldset>
-                        {!! Form::close() !!}
-
                         @if(count($managements) != 0)
                             <table class="table table-striped table-bordered table-hover table-condensed">
                                 <thead>
-                                <th>ID</th>
-                                <th>Descripcion</th>
-                                <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
+                                <th>Descripción</th>
                                 <th>Fecha</th>
                                 </thead>
                                 <tbody>
                                 @foreach($managements as $management)
                                     <tr>
-                                        <td>{{ $management->id }}</td>
-                                        <td>{{ $management->description }}</td>
-                                        <td>{{ $management->product }}</td>
-                                        <td>{{ $management->quantity }}</td>
-                                        <td>{{ $management->price }}</td>
-                                        <td>{{ $management->created_at }}</td>
+                                        <td>
+                                            <div class="col-sm-10">
+                                                {{ Form::textarea('description', $management->description, ['class' => 'form-control', 'rows' => '2', 'cols' => '50', 'style' => 'resize:none', 'disabled']) }}
+                                            </div>
+                                        </td>
+                                        <td>{{ \Carbon\Carbon::parse($management->created_at)->format('d-m-Y H:i') }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -124,6 +116,33 @@
                                 <strong> El Cliente no posee Gestiones!! </strong>
                             </div>
                         @endif
+                        <hr>
+                        <h4>Agregar Nueva Gestión</h4>
+                        <hr>
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}
+                                <div class="col-sm-9">
+                                    {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2', 'cols' => '40', 'style' => 'resize:none']) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('next_mng', 'Próxima Gestión', ['class' => 'col-sm-2 control-label']) }}
+                                <div class="col-sm-3">
+                                    {{ Form::date('next_mng', null, ['class' => 'form-control']) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ Form::label('status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
+                                    <div class="col-sm-3">
+                                        {{ Form::select('status', ['1' => 'Cliente Potencial', '2' => 'Muestra Entregada', '3' => 'Activo', '4' => 'Rechazado' ], null, ['class' => 'form-control']) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" align="center">
+                                {{ Form::submit('Agregar', ['class' => 'btn btn-primary']) }}
+                            </div>
+                        </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>

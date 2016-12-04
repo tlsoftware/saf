@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Management extends Model
 {
     protected $fillable = [
-        'title', 'description', 'product', 'quantity', 'price', 'customer_id', 'created_at'
+        'description', 'product', 'quantity', 'price', 'customer_id'
     ];
 
     public function customer() {

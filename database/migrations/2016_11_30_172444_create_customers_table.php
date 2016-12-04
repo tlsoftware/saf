@@ -27,14 +27,15 @@ class CreateCustomersTable extends Migration
             $table->string('email2', 50)->nullable();
             $table->string('email3', 50)->nullable();
             $table->string('web', 100)->nullable();
-            $table->enum('status', [0, 1, 2])->default(0);
-            $table->dateTime('last_mng')->nullable();
+            $table->enum('status', [0, 1, 2, 3, 4])->default(0);
+            $table->dateTime('last_mng')->nullable()->default(null);
             $table->date('next_mng');
             $table->integer('user_id')->unsigned();
 
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->timestamps();
+            $table->date('created_at');
+            $table->date('updated_at');
         });
     }
 

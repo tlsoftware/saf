@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Customer;
+use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
 
 class CustomerController extends Controller
@@ -45,6 +47,10 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $customer = new Customer($request->all());
+        $customer->next_mng = Carbon::now();
+
+        if(!$request->user_id)
+            $customer->user_id = Auth::user()->id;
 
         $customer->save();
 

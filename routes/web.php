@@ -35,7 +35,32 @@ Route::post('managements/store/{management}', [
 ]);
 
 
-Route::get('potencial/{id}', [
+Route::get('potencials/{id}', [
     'uses' => 'PotencialCustomerController@index',
-    'as'   => 'potencial'
+    'as'   => 'potencials'
+])->where('id', '[0-9]+');
+
+Route::get('potencials/show', [
+    'uses' => 'PotencialCustomerController@show',
+    'as'   => 'potencials.show'
+]);
+
+Route::get('muestras/{id}', [
+    'uses' => 'MuestraCustomerController@index',
+    'as'   => 'muestras'
+])->where('id', '[0-9]+');
+
+Route::get('muestras/show', [
+    'uses' => 'MuestraCustomerController@show',
+    'as'   => 'muestras.show'
+]);
+
+Route::get('activos/{id}', [
+    'uses' => 'ActivoCustomerController@index',
+    'as'   => 'activos'
+])->where('id', '[0-9]+');
+
+Route::get('activos/show', [
+    'uses' => 'ActivoCustomerController@show',
+    'as'   => 'activos.show'
 ]);

@@ -14,25 +14,40 @@ class ManagementController extends Controller
     {
         $management = new Management($request->all());
         $management->customer_id = $id;
-        // Guardamos la Nueva Gestion
         $management->save();
 
+        // Determinar si la fecha ingresada por el Usuario es Vacia o Mayor a 7 dias
+        $next = $request->next_mng;
+        $status = $request->status;
+
+        if($next == '') {
+            if ($status < 3) {
+                $dt = Carbon::now()->addWeekdays(7)->format('Y-m-d');
+            } else {
+                $dt = Carbon::now()->addWeekdays(15)->format('Y-m-d');
+            }
+            $next = $dt;
+        }
+
         $customer = Customer::find($id);
+        $customer->next_mng = $next;
+        $customer->status = $status;
 
-        $dt = Carbon::now();
-        $dt->addWeekdays(7);
-
-        $status = 1;
-        if ($management->product != "")
-            $status = 2;
-
-
-        $customer->update(['next_mng' => $dt, 'status' => $status]);
+        $customer->update(['next_mng' => $next, 'status' => $status,
+            'phone2' => $request->phone2, 'phone3' => $request->phone3,
+            'email2' => $request->email2, 'email3' => $request->email3]);
 
         Flash::success("Se ha agregado una Nueva Gestion de forma exitosa!!");
 
-        return redirect()->action('CustomerController@show', $customer->id);
+        if ($status == 1 ) {
+            return redirect()->action('PotencialCustomerController@show');
+        } elseif ($status == 2) {
+            return redirect()->action('MuestraCustomerController@show');
+        } elseif ($status == 3) {
+            return redirect()->action('ActivoCustomerController@show');
+        }
 
+        return redirect()->action('HomeCustomerController@index');
     }
 
     public function create($id)

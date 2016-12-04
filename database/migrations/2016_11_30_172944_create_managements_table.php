@@ -15,10 +15,10 @@ class CreateManagementsTable extends Migration
     {
         Schema::create('managements', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('description')->nullable();
-            $table->string('product', 100)->nullable();
-            $table->integer('quantity')->nullable();
-            $table->double('price')->nullable();
+            $table->text('description');
+            $table->string('product', 100)->nullable()->default('N/A');
+            $table->integer('quantity')->nullable()->default('0');
+            $table->double('price')->nullable()->default('0.0');
 
             $table->integer('customer_id')->unsigned();
             $table->foreign('customer_id')->references('id')->on('customers');
