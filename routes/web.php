@@ -33,3 +33,9 @@ Route::post('managements/store/{management}', [
     'uses' => 'ManagementController@store',
     'as'  => 'managements.store'
 ]);
+
+
+Route::get('potencial/{id}', [
+    'uses' => 'PotencialCustomerController@index',
+    'as'   => 'potencial'
+]);

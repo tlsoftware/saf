@@ -50,7 +50,7 @@ class CustomerController extends Controller
 
         Flash::success("Se ha registrado el cliente de forma exitosa!!");
 
-        return redirect()->action('CustomerController@index');
+        return redirect()->action('HomeController@index');
     }
 
     /**

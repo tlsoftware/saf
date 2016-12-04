@@ -7,6 +7,7 @@ use App\Customer;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
+use Laracasts\Flash\Flash;
 
 class HomeController extends Controller
 {
@@ -32,18 +33,22 @@ class HomeController extends Controller
        {
            $customers = Customer::Search($request->bs_name)
                ->where('next_mng', '<=', Carbon::now())
+               ->where('status', '!=', '2')
                ->orderBy('next_mng', 'asc')
-               ->paginate(5);
-           // return view('home')
-           //    ->with('customers', $customers);
+               ->orderBY('last_mng', 'asc')
+               ->paginate(10);
+
        }
+
        // Si es Vendedor carga solo los clientes pendientes de ese Vendedor
        else {
            $customers = Customer::Search($request->bs_name)
                ->where('user_id', Auth::user()->id)
+               ->where('status', '!=', '2')
                ->where('next_mng', '<=', Carbon::now())
                ->orderBy('next_mng', 'asc')
-               ->paginate(5);
+               ->orderBY('last_mng', 'asc')
+               ->paginate(10);
 
            /*
             *  Si el Vendedor no tiene Clientes Pendientes por Gestionar
@@ -52,8 +57,19 @@ class HomeController extends Controller
             if($customers->count() == 0) {
                 $customers = Customer::Search($request->bs_name)
                     ->where('user_id', Auth::user()->id)
+                    ->where('status', '=', '1')
                     ->orderBy('next_mng', 'asc')
-                    ->paginate(5);
+                    ->orderBY('last_mng', 'asc')
+                    ->paginate(10);
+
+                Flash::warning('No Tiene Clientes Pendientes por Gestionar!!');
+
+                /*
+                 * Redirigir a la Pagina de Clientes Potenciales
+                 *
+                return view('home')
+                    ->with('customers', $customers);
+                */
                 /*
                  *  Si el vendedor no tiene Clientes Asociados
                  *  Redirigimos a la Pagina para Cargar un Nuevo Cliente

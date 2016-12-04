@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-default">
-                <div class="panel-heading"> Pagina Principal </div>
+                <div class="panel-heading"> Potenciales Clientes pendientes de Gestion </div>
                     <div class="panel-body">
                         @if(Auth::user()->admin)
                             <a href="{{ route('customers.create') }}" class="btn btn-info">Nuevo Cliente</a>
@@ -25,7 +25,7 @@
                         <hr>
                         <table class="table table-striped table-bordered table-hover table-condensed">
                             <thead>
-                            <th>ID</th>
+                            <th>Gestion</th>
                             <th>Razon Social</th>
                             <th>Persona de Contacto</th>
                             <th>Telefono</th>
@@ -34,15 +34,13 @@
                                 <th>Responsable</th>
                             @endif
                             <th>Ultima Gestion</th>
-                            <th>Gestion</th>
+                            <th>Dias sin Gestion</th>
                             <th>Proxima Gestion</th>
-                            <th>Estatus</th>
-                            <th>Accion</th>
                             </thead>
                             <tbody>
                             @foreach($customers as $customer)
                                 <tr>
-                                    <td>{{ $customer->id }}</td>
+                                    <td><a href="{{ route('potencial', $customer->id) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a></td>
                                     <td>{{ $customer->bs_name }}</td>
                                     <td>{{ $customer->contact_name }}</td>
                                     <td>{{ $customer->phone1 }}</td>
@@ -50,26 +48,15 @@
                                     @if(Auth::user()->admin)
                                         <td>{{ $customer->user()->first()->name }}</td>
                                     @endif
-                                    <td> Agregar </td> <!-- $customer->managements->last()->title -->
-                                    <td> Agregar </td> <!--$customer->managements->last()->created_at -->
-                                    <td>{{ $customer->next_mng }}</td>
-                                    <td>
-                                        @if($customer->status == 0)
-                                            <span class="label label-danger">SIN GESTION</span>
-                                        @elseif($customer->status == 1)
-                                            <span class="label label-primary">POTENCIAL</span>
-                                        @else
-                                            <span class="label label-success">ACTIVO</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a>
-                                        @if(Auth::user()->admin)
-                                            <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a>
-                                        @else
-                                            <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a>
-                                        @endif
-                                    </td>
+
+                                    <!-- Validar si el Cliente Posee Gestiones -->
+                                    @if($customer->managements->count()))
+                                        <td>{{ $customer->managements->last()->created_at }}</td>
+                                    @else
+                                        <td> SIN GESTION </td>
+                                    @endif
+                                        <td>{{ Carbon\Carbon::parse($customer->last_mng)->diffInDays(Carbon\Carbon::now()) }}</td>
+                                        <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
