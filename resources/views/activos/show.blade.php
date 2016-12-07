@@ -9,9 +9,9 @@
                     <div class="panel-body">
                         <a href="{{ route('customers.create') }}" class="btn btn-info">Nuevo Cliente</a>
                     <!-- BUSCAR CLIENTES -->
-                        {!! Form::open(['action' => 'ActivoCustomerController@show', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
+                        {!! Form::open(['route' => 'activos.show', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
                         <div class="input-group">
-                            {!! Form::text('bs_name', null, ['class' => 'form-control', 'placeholder' => 'Buscar Cliente..', 'aria-describedby' => 'search']) !!}
+                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Buscar Cliente..', 'aria-describedby' => 'search']) !!}
                             <span class="input-group-addon" id="search">
                                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                     </span>
@@ -22,7 +22,7 @@
                         <table class="table table-striped table-bordered table-hover table-condensed">
                             <thead>
                             <th>Gestión</th>
-                            <th>Razón Social</th>
+                            <th>Nombre Comercial</th>
                             <th>Persona de Contacto</th>
                             <th>Teléfono</th>
                             <!-- Solo mostrar en case de que sea Administrador -->
@@ -37,7 +37,7 @@
                             @foreach($customers as $customer)
                                 <tr>
                                     <td align="center"><a href="{{ route('activos', $customer->id) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a></td>
-                                    <td>{{ $customer->bs_name }}</td>
+                                    <td>{{ $customer->name }}</td>
                                     <td>{{ $customer->contact_name }}</td>
                                     <td>{{ $customer->phone1 }}</td>
                                     <!-- Solo mostrar en case de que sea Administrador -->
@@ -52,7 +52,7 @@
                                         <td> SIN GESTION </td>
                                     @endif
                                     <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>
-                                    <td>{{ Carbon\Carbon::parse($customer->last_mng)->diffInDays(Carbon\Carbon::now()) }}</td>
+                                    <td>{{ Carbon\Carbon::parse($customer->created_at)->diffInDays(Carbon\Carbon::now()) }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

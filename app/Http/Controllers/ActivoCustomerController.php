@@ -28,7 +28,7 @@ class ActivoCustomerController extends Controller
     {
         if (Auth::user()->admin)
         {
-            $customers = Customer::Search($request->bs_name)
+            $customers = Customer::Search($request->name)
                 ->where('status', '3')
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
@@ -38,7 +38,7 @@ class ActivoCustomerController extends Controller
 
         // Si es Vendedor carga solo los clientes pendientes de ese Vendedor
         else {
-            $customers = Customer::Search($request->bs_name)
+            $customers = Customer::Search($request->name)
                 ->where('user_id', Auth::user()->id)
                 ->where('status', '3')
                 ->orderBy('next_mng', 'asc')

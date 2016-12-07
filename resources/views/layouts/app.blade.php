@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Alman Foods') }}</title>
+    <title>{{ config('app.name', 'Sistema Alman Foods') }}</title>
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
@@ -37,7 +37,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Alman Foods') }}
+                        {{ config('app.name', 'Sistema Alman Foods') }}
                     </a>
                 </div>
 

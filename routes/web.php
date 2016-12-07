@@ -21,7 +21,10 @@ Route::post('register', 'Auth\RegisterController@register');
 
 // Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', [
+    'uses' => 'HomeController@index',
+    'as'   => 'home'
+]);
 
 Route::resource('users', 'UserController');
 
@@ -35,14 +38,19 @@ Route::post('managements/store/{management}', [
 ]);
 
 
-Route::get('potencials/{id}', [
+Route::get('potenciales/{id}', [
     'uses' => 'PotencialCustomerController@index',
-    'as'   => 'potencials'
+    'as'   => 'potenciales'
 ])->where('id', '[0-9]+');
 
-Route::get('potencials/show', [
+Route::get('potenciales/detalle/{id}', [
+    'uses' => 'PotencialCustomerController@detalle',
+    'as'   => 'potenciales.detalle'
+])->where('id', '[0-9]+');
+
+Route::get('potenciales/show', [
     'uses' => 'PotencialCustomerController@show',
-    'as'   => 'potencials.show'
+    'as'   => 'potenciales.show'
 ]);
 
 Route::get('muestras/{id}', [

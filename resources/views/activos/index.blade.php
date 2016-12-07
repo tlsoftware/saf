@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-11 col-md-offset-0">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Formulario de Gestión (Clientes Activos)</div>
+                    <div class="panel-heading">Formulario de Gestión "Clientes Activos"</div>
 
                     <div class="panel-body">
                         {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
@@ -130,23 +130,23 @@
                             <div class="form-group">
                                 {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-8">
-                                    {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2', 'cols' => '40', 'style' => 'resize:none']) }}
+                                    {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2', 'cols' => '40', 'style' => 'resize:none', 'required']) }}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {{ Form::label('product', 'Producto Vendido', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-3">
-                                    {{ Form::text('product', null, ['class' => 'form-control']) }}
+                                    {{ Form::text('product', null, ['class' => 'form-control', 'required']) }}
                                 </div>
                                 <div class="form-group">
                                     {{ Form::label('quantity', 'Cantidad', ['class' => 'col-sm-1 control-label']) }}
                                     <div class="col-sm-1">
-                                        {{ Form::text('quantity', null, ['class' => 'form-control']) }}
+                                        {{ Form::text('quantity', null, ['class' => 'form-control', 'required']) }}
                                     </div>
                                     <div class="form-group">
                                         {{ Form::label('price', 'Precio', ['class' => 'col-sm-1 control-label']) }}
                                         <div class="col-sm-2">
-                                            {{ Form::text('price', null, ['class' => 'form-control']) }}
+                                            {{ Form::text('price', null, ['class' => 'form-control', 'required']) }}
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                                     <div class="form-group">
                                         {{ Form::label('status', 'Estatus', ['class' => 'col-sm-1 control-label']) }}
                                         <div class="col-sm-4">
-                                            {{ Form::select('status', ['1' => 'Cliente Potencial', '2' => 'Muestra Entregada', '3' => 'Activo', '4' => 'Rechazado' ], '3', ['class' => 'form-control']) }}
+                                            {{ Form::select('status', ['1' => 'Potencial Cliente', '2' => 'Muestra Entregada', '3' => 'Cliente Activo', '4' => 'Cliente Rechazado' ], '3', ['class' => 'form-control']) }}
                                         </div>
                                     </div>
                                 </div>

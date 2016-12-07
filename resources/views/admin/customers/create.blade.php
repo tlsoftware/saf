@@ -19,14 +19,14 @@
                             <div class="form-group">
                                     {{ Form::label('bs_name', 'Razon Social', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-9">
-                                    {{ Form::text('bs_name', null, ['class' => 'form-control', 'required', 'placeholder' => 'Escriba Razon Social del Cliente']) }}
+                                    {{ Form::text('bs_name', null, ['class' => 'form-control', 'placeholder' => 'Escriba Razon Social del Cliente']) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 {{ Form::label('name', 'Nombre Comercial', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-9">
-                                    {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Escriba Nombre Comercial del Cliente']) }}
+                                    {{ Form::text('name', null, ['class' => 'form-control', 'required', 'placeholder' => 'Escriba Nombre Comercial del Cliente']) }}
                                 </div>
                             </div>
 
@@ -59,7 +59,7 @@
                                 <div class="form-group">
                                     {{ Form::label('email1', 'Correo', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::text('email1', null, ['class' => 'form-control', 'placeholder' => 'Correo Principal']) }}
+                                        {{ Form::text('email1', null, ['class' => 'form-control', 'required','placeholder' => 'Correo Principal']) }}
                                     </div>
                                     <div class="col-sm-3">
                                         {{ Form::text('email2', null, ['class' => 'form-control', 'placeholder' => 'Correo Adicional 1']) }}

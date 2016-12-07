@@ -19,7 +19,7 @@ class PotencialCustomerController extends Controller
             ->limit('3')
             ->get();
 
-        return view('potencials.index')
+        return view('potenciales.index')
             ->with('customer', $customer)
             ->with(compact('managements', $managements));
     }
@@ -28,8 +28,8 @@ class PotencialCustomerController extends Controller
     {
         if (Auth::user()->admin)
         {
-            $customers = Customer::Search($request->bs_name)
-                ->where('status', '==', '1')
+            $customers = Customer::Search($request->name)
+                ->where('status', '1')
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);
@@ -38,9 +38,9 @@ class PotencialCustomerController extends Controller
 
         // Si es Vendedor carga solo los clientes pendientes de ese Vendedor
         else {
-            $customers = Customer::Search($request->bs_name)
+            $customers = Customer::Search($request->name)
                 ->where('user_id', Auth::user()->id)
-                ->where('status', '<', '2')
+                ->where('status', '1')
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);
@@ -54,15 +54,24 @@ class PotencialCustomerController extends Controller
             Flash::warning('No Posee Potenciales Clientes Asociados!!');
         }
 
-        return view('potencials.show')
+        return view('potenciales.show')
             ->with('customers', $customers);
 
     }
+
+    public function detalle($id)
+    {
+        $customer = Customer::find($id);
+
+        $managements = Management::where('customer_id', $id)
+            ->orderBY('created_at', 'DESC')
+            ->get();
+
+        return view('potenciales.detalle')
+            ->with('customer', $customer)
+            ->with(compact('managements', $managements));
+    }
 }
-
-
-
-
 
 /*
 

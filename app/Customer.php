@@ -20,8 +20,9 @@ class Customer extends Model
         return $this->hasMany('App\Management');
     }
 
-    public function ScopeSearch($query, $bs_name)
+    public function scopeSearch($query, $name)
     {
-        return $query->where('bs_name', 'LIKE', "%$bs_name%");
+        return $query->where('name', 'LIKE', "%$name%");
     }
+
 }

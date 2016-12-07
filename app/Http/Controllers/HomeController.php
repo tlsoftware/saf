@@ -31,7 +31,7 @@ class HomeController extends Controller
         // Si es Administrador Cargar todos los Clientes pendientes
        if (Auth::user()->admin)
        {
-           $customers = Customer::Search($request->bs_name)
+           $customers = Customer::Search($request->name)
                ->where('next_mng', '<=', Carbon::now())
                ->where('status','<', '2')
                ->orderBy('next_mng', 'asc')
@@ -41,7 +41,7 @@ class HomeController extends Controller
 
        // Si es Vendedor carga solo los clientes pendientes de ese Vendedor
        else {
-           $customers = Customer::Search($request->bs_name)
+           $customers = Customer::Search($request->name)
                ->where('user_id', Auth::user()->id)
                ->where('status','<', '2')
                ->where('next_mng', '<=', Carbon::now())
@@ -49,6 +49,7 @@ class HomeController extends Controller
                ->orderBY('last_mng', 'asc')
                ->paginate(10);
        }
+
         if($customers->count() == 0)
             Flash::warning('No Tiene Clientes Pendientes por Gestionar!!');
 

@@ -134,7 +134,7 @@
                                 <div class="form-group">
                                     {{ Form::label('status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::select('status', ['1' => 'Cliente Potencial', '2' => 'Muestra Entregada', '3' => 'Activo', '4' => 'Rechazado' ], '2', ['class' => 'form-control']) }}
+                                        {{ Form::select('status', ['1' => 'Potencial Cliente' , '2' => 'Muestra Entregada', '3' => 'Cliente Activo', '4' => 'Cliente Rechazado' ], '2', ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                             </div>

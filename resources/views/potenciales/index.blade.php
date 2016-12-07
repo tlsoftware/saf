@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-11 col-md-offset-0">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Formulario de Gestión (Clientes Potenciales)</div>
+                    <div class="panel-heading">Formulario de Gestión "Potenciales Clientes "</div>
 
                     <div class="panel-body">
                         {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
@@ -134,7 +134,7 @@
                                 <div class="form-group">
                                     {{ Form::label('status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::select('status', ['1' => 'Cliente Potencial', '2' => 'Muestra Entregada', '3' => 'Activo', '4' => 'Rechazado' ], null, ['class' => 'form-control']) }}
+                                        {{ Form::select('status', ['1' => 'Potencial Cliente', '2' => 'Muestra Entregada', '3' => 'Cliente Activo', '4' => 'Cliente Rechazado' ], null, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                             </div>
