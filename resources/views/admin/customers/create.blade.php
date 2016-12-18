@@ -39,8 +39,12 @@
 
                             <div class="form-group">
                                 {{ Form::label('position', 'Cargo', ['class' => 'col-sm-2 control-label']) }}
-                                <div class="col-sm-9">
+                                <div class="col-sm-4">
                                     {{ Form::text('position', null, ['class' => 'form-control', 'placeholder' => 'Cargo de Persona de Contacto']) }}
+                                </div>
+                                {{ Form::label('bstype_id', 'Tipo de Empresa', ['class' => 'col-sm-2 control-label']) }}
+                                <div class="col-sm-3">
+                                    {{ Form::select('bstype_id', $bstypes, null, ['class' => 'form-control']) }}
                                 </div>
                             </div>
 

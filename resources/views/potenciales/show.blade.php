@@ -37,8 +37,11 @@
                             @foreach($customers as $customer)
                                 <tr>
                                     <td align="center">
-                                        <a href="{{ route('potenciales', $customer->id) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a>
+                                        <a href="{{ route('potenciales', $customer->id) }}" class="btn btn-success"><span class=" glyphicon glyphicon-wrench"></span></a>
                                         <a href="{{ route('potenciales.detalle', $customer->id) }}" class="btn btn-info"><span class="glyphicon glyphicon-info-sign"></span></a>
+                                        @if(Auth::user()->admin)
+                                            <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a>
+                                        @endif
                                     </td>
                                     <td>{{ $customer->name }}</td>
                                     <td>{{ $customer->contact_name }}</td>

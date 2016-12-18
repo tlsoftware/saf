@@ -4,8 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-md-offset-0">
-            <div class="panel panel-default">
-                <div class="panel-heading"> Potenciales Clientes Pendientes por Gestionar </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading"><strong>ClientesPendientes por Gestionar</strong>
+                    <span class="label label-danger col-md-offset-8">Total pendientes: {{ $customers->total() }}</span>
+                </div>
                     <div class="panel-body">
                         <a href="{{ route('customers.create') }}" class="btn btn-info">Nuevo Cliente</a>
                         <!-- BUSCAR CLIENTES -->
@@ -36,7 +38,8 @@
                             <tbody>
                             @foreach($customers as $customer)
                                 <tr>
-                                    <td align="center"><a href="{{ route('potenciales', $customer->id) }}" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                    <td align="center"><a href="{{ route('managements', $customer->id) }}" class="btn btn-success"><span class=" glyphicon glyphicon-wrench"></span></a>
+                                    </td>
                                     <td>{{ $customer->name }}</td>
                                     <td>{{ $customer->contact_name }}</td>
                                     <td>{{ $customer->phone1 }}</td>
@@ -49,7 +52,7 @@
                                     @if($customer->managements->count())
                                         <td>{{ \Carbon\Carbon::parse($customer->managements->last()->created_at)->format('d-m-Y') }}</td>
                                     @else
-                                        <td> SIN GESTION </td>
+                                        <td> SIN GESTIÓN </td>
                                     @endif
                                         <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>
                                         <td>{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($customer->created_at)) }}</td>

@@ -11,6 +11,7 @@ html {
 }
 body {
   margin: 0;
+  background-image: url("../../images/home-1.jpg");background-color: transparent;background-position: center;
 }
 article,
 aside,

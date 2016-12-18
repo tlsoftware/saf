@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bstype;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $customers = Customer::Search($request->bs_name)
+        $customers = Customer::Search($request->name)
             ->orderBy('next_mng', 'asc')
             ->paginate(5);
 
@@ -34,8 +35,11 @@ class CustomerController extends Controller
     public function create()
     {
         $users = User::pluck('name', 'id')->toArray();
+        $bstypes = Bstype::pluck('type', 'id')->toArray();
 
-        return view('admin.customers.create', compact('users', $users));
+        return view('admin.customers.create')
+            ->with(compact('users', $users))
+            ->with(compact('bstypes', $bstypes));
     }
 
     /**

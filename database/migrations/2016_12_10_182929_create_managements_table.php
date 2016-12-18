@@ -16,14 +16,22 @@ class CreateManagementsTable extends Migration
         Schema::create('managements', function (Blueprint $table) {
             $table->increments('id');
             $table->text('description');
-            $table->string('product', 100)->nullable()->default('N/A');
             $table->integer('quantity')->nullable()->default('0');
             $table->double('price')->nullable()->default('0.0');
+            $table->date('dispatch_date')->nullable()->default(null);
+            $table->time('dispatch_time')->nullable()->default(null);
 
             $table->integer('customer_id')->unsigned();
             $table->foreign('customer_id')->references('id')->on('customers');
 
-            $table->timestamps();
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('products');
+
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->dateTime('created_at');
+
         });
     }
 
@@ -37,3 +45,4 @@ class CreateManagementsTable extends Migration
         Schema::dropIfExists('managements');
     }
 }
+

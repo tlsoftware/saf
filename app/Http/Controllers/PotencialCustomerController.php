@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Customer;
 use App\Management;
+use App\User;
 use Auth;
 use Laracasts\Flash\Flash;
 
@@ -18,6 +20,13 @@ class PotencialCustomerController extends Controller
             ->orderBY('created_at', 'DESC')
             ->limit('3')
             ->get();
+        if(Auth::user()->admin) {
+            $users = User::pluck('name', 'id')->toArray();
+            return view('potenciales.index')
+                ->with('customer', $customer)
+                ->with(compact('managements', $managements))
+                ->with(compact('users', $users));
+        }
 
         return view('potenciales.index')
             ->with('customer', $customer)
@@ -30,6 +39,7 @@ class PotencialCustomerController extends Controller
         {
             $customers = Customer::Search($request->name)
                 ->where('status', '1')
+                ->where('next_mng', '>', Carbon::now())
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);
@@ -72,39 +82,3 @@ class PotencialCustomerController extends Controller
             ->with(compact('managements', $managements));
     }
 }
-
-/*
-
-   // Redireccionamos a la Pagina de Clientes Potenciales
-       $customers = Customer::Search($request->bs_name)
-           ->where('user_id', Auth::user()->id)
-           ->where('status', '==', '2')
-           ->orderBy('next_mng', 'asc')
-           ->orderBY('last_mng', 'asc')
-           ->paginate(10);
-
-       Flash::warning('No Posee Potenciales Clientes Asociados!!');
-
-   }
-   elseif ($customers->count() == 0) {
-       $customers = Customer::Search($request->bs_name)
-           ->where('user_id', Auth::user()->id)
-           ->where('status', '==', '3')
-           ->orderBy('next_mng', 'asc')
-           ->orderBY('last_mng', 'asc')
-           ->paginate(10);
-
-       Flash::warning('No Posee Potenciales Clientes con Muestras Entregadas!!');
-
-   } elseif ($customers->count() == 0) {
-       $customers = Customer::Search($request->bs_name)
-           ->where('user_id', Auth::user()->id)
-           ->where('status', '==', '4')
-           ->orderBy('next_mng', 'asc')
-           ->orderBY('last_mng', 'asc')
-           ->paginate(10);
-
-       Flash::warning('No Posee Clientes Activos Asociados!!');
-   }
-}
-

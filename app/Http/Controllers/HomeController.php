@@ -28,6 +28,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+
         // Si es Administrador Cargar todos los Clientes pendientes
        if (Auth::user()->admin)
        {

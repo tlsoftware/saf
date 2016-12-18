@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Bstype;
 use Illuminate\Http\Request;
 use App\Management;
 use App\Customer;
+use App\User;
 use Laracasts\Flash\Flash;
 use Carbon\Carbon;
+use Auth;
 
 class ManagementController extends Controller
 {
@@ -56,5 +59,30 @@ class ManagementController extends Controller
 
         return view('managements.create')
             ->with(compact('customer', $customer));
+    }
+
+    public function index($id)
+    {
+        // $customer = Customer::find($id);
+
+        $customers = Customer::paginate(1);
+
+
+            $managements = Management::where('customer_id', $customers->id)
+            ->orderBY('created_at', 'DESC')
+            ->limit('3')
+            ->get();
+
+        if(Auth::user()->admin) {
+            $users = User::pluck('name', 'id')->toArray();
+            return view('managements.index')
+                ->with('customers', $customers)
+                ->with(compact('managements', $managements))
+                ->with(compact('users', $users));
+        }
+
+        return view('managements.index')
+            ->with('customers', $customers)
+            ->with(compact('managements', $managements));
     }
 }

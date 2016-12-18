@@ -27,8 +27,19 @@ Route::get('/home', [
 ]);
 
 Route::resource('users', 'UserController');
+Route::get('users/{id}/destroy', [
+   'uses'  => 'UserController@destroy',
+    'as'   => 'users.destroy'
+]);
+
+Route::resource('products', 'ProductController');
 
 Route::resource('customers', 'CustomerController');
+
+Route::get('/managements/{id}', [
+    'uses' => 'ManagementController@index',
+    'as'   => 'managements'
+]);
 
 Route::get('/managements/create/{id}', 'ManagementController@create');
 

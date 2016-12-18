@@ -96,7 +96,7 @@
                         @if(count($managements) != 0)
                             <table class="table table-striped table-bordered table-hover table-condensed">
                                 <thead>
-                                <th>Descripción</th>
+                                <th>Gestiónes</th>
                                 <th>Fecha</th>
                                 <th>Producto</th>
                                 <th>Cantidad</th>

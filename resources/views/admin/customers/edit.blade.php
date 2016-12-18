@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-11 col-md-offset-0">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Dashboard</div>
+                    <div class="panel-heading">Editar Cliente "<strong>{{ $customer->name }}"</strong></div>
 
                     <div class="panel-body">
                         {!! Form::open(['route' => ['customers.update', $customer], 'method' => 'PUT']) !!}
@@ -83,7 +83,7 @@
                             <div class="form-group">
                                 {{ Form::label('next_mng', 'Próxima Gestión', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-3">
-                                    {{ Form::date('next_mng', \Carbon\Carbon::now(), ['class' => 'form-control']) }}
+                                    {{ Form::date('next_mng', Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y'), ['class' => 'form-control']) }}
                                 </div>
                             </div>
                             <hr>

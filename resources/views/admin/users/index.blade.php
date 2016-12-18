@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Dashboard</div>
+                    <div class="panel-heading">Usuarios Registrados</div>
                     <div class="panel-body">
                         <a href="{{ route('users.create') }}" class="btn btn-info"> Agregar Usuario</a>
                         <hr>
@@ -15,7 +15,7 @@
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>Tipo</th>
-                            <th>Accion</th>
+                            <th>Acción</th>
                             </thead>
                             <tbody>
                             @foreach($users as $user)
@@ -31,7 +31,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas eliminar al Usuario?{{ $user->name }}')"><span class="glyphicon glyphicon-remove"></span></a>
+                                        <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas eliminar al Usuario? {{ $user->name }}')"><span class="glyphicon glyphicon-remove"></span></a>
                                         <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a>
                                     </td>
                                 </tr>

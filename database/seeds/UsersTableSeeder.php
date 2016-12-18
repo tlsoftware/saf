@@ -16,18 +16,19 @@ class UsersTableSeeder extends Seeder
       * Creacion de Usuario role Vendedor
       */
         $user = new User();
-        $user->name = 'User';
-        $user->email = 'user@gmail.com';
-        $user->password = bcrypt('123123');
+        $user->name = 'Ricardo Alzurutt';
+        $user->email = 'ralzurutt@alman.cl';
+        $user->password = '123123';
+        $user->admin = 1;
         $user->save();
 
         /*
          * Creacion de Usuario role Administrador
          */
         $user = new User();
-        $user->name = 'Admin';
-        $user->email = 'admin@gmail.com';
-        $user->password = bcrypt('123123');
+        $user->name = 'Leonardo González';
+        $user->email = 'leonardo@alman.cl';
+        $user->password = '123123';
         $user->admin = 1;
         $user->save();
     }

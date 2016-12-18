@@ -51,7 +51,8 @@ class MuestraCustomerController extends Controller
          *  Cargamos todos los clientes del Vendedor
          */
         if($customers->count() == 0) {
-            Flash::warning('No Posee Clientes con Muestras Entregadas Pendientes por Gestiona!!');
+            Flash::warning('No Posee Clientes con Muestras Entregadas!!');
+            return redirect()->route('home');
         }
 
         return view('muestras.show')

@@ -5,8 +5,7 @@
         <div class="row">
             <div class="col-md-11 col-md-offset-0">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Formulario de Gestión "Potenciales Clientes "</div>
-
+                    <div class="panel-heading"><strong>"Potenciales Clientes"</strong></div>
                     <div class="panel-body">
                         {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
                             <div class="form-horizontal">
@@ -75,8 +74,8 @@
                                 @if(Auth::user()->admin)
                                     <div class="form-group">
                                         {{ Form::label('user_id', 'Responsable', ['class' => 'col-sm-2 control-label']) }}
-                                        <div class="col-sm-9">
-                                            {{ Form::text('user_id', $customer->user->name, ['class' => 'form-control']) }}
+                                        <div class="col-sm-4">
+                                            {{ Form::select('user_id', $users, $customer->user->id, ['class' => 'form-control']) }}
                                         </div>
                                     </div>
                                 @endif
@@ -95,7 +94,7 @@
                         @if(count($managements) != 0)
                             <table class="table table-striped table-bordered table-hover table-condensed">
                                 <thead>
-                                <th>Descripción</th>
+                                <th>Gestiones</th>
                                 <th>Fecha</th>
                                 </thead>
                                 <tbody>
@@ -123,7 +122,7 @@
                             <div class="form-group">
                                 {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-9">
-                                    {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2', 'cols' => '40', 'style' => 'resize:none']) }}
+                                    {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2', 'cols' => '40', 'style' => 'resize:none', 'required']) }}
                                 </div>
                             </div>
                             <div class="form-group">

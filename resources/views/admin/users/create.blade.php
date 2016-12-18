@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Dashboard</div>
+                    <div class="panel-heading">Crear Nuevo Usuario</div>
                     <div class="panel-body">
                         {!! Form::open(['action' => 'UserController@store', 'method' => 'POST']) !!}
                         <div class="form-group">
@@ -14,7 +14,7 @@
                         </div>
 
                         <div class="form-group">
-                            {{ Form::label('email', 'Correo Electronico') }}
+                            {{ Form::label('email', 'Correo Electrónico') }}
                             {{ Form::email('email', null, ['class' => 'form-control', 'required', 'placeholder' => 'ejemplo@gmail.com']) }}
                         </div>
 
