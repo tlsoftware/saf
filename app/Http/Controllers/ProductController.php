@@ -59,6 +59,14 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+
+        if (!count($product->managements)) {
+            $product->delete();
+            Flash::error('El producto ' . $product->name . ' ha sido borrado de forma Exitosa!!');
+            return redirect()->route('products.index');
+        }
+        Flash::error('El producto ' . $product->name . ' no se pudo eliminar "Tiene Ventas Asociadas"!!');
+        return redirect()->route('product.index');
     }
 }

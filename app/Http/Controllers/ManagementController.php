@@ -10,6 +10,7 @@ use App\User;
 use Laracasts\Flash\Flash;
 use Carbon\Carbon;
 use Auth;
+use View;
 
 class ManagementController extends Controller
 {
@@ -61,28 +62,45 @@ class ManagementController extends Controller
             ->with(compact('customer', $customer));
     }
 
-    public function index($id)
+    public function show($id)
     {
-        // $customer = Customer::find($id);
+        $customer = Customer::find($id);
 
-        $customers = Customer::paginate(1);
+        // Get Previous Customer ID
+        $previous = Customer::where('id', '<', $customer->id)->max('id');
 
+        // Get Previous Customer ID
+        $next = Customer::where('id', '>', $customer->id)->min('id');
 
-            $managements = Management::where('customer_id', $customers->id)
+        if (!$next) { // Redireccionar al Primero
+            $next = Customer::first()->min('id');
+        }
+
+        if (!$previous) { // Redireccionar al Ultimo
+            $previous = Customer::latest()->max('id');
+        }
+
+        // $customers = Customer::paginate(1);
+
+        $managements = Management::where('customer_id', $customer->id)
             ->orderBY('created_at', 'DESC')
             ->limit('3')
             ->get();
 
         if(Auth::user()->admin) {
             $users = User::pluck('name', 'id')->toArray();
-            return view('managements.index')
-                ->with('customers', $customers)
+            return View::make('managements.show')
+                ->with('previous', $previous)
+                ->with('next', $next)
+                ->with('customer', $customer)
                 ->with(compact('managements', $managements))
                 ->with(compact('users', $users));
         }
 
-        return view('managements.index')
-            ->with('customers', $customers)
+        return View::make('managements.index')
+            ->with('previous', $previous)
+            ->with('next', $next)
+            ->with('customer', $customer)
             ->with(compact('managements', $managements));
     }
 }

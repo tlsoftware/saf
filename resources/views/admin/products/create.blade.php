@@ -18,7 +18,7 @@
                             {{ Form::text('name', null, ['class' => 'form-control', 'required', 'placeholder' => 'Nombre de Producto']) }}
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" align="center">
                             {{ Form::submit('Aceptar', ['class' => 'btn btn-primary']) }}
                         </div>
 

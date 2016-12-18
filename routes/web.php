@@ -37,7 +37,7 @@ Route::resource('products', 'ProductController');
 Route::resource('customers', 'CustomerController');
 
 Route::get('/managements/{id}', [
-    'uses' => 'ManagementController@index',
+    'uses' => 'ManagementController@show',
     'as'   => 'managements'
 ]);
 
