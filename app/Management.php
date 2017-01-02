@@ -9,7 +9,7 @@ class Management extends Model
     public $updated_at = false;
 
     protected $fillable = [
-        'description', 'quantity', 'price', 'customer_id', 'product_id'
+        'description', 'quantity', 'price', 'customer_id', 'product_id', 'st_details'
     ];
 
     public function customer() {

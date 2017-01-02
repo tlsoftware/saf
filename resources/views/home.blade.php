@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-primary">
-                <div class="panel-heading"><strong>ClientesPendientes por Gestionar</strong>
+                <div class="panel-heading"><strong>Clientes Pendientes por Gestionar</strong>
                     <span class="label label-danger col-md-offset-8">Total pendientes: {{ $customers->total() }}</span>
                 </div>
                     <div class="panel-body">
@@ -56,7 +56,6 @@
                                     @endif
                                         <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>
                                         <td>{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($customer->created_at)) }}</td>
-
                                 </tr>
                             @endforeach
                             </tbody>

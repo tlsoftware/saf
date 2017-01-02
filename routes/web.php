@@ -41,6 +41,29 @@ Route::get('/managements/{id}', [
     'as'   => 'managements'
 ]);
 
+Route::get('/managements/showgestion/{id}', [
+    'uses' => 'ManagementController@showGestion',
+    'as'   => 'managements.showgestion'
+]);
+Route::get('/managements/showmuestra/{id}', [
+    'uses' => 'ManagementController@showMuestra',
+    'as'   => 'managements.showmuestra'
+]);
+Route::get('/managements/showdatos/{id}', [
+    'uses' => 'ManagementController@showDatos',
+    'as'   => 'managements.showdatos'
+]);
+Route::get('/managements/showventa/{id}', [
+    'uses' => 'ManagementController@showVenta',
+    'as'   => 'managements.showventa'
+]);
+Route::get('/managements/showrechazo/{id}', [
+    'uses' => 'ManagementController@showRechazo',
+    'as'   => 'managements.showrechazo'
+]);
+
+
+
 Route::get('/managements/create/{id}', 'ManagementController@create');
 
 Route::post('managements/store/{management}', [

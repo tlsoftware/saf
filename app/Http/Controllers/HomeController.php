@@ -34,10 +34,39 @@ class HomeController extends Controller
        {
            $customers = Customer::Search($request->name)
                ->where('next_mng', '<=', Carbon::now())
-               ->where('status','<', '2')
+               ->where('status', '0')
                ->orderBy('next_mng', 'asc')
                ->orderBY('last_mng', 'asc')
                ->paginate(10);
+
+           // Si no existen clientes sin Gestión
+            if($customers->count() == 0) {
+                $customers = Customer::Search($request->name)
+                    ->where('next_mng', '<=', Carbon::now())
+                    ->where('status', '1')
+                    ->orderBy('next_mng', 'asc')
+                    ->orderBY('last_mng', 'asc')
+                    ->paginate(10);
+
+            // Si no existen clientes potenciales vencidos
+            } else if ($customers->count() == 0) {
+                $customers = Customer::Search($request->name)
+                    ->where('next_mng', '<=', Carbon::now())
+                    ->where('status', '2')
+                    ->orderBy('next_mng', 'asc')
+                    ->orderBY('last_mng', 'asc')
+                    ->paginate(10);
+
+           // Si no existen clientes con muestra entregada
+            } else if ($customers->count() == 0) {
+                $customers = Customer::Search($request->name)
+                    ->where('next_mng', '<=', Carbon::now())
+                    ->where('status', '3')
+                    ->orderBy('next_mng', 'asc')
+                    ->orderBY('last_mng', 'asc')
+                    ->paginate(10);
+            }
+
        }
 
        // Si es Vendedor carga solo los clientes pendientes de ese Vendedor

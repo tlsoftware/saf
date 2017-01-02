@@ -3,10 +3,16 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-11 col-md-offset-0">
+            <div class="col-md-12 col-md-offset-0">
                 <div class="panel panel-primary">
                     <div class="panel-heading"><strong> Formulario de Gestión </strong></div>
                     <div class="panel-body">
+                        <a href="{{ route('managements.showgestion', $customer->id) }}" class="btn btn-info">Nueva Gestión</a>
+                        <a href="{{ route('managements.showmuestra', $customer->id) }}" class="btn btn-info">Entrega de Muestras</a>
+                        <a href="{{ route('managements.showdatos', $customer->id) }}" class="btn btn-info">Datos Adicionales</a>
+                        <a href="#" class="btn btn-info">Agregar Venta</a>
+                        <a href="#" class="btn btn-info">Rechazo</a>
+                        <hr>
                         {!! Form::open(['route' => 'home', 'method' => 'POST']) !!}
                         <div class="form-horizontal">
                                 <div class="form-group">

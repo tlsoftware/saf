@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bstype;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Management;
 use App\Customer;
@@ -18,7 +19,11 @@ class ManagementController extends Controller
     {
         $management = new Management($request->all());
         $management->customer_id = $id;
+        $management->user_id = Auth::user()->id;
+        // dd($management);
         $management->save();
+
+
 
         // Determinar si la fecha ingresada por el Usuario es Vacia o Mayor a 7 dias
         $next = $request->next_mng;
@@ -35,6 +40,7 @@ class ManagementController extends Controller
 
         $customer = Customer::find($id);
         $customer->next_mng = $next;
+        $customer->last_mng = Carbon::now();
         $customer->status = $status;
 
         $customer->update(['next_mng' => $next, 'status' => $status,
@@ -103,4 +109,74 @@ class ManagementController extends Controller
             ->with('customer', $customer)
             ->with(compact('managements', $managements));
     }
+
+    public function showGestion($id)
+    {
+        $customer = Customer::find($id);
+
+        $managements = Management::where('customer_id', $customer->id)
+            ->orderBY('created_at', 'DESC')
+            ->limit('1')
+            ->get();
+
+        if(Auth::user()->admin) {
+            $users = User::pluck('name', 'id')->toArray();
+            return View::make('managements.showgestion')
+                ->with('customer', $customer)
+                ->with(compact('managements', $managements))
+                ->with(compact('users', $users));
+        }
+
+        return View::make('managements.showgestion')
+            ->with('customer', $customer)
+            ->with(compact('managements', $managements));
+    }
+
+    public function showMuestra($id)
+    {
+        $customer = Customer::find($id);
+        $products = Product::pluck('name', 'id')->toArray();
+
+        $managements = Management::where('customer_id', $customer->id)
+            ->orderBY('created_at', 'DESC')
+            ->limit('1')
+            ->get();
+
+        if(Auth::user()->admin) {
+            $users = User::pluck('name', 'id')->toArray();
+            return View::make('managements.showmuestra')
+                ->with('customer', $customer)
+                ->with(compact('managements', $managements))
+                ->with(compact('users', $users))
+                ->with(compact('products', $products));
+        }
+
+        return View::make('managements.showmuestra')
+            ->with('customer', $customer)
+            ->with(compact('managements', $managements))
+            ->with(compact('products', $products));
+    }
+
+    public function showDatos($id)
+    {
+        $customer = Customer::find($id);
+
+        $managements = Management::where('customer_id', $customer->id)
+            ->orderBY('created_at', 'DESC')
+            ->limit('1')
+            ->get();
+
+        if(Auth::user()->admin) {
+            $users = User::pluck('name', 'id')->toArray();
+            return View::make('managements.showdatos')
+                ->with('customer', $customer)
+                ->with(compact('managements', $managements))
+                ->with(compact('users', $users));
+        }
+
+        return View::make('managements.showdatos')
+            ->with('customer', $customer)
+            ->with(compact('managements', $managements));
+    }
+
 }
