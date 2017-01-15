@@ -21,6 +21,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Customer');
     }
 
+    public function managemets() {
+        return $this->hasMany('App\Management');
+    }
+
     public function scopeSearch($query, $name)
     {
         return $query->where('name', 'LIKE', "%$name%");

@@ -61,6 +61,14 @@ Route::get('/managements/showrechazo/{id}', [
     'uses' => 'ManagementController@showRechazo',
     'as'   => 'managements.showrechazo'
 ]);
+Route::get('/managements/showbaja/{id}', [
+    'uses' => 'ManagementController@showBaja',
+    'as'   => 'managements.showbaja'
+]);
+Route::put('/managements/storeDatos/{id}', [
+    'uses' => 'ManagementController@storeDatos',
+    'as'   => 'managements.storeDatos'
+]);
 
 
 

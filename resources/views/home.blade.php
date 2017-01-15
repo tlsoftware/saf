@@ -6,7 +6,7 @@
         <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-primary">
                 <div class="panel-heading"><strong>Clientes Pendientes por Gestionar</strong>
-                    <span class="label label-danger col-md-offset-8">Total pendientes: {{ $customers->total() }}</span>
+                    <span class="label label-danger col-md-offset-8">Total Pendientes: {{ $customers->total() }}</span>
                 </div>
                     <div class="panel-body">
                         <a href="{{ route('customers.create') }}" class="btn btn-info">Nuevo Cliente</a>
@@ -33,12 +33,12 @@
                             @endif
                             <th>Última Gestión</th>
                             <th>Próxima Gestión</th>
-                            <th>Días en Gestión</th>
+                            <th>Estatus</th>
                             </thead>
                             <tbody>
                             @foreach($customers as $customer)
                                 <tr>
-                                    <td align="center"><a href="{{ route('managements', $customer->id) }}" class="btn btn-success"><span class=" glyphicon glyphicon-wrench"></span></a>
+                                    <td align="center"><a href="{{ route('managements', $customer->id) }}" class="btn btn-primary"><span class="glyphicon glyphicon-saved"></span></a>
                                     </td>
                                     <td>{{ $customer->name }}</td>
                                     <td>{{ $customer->contact_name }}</td>
@@ -52,10 +52,12 @@
                                     @if($customer->managements->count())
                                         <td>{{ \Carbon\Carbon::parse($customer->managements->last()->created_at)->format('d-m-Y') }}</td>
                                     @else
-                                        <td> SIN GESTIÓN </td>
+                                        <td> N/A </td>
                                     @endif
-                                        <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>
-                                        <td>{{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($customer->created_at)) }}</td>
+                                    <!-- PROXIMA GESTION -->
+                                    <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>
+                                    <!-- STATUS -->
+                                    @include('layouts.status')
                                 </tr>
                             @endforeach
                             </tbody>

@@ -5,15 +5,19 @@
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><strong> Formulario de Gestión </strong></div>
+                    <div class="panel-heading"><strong> Formulario de Gestión </strong>
+                         <span class="label label-danger col-md-offset-9">@include('layouts.status2')</span>
+                    </div>
                     <div class="panel-body">
                         <a href="{{ route('managements.showgestion', $customer->id) }}" class="btn btn-info">Nueva Gestión</a>
                         <a href="{{ route('managements.showmuestra', $customer->id) }}" class="btn btn-info">Entrega de Muestras</a>
                         <a href="{{ route('managements.showdatos', $customer->id) }}" class="btn btn-info">Datos Adicionales</a>
-                        <a href="#" class="btn btn-info">Agregar Venta</a>
-                        <a href="#" class="btn btn-info">Rechazo</a>
+                        <a href="{{ route('managements.showventa', $customer->id) }}" class="btn btn-info">Agregar Venta</a>
+                        <a href="{{ route('managements.showrechazo', $customer->id) }}" class="btn btn-info">Rechazo</a>
+                        <a href="{{ route('managements.showbaja', $customer->id) }}" class="btn btn-info">Baja</a>
                         <hr>
                         {!! Form::open(['route' => 'home', 'method' => 'POST']) !!}
+                        <fieldset disabled>
                         <div class="form-horizontal">
                                 <div class="form-group">
                                     {{ Form::label('rut', 'Rut', ['class' => 'col-sm-2 control-label']) }}
@@ -100,30 +104,8 @@
                                 </div>
                             </div>
                             <hr>
-                            @if(count($managements) != 0)
-                                <table class="table table-striped table-bordered table-hover table-condensed">
-                                    <thead>
-                                    <th>Gestiones</th>
-                                    <th>Fecha</th>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($managements as $management)
-                                        <tr>
-                                            <td>
-                                                <div class="col-sm-10">
-                                                    {{ Form::textarea('description', $management->description, ['class' => 'form-control', 'rows' => '2', 'cols' => '50', 'style' => 'resize:none', 'disabled']) }}
-                                                </div>
-                                            </td>
-                                            <td>{{ \Carbon\Carbon::parse($management->created_at)->format('d-m-Y H:i') }}</td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            @else
-                                <div class="alert alert-danger">
-                                    <strong> El Cliente no posee Gestiones!! </strong>
-                                </div>
-                            @endif
+                            @include('layouts.gestion')
+                            </fieldset>
                             <hr>
                             <div class="group-form" align="center">
                                 <a href="{{ URL::to( 'managements/' . $previous ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-backward"></span></a>

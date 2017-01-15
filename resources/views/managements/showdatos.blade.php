@@ -4,10 +4,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
+                @include('layouts.clientinfo')
                 <div class="panel panel-primary">
                     <div class="panel-heading">Nueva Gestión (Muestras) -> <strong>{{ $customer->name }}</strong></div>
                     <div class="panel-body">
-                        {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
+                        {!! Form::open(['route' => ['managements.storeDatos', $customer], 'method' => 'PUT']) !!}
+                        {{ Form::hidden('status', $customer->status) }}
                         <div class="form-horizontal">
                                 <div class="form-group">
                                     {{ Form::label('rut', 'Rut', ['class' => 'col-sm-2 control-label']) }}

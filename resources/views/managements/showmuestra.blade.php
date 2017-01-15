@@ -4,10 +4,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
+                @include('layouts.clientinfo')
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Nueva Gestión (Muestras) -> <strong>{{ $customer->name }}</strong></div>
+                    <div class="panel-heading">Agrregar Nueva Gestión (Muestras) -> <strong>{{ $customer->name }}</strong></div>
                     <div class="panel-body">
                         {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
+                        {{ Form::hidden('status', 2) }}
                         <div class="form-horizontal">
                             <div class="form-group">
                                 {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}
@@ -39,10 +41,8 @@
                                     {{ Form::date('next_mng', null, ['class' => 'form-control']) }}
                                 </div>
                                 <div class="form-group">
-                                    {{ Form::label('status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
-                                    <div class="col-sm-3">
-                                        {{ Form::select('st_details', ['1' => 'Sin Contactar' , '2' => 'Por Concretar Venta', '3' => 'En Seguimiento', '4' => 'Venta', '5' => 'Rechazado' ], '1', ['class' => 'form-control']) }}
-                                    </div>
+                                    {{ Form::label('st_status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
+                                    @include('layouts.stmenu')
                                 </div>
                             </div>
                             <hr>

@@ -8,7 +8,9 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Agregar Nueva Gestión -> <strong>{{ $customer->name }}</strong></div>
                     <div class="panel-body">
-                            <div class="form-horizontal">
+                        {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
+                        {{ Form::hidden('status', 1) }}
+                        <div class="form-horizontal">
                                 <div class="form-group">
                                     {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-9">
@@ -21,10 +23,8 @@
                                         {{ Form::date('next_mng', null, ['class' => 'form-control']) }}
                                     </div>
                                     <div class="form-group">
-                                        {{ Form::label('status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
-                                        <div class="col-sm-3">
-                                            {{ Form::select('status', ['1' => 'Potencial Cliente' , '2' => 'Muestra Entregada', '3' => 'Cliente Activo', '4' => 'Cliente Rechazado' ], '2', ['class' => 'form-control']) }}
-                                        </div>
+                                        {{ Form::label('st_status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
+                                        @include('layouts.stmenu')
                                     </div>
                                 </div>
                                 <div class="form-group" align="center">

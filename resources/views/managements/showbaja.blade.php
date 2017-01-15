@@ -6,10 +6,10 @@
             <div class="col-md-12 col-md-offset-0">
                 @include('layouts.clientinfo')
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Agregar Nueva Gestión (Rechazo)-> <strong>{{ $customer->name }}</strong></div>
+                    <div class="panel-heading">Agregar Nueva Gestión (Baja)-> <strong>{{ $customer->name }}</strong></div>
                     <div class="panel-body">
                         {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
-                        {{ Form::hidden('status', 4) }}
+                        {{ Form::hidden('status', 5) }}
                         <div class="form-horizontal">
                             <div class="form-group">
                                 {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}
