@@ -55,8 +55,12 @@ class MuestraCustomerController extends Controller
             return redirect()->route('home');
         }
 
+        /*
         return view('muestras.show')
             ->with('customers', $customers);
+        */
 
+        return view('home')
+            ->with('customers', $customers);
     }
 }

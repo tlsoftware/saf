@@ -32,6 +32,17 @@ Route::get('users/{id}/destroy', [
     'as'   => 'users.destroy'
 ]);
 
+Route::get('/users/migrate/{id}', [
+    'uses' => 'UserController@migrate',
+    'as'   => 'migrate'
+]);
+
+Route::put('users/migrate/{id}', [
+    'uses'  => 'UserController@storeMigrate',
+    'as'   => 'migrate'
+]);
+
+
 Route::resource('products', 'ProductController');
 
 Route::resource('customers', 'CustomerController');
@@ -113,4 +124,19 @@ Route::get('activos/{id}', [
 Route::get('activos/show', [
     'uses' => 'ActivoCustomerController@show',
     'as'   => 'activos.show'
+]);
+
+Route::get('bajas/show', [
+    'uses' => 'BajaCustomerController@show',
+    'as'   => 'bajas.show'
+]);
+
+Route::get('rechazos/show', [
+    'uses' => 'RechazoCustomerController@show',
+    'as'   => 'rechazos.show'
+]);
+
+Route::get('todos/show', [
+    'uses' => 'TodosCustomerController@show',
+    'as'   => 'todos.show'
 ]);

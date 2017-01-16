@@ -15,6 +15,7 @@
                         <a href="{{ route('managements.showventa', $customer->id) }}" class="btn btn-info">Agregar Venta</a>
                         <a href="{{ route('managements.showrechazo', $customer->id) }}" class="btn btn-info">Rechazo</a>
                         <a href="{{ route('managements.showbaja', $customer->id) }}" class="btn btn-info">Baja</a>
+                        <a href="#" class="btn btn-info">Consulta</a>
                         <hr>
                         {!! Form::open(['route' => 'home', 'method' => 'POST']) !!}
                         <fieldset disabled>

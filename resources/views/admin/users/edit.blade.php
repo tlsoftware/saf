@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">Editar Usuario <strong>{{ $user->name }}</strong></div>
                     <div class="panel-body">
                         {!! Form::open(['route' => ['users.update', $user], 'method' => 'PUT']) !!}
@@ -27,7 +27,7 @@
                             {{ Form::label('admin', 'Perfil de Usuario') }}
                             {{ Form::select('admin', ['' => 'Seleccione', '0' => 'Vendedor', '1' => 'Administrador'], null, ['class' => 'form-control']) }}
                         </div>
-
+                        <hr>
                         <div class="form-group" align="center">
                             {{ Form::submit('Aceptar', ['class' => 'btn btn-primary']) }}
                         </div>

@@ -10,8 +10,13 @@
 
         <ul class="dropdown-menu" role="menu">
             <li><a href="{{ action('PotencialCustomerController@show') }}">Potenciales</a></li>
-            <li><a href="{{ action('MuestraCustomerController@show') }}">Muestras Entregadas</a></li>
+            <li><a href="{{ action('MuestraCustomerController@show') }}">Muestras</a></li>
             <li><a href="{{ action('ActivoCustomerController@show') }}">Activos</a></li>
+            @if(Auth::user()->admin)
+                <li><a href="{{ action('RechazoCustomerController@show') }}">Rechazos</a></li>
+                <li><a href="{{ action('BajaCustomerController@show') }}">Bajas</a></li>
+            @endif
+            <li><a href="{{ action('TodosCustomerController@show') }}">Todos</a></li>
         </ul>
     </li>
 

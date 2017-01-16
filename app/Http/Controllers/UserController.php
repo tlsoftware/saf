@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Customer;
 use Laracasts\Flash\Flash;
 use App\Http\Requests\UserRequest;
 
@@ -75,4 +76,23 @@ class UserController extends Controller
         Flash::error('El usuario ' . $user->name . ' no se pudo eliminar "Tiene Clientes Asociados"!!');
         return redirect()->route('users.index');
     }
+
+    public function migrate($id)
+    {
+        $user = User::find($id);
+        $users2 = User::pluck('name', 'id')->toArray();
+
+        return view('admin.users.migrate')
+            ->with(compact('users2', $users2))
+            ->with('user', $user);
+    }
+
+    public function storeMigrate(Request $request, $id)
+    {
+        Customer::where('user_id', $id)
+            ->update(['user_id' => $request->user2_id]);
+
+        Flash::warning('Se migraron los Clientes con Exito!!');
+
+        return redirect()->route('users.index');    }
 }

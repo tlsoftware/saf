@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">Crear Nuevo Usuario</div>
                     <div class="panel-body">
                         {!! Form::open(['action' => 'UserController@store', 'method' => 'POST']) !!}
@@ -27,8 +27,8 @@
                             {{ Form::label('admin', 'Perfil de Usuario') }}
                             {{ Form::select('admin', ['' => 'Seleccione', '0' => 'Vendedor', '1' => 'Administrador'], null, ['class' => 'form-control']) }}
                         </div>
-
-                        <div class="form-group">
+                        <hr>
+                        <div class="form-group" align="center">
                             {{ Form::submit('Aceptar', ['class' => 'btn btn-primary']) }}
                         </div>
 

@@ -64,9 +64,12 @@ class PotencialCustomerController extends Controller
             Flash::warning('No Posee Potenciales Clientes Asociados!!');
         }
 
+        /*
         return view('potenciales.show')
             ->with('customers', $customers);
-
+        */
+        return view('home')
+            ->with('customers', $customers);
     }
 
     public function detalle($id)
