@@ -11,6 +11,8 @@
 |
 */
 
+use App\Detail;
+
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
@@ -140,3 +142,14 @@ Route::get('todos/show', [
     'uses' => 'TodosCustomerController@show',
     'as'   => 'todos.show'
 ]);
+
+Route::get('form', [
+    'uses'  => 'StatusController@index',
+    'as'    => 'form'
+]);
+
+Route::get('/ajax-call', function(){
+    $id = Input::get('status_id');
+    $details = Detail::where('status_id', '=', $id)->get();
+    return Response::json($details);
+});

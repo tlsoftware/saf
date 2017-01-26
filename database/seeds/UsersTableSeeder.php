@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
         $user->name = 'Leonardo González';
         $user->email = 'leonardo@alman.cl';
         $user->password = '123123';
-        $user->admin = 1;
+        $user->admin = 0;
         $user->save();
     }
 }

@@ -78,7 +78,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('plugins/jquery/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('plugin/jquery/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="/js/app.js"></script>
 </body>
