@@ -12,8 +12,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        /*
-      * Creacion de Usuario role Vendedor
+      /*
+      * Creacion de Usuario role Admin
       */
         $user = new User();
         $user->name = 'Ricardo Alzurutt';
@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
         $user->save();
 
         /*
-         * Creacion de Usuario role Administrador
+         * Creacion de Usuario role Vendedor
          */
         $user = new User();
         $user->name = 'Leonardo González';
@@ -31,5 +31,6 @@ class UsersTableSeeder extends Seeder
         $user->password = '123123';
         $user->admin = 0;
         $user->save();
+
     }
 }

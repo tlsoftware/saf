@@ -14,7 +14,7 @@ class DetailsTableSeeder extends Seeder
     {
 
         /*
-        *      Potencial Cliente
+        *      Potencial Cliente  = 1
         */
 
         $detail = new Detail();
@@ -48,7 +48,7 @@ class DetailsTableSeeder extends Seeder
         $detail->save();
 
         /*
-         *      Muestras
+         *      Muestras = 2
          */
 
         $detail = new Detail();
@@ -78,7 +78,7 @@ class DetailsTableSeeder extends Seeder
 
 
         /*
-         *      Rechazos
+         *      Rechazos = 3
         */
 
         $detail = new Detail();
@@ -112,7 +112,7 @@ class DetailsTableSeeder extends Seeder
         $detail->save();
 
         /*
-         *      Clientes Activos
+         *      Clientes Activos = 4
         */
 
         $detail = new Detail();
@@ -136,7 +136,7 @@ class DetailsTableSeeder extends Seeder
         $detail->save();
 
         /*
-        *      Bajas
+        *      Bajas = 5
        */
 
         $detail = new Detail();

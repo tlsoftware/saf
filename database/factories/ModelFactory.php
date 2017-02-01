@@ -11,6 +11,8 @@
 |
 */
 
+/*
+
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
@@ -21,6 +23,9 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+*/
+
 
 $factory->define(App\Customer::class, function (Faker\Generator $faker) {
 
@@ -35,6 +40,7 @@ $factory->define(App\Customer::class, function (Faker\Generator $faker) {
         'web' => $faker->safeEmailDomain,
         'next_mng' => null,
         'next_mng' => $faker->dateTimeBetween('- 7 days', 'now'),
-        'user_id' => 1
+        'user_id' => $faker->numberBetween($min = 1, $max = 2),
+        'bstype_id' => $faker->numberBetween($min = 1, $max = 2)
     ];
 });
