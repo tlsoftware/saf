@@ -16,8 +16,8 @@ class CreateBstypesTable extends Migration
         Schema::create('bstypes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
-            $table->string('size');
-            $table->integer('quantity');
+            $table->string('size')->nullable()->default(null);
+            $table->integer('quantity')->nullable()->default(null);
         });
     }
 
