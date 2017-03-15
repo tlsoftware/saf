@@ -109,7 +109,7 @@ class ManagementController extends Controller
                 ->with(compact('users', $users));
         }
 
-        return View::make('managements.index')
+        return View::make('managements.show')
             ->with('previous', $previous)
             ->with('next', $next)
             ->with('customer', $customer)
