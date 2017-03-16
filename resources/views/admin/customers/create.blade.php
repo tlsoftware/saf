@@ -2,11 +2,23 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
+            <div class="row">
             <div class="col-md-12 col-md-offset-0">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Agregar Nuevo Cliente</div>
-
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            @if ($errors->has('phone1'))
+                                <li>{{ "Numero de telefono Principal no valido" }}</li>
+                            @endif
+                            @if ($errors->has('phone2'))
+                               <li>{{ "Numero de telefono Adicional 1 no valido" }}</li>
+                            @endif
+                            @if ($errors->has('phone2'))
+                                <li>{{ "Numero de telefono Adicional 2 no valido" }}</li>
+                            @endif
+                        </div>
+                    @endif
                     <div class="panel-body">
                         {!! Form::open(['route' => 'customers.store', 'method' => 'POST']) !!}
                         <div class="form-horizontal">
@@ -51,25 +63,25 @@
                                 <div class="form-group">
                                     {{ Form::label('phone1', 'Teléfonos', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::text('phone1', null, ['class' => 'form-control', 'required', 'placeholder' => 'Telefono Principal']) }}
+                                        {{ Form::number('phone1', null, ['class' => 'form-control', 'required', 'placeholder' => 'Telefono Principal']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('phone2', null, ['class' => 'form-control', 'placeholder' => 'Telefono Adicional 1']) }}
+                                        {{ Form::number('phone2', null, ['class' => 'form-control', 'placeholder' => 'Telefono Adicional 1']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('phone3', null, ['class' => 'form-control', 'placeholder' => 'Telefono Adicional 2']) }}
+                                        {{ Form::number('phone3', null, ['class' => 'form-control', 'placeholder' => 'Telefono Adicional 2']) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {{ Form::label('email1', 'Correo', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::text('email1', null, ['class' => 'form-control', 'required','placeholder' => 'Correo Principal']) }}
+                                        {{ Form::email('email1', null, ['class' => 'form-control', 'required','placeholder' => 'Correo Principal']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('email2', null, ['class' => 'form-control', 'placeholder' => 'Correo Adicional 1']) }}
+                                        {{ Form::email('email2', null, ['class' => 'form-control', 'placeholder' => 'Correo Adicional 1']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('email3', null, ['class' => 'form-control', 'placeholder' => 'Correo Adicional 2']) }}
+                                        {{ Form::email('email3', null, ['class' => 'form-control', 'placeholder' => 'Correo Adicional 2']) }}
                                     </div>
                                 </div>
                             <div class="form-group">

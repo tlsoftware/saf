@@ -30,12 +30,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Customer::class, function (Faker\Generator $faker) {
 
     return [
-        'rut' => $faker->randomNumber(),
+        'rut' => $faker->randomNumber($nbDigits = 9),
         'bs_name' => $faker->bs,
         'name' => $faker->company,
         'contact_name' => $faker->name,
         'position' => $faker->jobTitle,
-        'phone1' => $faker->e164PhoneNumber,
+        'phone1' => "+569". $faker->randomNumber($nbDigits = 8),
         'email1' => $faker->email,
         'web' => $faker->safeEmailDomain,
         'next_mng' => null,

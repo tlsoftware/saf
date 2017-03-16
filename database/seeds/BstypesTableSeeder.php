@@ -17,7 +17,7 @@ class BstypesTableSeeder extends Seeder
         $bstype->save();
 
         $bstype = new Bstype();
-        $bstype->type = 'Itaiana';
+        $bstype->type = 'Italiana';
         $bstype->save();
     }
 }
