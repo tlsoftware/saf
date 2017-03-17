@@ -187,20 +187,35 @@ class ManagementController extends Controller
 
     public function storeDatos(Request $request, $id)
     {
+        // dd($id);
         $customer = Customer::find($id);
+
+        $this->validate($request, [
+            'phone2' => [
+                'regex:/^\+56[9|2][0-9]{8}$/',
+            ],
+            'phone3' => [
+                'regex:/^\+56[9|2][0-9]{8}$/',
+            ]
+        ]);
+
         $customer->fill($request->all());
-        $customer->save();
 
         $st_details = Management::where('customer_id', $id)
             ->first()
             ->st_details;
+
 
         $management = new Management();
         $management->customer_id = $id;
         $management->user_id = Auth::user()->id;
         $management->description = "Se actualizaron datos de Contacto";
         $management->st_details = $st_details;
-        $management->save();
+
+
+        if ($management->save()) {
+            $customer->save();
+        }
 
         return redirect()->action('HomeController@index');
     }

@@ -63,13 +63,13 @@
                                 <div class="form-group">
                                     {{ Form::label('phone1', 'Teléfonos', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::number('phone1', null, ['class' => 'form-control', 'required', 'placeholder' => 'Telefono Principal']) }}
+                                        {{ Form::text('phone1', null, ['class' => 'form-control', 'required', 'placeholder' => '+56912341234']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::number('phone2', null, ['class' => 'form-control', 'placeholder' => 'Telefono Adicional 1']) }}
+                                        {{ Form::text('phone2', null, ['class' => 'form-control', 'placeholder' => '+56912341234']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::number('phone3', null, ['class' => 'form-control', 'placeholder' => 'Telefono Adicional 2']) }}
+                                        {{ Form::text('phone3', null, ['class' => 'form-control', 'placeholder' => '+56912341234']) }}
                                     </div>
                                 </div>
                                 <div class="form-group">

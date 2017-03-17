@@ -50,24 +50,20 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        
         $customer = new Customer($request->all());
 
         $this->validate($request, [
             'phone1' => [
-                'regex:/^[9|2][0-9]{8}$/',
+                'regex:/^\+56[9|2][0-9]{8}$/',
             ],
             'phone2' => [
-                'regex:/^[9|2][0-9]{8}$/',
+                'regex:/^\+56[9|2][0-9]{8}$/',
             ],
             'phone3' => [
-                'regex:/^[9|2][0-9]{8}$/',
+                'regex:/^\+56[9|2][0-9]{8}$/',
             ]
         ]);
-
-        $customer->phone1 = "+56" . $request->phone1;
-
-        if($request->phone2)  $customer->phone2 = "+56" . $request->phone2;
-        if($request->phone3)  $customer->phone3 = "+56" . $request->phone3;
 
         $customer->next_mng = Carbon::now();
 

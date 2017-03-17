@@ -7,8 +7,19 @@
                 @include('layouts.clientinfo')
                 <div class="panel panel-primary">
                     <div class="panel-heading">Nueva Gestión (Muestras) -> <strong>{{ $customer->name }}</strong></div>
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            @if ($errors->has('phone2'))
+                                <li>{{ "Numero de telefono Adicional 1 no valido" }}</li>
+                            @endif
+                            @if ($errors->has('phone3'))
+                                <li>{{ "Numero de telefono Adicional 2 no valido" }}</li>
+                            @endif
+                        </div>
+                    @endif
+
                     <div class="panel-body">
-                        {!! Form::open(['route' => ['managements.storeDatos', $customer], 'method' => 'PUT']) !!}
+                        {!! Form::open(['route' => ['managements.storeDatos', $customer->id], 'method' => 'PUT']) !!}
                         {{ Form::hidden('status', $customer->status) }}
                         <div class="form-horizontal">
                                 <div class="form-group">
@@ -38,13 +49,13 @@
                                 <div class="form-group">
                                     {{ Form::label('email1', 'Correo', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::text('email1', $customer->email1, ['class' => 'form-control', 'disabled']) }}
+                                        {{ Form::email('email1', $customer->email1, ['class' => 'form-control', 'disabled']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('email2', $customer->email2, ['class' => 'form-control']) }}
+                                        {{ Form::email('email2', $customer->email2, ['class' => 'form-control']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('email3', $customer->email3, ['class' => 'form-control']) }}
+                                        {{ Form::email('email3', $customer->email3, ['class' => 'form-control']) }}
                                     </div>
                                 </div>
                         </div>
