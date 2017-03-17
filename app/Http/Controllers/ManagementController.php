@@ -187,7 +187,7 @@ class ManagementController extends Controller
 
     public function storeDatos(Request $request, $id)
     {
-        // dd($id);
+        
         $customer = Customer::find($id);
 
         $this->validate($request, [
@@ -201,17 +201,19 @@ class ManagementController extends Controller
 
         $customer->fill($request->all());
 
-        $st_details = Management::where('customer_id', $id)
-            ->first()
-            ->st_details;
-
+        if (! $mng = Management::where('customer_id', $id)->first()) {
+            $st_details = 'En Gestion'; 
+            $customer->status = '1';
+        } else {
+            $st_details = $mng->st_details;
+        } 
 
         $management = new Management();
         $management->customer_id = $id;
         $management->user_id = Auth::user()->id;
         $management->description = "Se actualizaron datos de Contacto";
         $management->st_details = $st_details;
-
+        $management->product_id = null;
 
         if ($management->save()) {
             $customer->save();

@@ -40,10 +40,10 @@
                                         {{ Form::text('phone1', $customer->phone1, ['class' => 'form-control', 'disabled']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('phone2', $customer->phone2, ['class' => 'form-control']) }}
+                                        {{ Form::text('phone2', $customer->phone2, ['class' => 'form-control', 'placeholder' => '+56912341234']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::text('phone3', $customer->phone3, ['class' => 'form-control']) }}
+                                        {{ Form::text('phone3', $customer->phone3, ['class' => 'form-control', 'placeholder' => '+56912341234']) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -52,10 +52,10 @@
                                         {{ Form::email('email1', $customer->email1, ['class' => 'form-control', 'disabled']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::email('email2', $customer->email2, ['class' => 'form-control']) }}
+                                        {{ Form::email('email2', $customer->email2, ['class' => 'form-control', 'placeholder' => 'example@gmail.com']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::email('email3', $customer->email3, ['class' => 'form-control']) }}
+                                        {{ Form::email('email3', $customer->email3, ['class' => 'form-control', 'placeholder' => 'example@gmail.com']) }}
                                     </div>
                                 </div>
                         </div>

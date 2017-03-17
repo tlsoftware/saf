@@ -17,7 +17,7 @@ class CreateManagementsTable extends Migration
             $table->increments('id');
             $table->text('description');
             $table->string('st_details')->default('En Gestion');
-            $table->integer('quantity')->nullable()->default('0');
+            $table->integer('quantity')->default('0');
             $table->double('price')->nullable()->default('0.0');
             $table->date('dispatch_date')->nullable()->default(null);
             $table->time('dispatch_time')->nullable()->default(null);
@@ -25,7 +25,7 @@ class CreateManagementsTable extends Migration
             $table->integer('customer_id')->unsigned();
             $table->foreign('customer_id')->references('id')->on('customers');
 
-            $table->integer('product_id')->unsigned();
+            $table->integer('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products');
 
             $table->integer('user_id')->unsigned();

@@ -75,13 +75,13 @@
                                 <div class="form-group">
                                     {{ Form::label('email1', 'Correo', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::email('email1', null, ['class' => 'form-control', 'required','placeholder' => 'Correo Principal']) }}
+                                        {{ Form::email('email1', null, ['class' => 'form-control', 'required','placeholder' => 'example@gmail.com']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::email('email2', null, ['class' => 'form-control', 'placeholder' => 'Correo Adicional 1']) }}
+                                        {{ Form::email('email2', null, ['class' => 'form-control', 'placeholder' => 'example@gmail.com']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        {{ Form::email('email3', null, ['class' => 'form-control', 'placeholder' => 'Correo Adicional 2']) }}
+                                        {{ Form::email('email3', null, ['class' => 'form-control', 'placeholder' => 'example@gmail.com']) }}
                                     </div>
                                 </div>
                             <div class="form-group">
