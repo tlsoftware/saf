@@ -24,17 +24,18 @@
                                 </div>
                                 {{ Form::label('quantity', 'Cantidad', ['class' => 'col-sm-1 control-label']) }}
                                 <div class="col-sm-1">
-                                    {{ Form::text('quantity', null, ['class' => 'form-control', 'required']) }}
+                                    {{ Form::number('quantity', 1, ['class' => 'form-control']) }}
                                 </div>
                                     {{ Form::label('price', 'Precio', ['class' => 'col-sm-1 control-label']) }}
                                     <div class="col-sm-2">
-                                        {{ Form::text('price', null, ['class' => 'form-control', 'required']) }}
+                                        {{ Form::number('price', 0, ['class' => 'form-control']) }}
                                     </div>
                             </div>
                             <div class="form-group">
                                 {{ Form::label('dispatch_date', 'Fecha Despacho', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-3">
-                                    {{ Form::date('dispatch_date', null, ['class' => 'form-control']) }}
+                                    {{ Form::date('dispatch_date', null, ['class' => 'form-control datepicker', 'onkeypress' => 'return false']) }}
+                                    
                                 </div>
                                     {{ Form::label('dispatch_time', 'Hora Despacho', ['class' => 'col-sm-3 control-label']) }}
                                     <div class="col-sm-3">
@@ -45,10 +46,14 @@
                             <div class="form-group">
                                 {{ Form::label('next_mng', 'Próxima Gestión', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-3">
-                                    {{ Form::date('next_mng', null, ['class' => 'form-control']) }}
+                                    {{ Form::date('next_mng', null, ['class' => 'form-control', 'required', 'onkeypress' => 'return false']) }}
                                 </div>
-                                    {{ Form::label('st_status', 'Estatus', ['class' => 'col-sm-3 control-label']) }}
-                                    @include('layouts.stmenu')
+                                <div class="form-group">
+                                        {{ Form::label('st_status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
+                                        <div class="col-sm-3">
+                                             {{ Form::select('st_details', ['En Gestión', 'Baja' ,'Promesa de Compra', 'Venta'], 0, ['class' => 'form-control']) }}
+                                        </div>
+                                    </div>                                  
                             </div>
                             <hr>
                             <div class="form-group" align="center">
@@ -60,4 +65,11 @@
             </div>
         </div>
     </div>
+    <script>
+    $('.datepicker').datepicker({
+        format: "dd/mm/yyyy",
+        language: "es",
+        autoclose: true
+    });
+</script>
 @endsection

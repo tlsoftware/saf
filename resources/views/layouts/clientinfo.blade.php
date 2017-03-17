@@ -20,7 +20,6 @@
                             {{ Form::text('position', $customer->position, ['class' => 'form-control', 'disabled']) }}
                         </div>
                     </div>
-
                 <div class="form-group">
                     {{ Form::label('phone1', 'Teléfonos', ['class' => 'col-sm-2 control-label']) }}
                     <div class="col-sm-3">

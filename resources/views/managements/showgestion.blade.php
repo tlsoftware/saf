@@ -25,7 +25,7 @@
                                     <div class="form-group">
                                         {{ Form::label('st_status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
                                         <div class="col-sm-3">
-                                            {{ Form::select('st_details', ['En Gestión', 'Positivo con Correo' ,'Positivo sin Correo', 'No Contesta', 'Envio Catalogo', 'Solicitud de Muestras' ],0, ['class' => 'form-control']) }}
+                                            {{ Form::select('st_details', ['En Gestión', 'Positivo con Correo' ,'Positivo sin Correo', 'No Contesta', 'Envio Catalogo', 'Solicitud de Muestras' ], 0, ['class' => 'form-control']) }}
                                         </div>
                                     </div>
                                 </div>
