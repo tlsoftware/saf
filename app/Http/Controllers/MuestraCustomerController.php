@@ -21,6 +21,7 @@ class MuestraCustomerController extends Controller
 
         return view('muestras.index')
             ->with('customer', $customer)
+            ->with('status', 2)
             ->with(compact('managements', $managements));
     }
 
