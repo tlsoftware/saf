@@ -20,6 +20,7 @@ class PotencialCustomerController extends Controller
             ->orderBY('created_at', 'DESC')
             ->limit('3')
             ->get();
+
         if(Auth::user()->admin) {
             $users = User::pluck('name', 'id')->toArray();
             return view('potenciales.index')

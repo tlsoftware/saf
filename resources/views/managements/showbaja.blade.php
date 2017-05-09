@@ -14,12 +14,14 @@
                             <div class="form-group">
                                 {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-9">
-                                    {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2', 'cols' => '40', 'style' => 'resize:none']) }}
+                                    {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2', 'cols' => '40', 'style' => 'resize:none', 'required']) }}
                                 </div>
                             </div>
                             <div class="form-group">
                                     {{ Form::label('st_status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
-                                    @include('layouts.stmenu')
+                                <div class="col-sm-3">
+                                    {{ Form::select('st_details', ['Precio' , 'Motivos Administrativos', 'Falta de Seguimiento', 'Calidad del Producto', 'Otras'],0, ['class' => 'form-control']) }}
+                                </div>
                             </div>
                             <hr>
                             <div class="form-group" align="center">

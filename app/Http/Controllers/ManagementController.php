@@ -17,7 +17,7 @@ class ManagementController extends Controller
 {
     public function store(Request $request, $id)
     {
-        if (! $request->status == 4)
+        if (! ($request->status == 4 || $request->status == 5))
             $this->validate($request, [
                 'next_mng' => 'after:today|required',
                 'dispatch_date' => 'after:yesterday',

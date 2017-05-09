@@ -16,7 +16,7 @@ class RechazoCustomerController extends Controller
         if (Auth::user()->admin)
         {
             $customers = Customer::Search($request->name)
-                ->where('status', '4')
+                ->where('status', '3')
                 // ->where('next_mng', '>', Carbon::now())
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
@@ -28,7 +28,7 @@ class RechazoCustomerController extends Controller
         else {
             $customers = Customer::Search($request->name)
                 ->where('user_id', Auth::user()->id)
-                ->where('status', '4')
+                ->where('status', '3')
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);
