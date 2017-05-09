@@ -11,16 +11,17 @@
                         {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
                         {{ Form::hidden('status', 1) }}
                         <div class="form-horizontal">
+                            @include('layouts.errors')
                                 <div class="form-group">
                                     {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-9">
-                                        {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2', 'cols' => '40', 'style' => 'resize:none']) }}
+                                        {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2', 'cols' => '40', 'style' => 'resize:none', 'required']) }}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     {{ Form::label('next_mng', 'Próxima Gestión', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                        {{ Form::date('next_mng', null, ['class' => 'form-control']) }}
+                                        {{ Form::date('next_mng', null, ['class' => 'form-control', 'required']) }}
                                     </div>
                                     <div class="form-group">
                                         {{ Form::label('st_status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}

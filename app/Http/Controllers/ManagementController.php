@@ -17,6 +17,10 @@ class ManagementController extends Controller
 {
     public function store(Request $request, $id)
     {
+        $this->validate($request, [
+            'next_mng' => 'after:today',
+        ]);
+
         $management = new Management($request->all());
         $management->customer_id = $id;
         $management->user_id = Auth::user()->id;
