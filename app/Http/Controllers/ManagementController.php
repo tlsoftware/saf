@@ -17,10 +17,11 @@ class ManagementController extends Controller
 {
     public function store(Request $request, $id)
     {
-        $this->validate($request, [
-            'next_mng' => 'after:today|required',
-            'dispatch_date' => 'after:yesterday',
-        ]);
+        if (! $request->status == 4)
+            $this->validate($request, [
+                'next_mng' => 'after:today|required',
+                'dispatch_date' => 'after:yesterday',
+            ]);
 
         $management = new Management($request->all());
         $management->customer_id = $id;
