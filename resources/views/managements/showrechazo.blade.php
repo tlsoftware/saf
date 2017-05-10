@@ -10,7 +10,7 @@
                     @include('layouts.errors')
                     <div class="panel-body">
                         {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
-                        {{ Form::hidden('status', 4) }}
+                        {{ Form::hidden('status', '3') }}
                         <div class="form-horizontal">
                             <div class="form-group">
                                 {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}

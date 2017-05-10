@@ -40,7 +40,7 @@ class PotencialCustomerController extends Controller
         {
             $customers = Customer::Search($request->name)
                 ->where('status', '1')
-                ->where('next_mng', '>', Carbon::now())
+                //->where('next_mng', '>', Carbon::now())
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);

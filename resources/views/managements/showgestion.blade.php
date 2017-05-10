@@ -7,11 +7,11 @@
                 @include('layouts.clientinfo')
                 <div class="panel panel-primary">
                     <div class="panel-heading">Agregar Nueva Gestión -> <strong>{{ $customer->name }}</strong></div>
+                    @include('layouts.errors')
                     <div class="panel-body">
                         {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
-                        {{ Form::hidden('status', 1) }}
+                        {{ Form::hidden('status', '1') }}
                         <div class="form-horizontal">
-                            @include('layouts.errors')
                                 <div class="form-group">
                                     {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-9">

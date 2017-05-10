@@ -17,7 +17,8 @@ class ManagementController extends Controller
 {
     public function store(Request $request, $id)
     {
-        if (! ($request->status == 4 || $request->status == 5))
+
+        if (! ($request->status == '3' || $request->status == '5'))
             $this->validate($request, [
                 'next_mng' => 'after:today|required',
                 'dispatch_date' => 'after:yesterday',
@@ -36,11 +37,14 @@ class ManagementController extends Controller
         }
 
         $customer = Customer::find($id);
-        $customer->status = $request->status;
-        $customer->next_mng = $next;
-        $customer->last_mng = Carbon::now();
 
-        $customer->update(['next_mng' => $next]);
+        $status = $request->status;
+        $next_mng = $next;
+        $last_mng = Carbon::now();
+
+        $data = array('status' => $status, 'next_mng' => $next_mng, 'last_mng' => $last_mng);
+
+        $customer->update($data);
 
         Flash::success("Se ha agregado una Nueva Gestion de forma exitosa!!");
 
