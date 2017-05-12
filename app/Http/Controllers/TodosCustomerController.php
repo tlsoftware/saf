@@ -39,7 +39,7 @@ class TodosCustomerController extends Controller
          *  Cargamos todos los clientes del Vendedor
          */
         if($customers->count() == 0) {
-            Flash::warning('No Posee Clientes Asociados!!');
+            Flash::error('No Posee Clientes Asociados!!');
         }
 
         return view('home')

@@ -14,9 +14,6 @@
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css')}}">
 
-    <!-- Datepicker Files -->
-    <link rel="stylesheet" href="{{asset('datePicker/css/bootstrap-datepicker3.css')}}">
-
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -81,11 +78,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('plugin/jquery/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('jquery/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{asset('datePicker/js/bootstrap-datepicker.js')}}"></script>
-    <!-- Languaje -->
-    <script src="{{asset('datePicker/locales/bootstrap-datepicker.es.min.js')}}"></script>
-    <script src="/js/app.js"></script>
 </body>
 </html>

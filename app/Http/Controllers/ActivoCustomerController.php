@@ -16,7 +16,7 @@ class ActivoCustomerController extends Controller
 
         $managements = Management::where('customer_id', $id)
             ->orderBY('created_at', 'DESC')
-            ->limit('3')
+            ->limit(3)
             ->get();
 
         return view('activos.index')
@@ -29,7 +29,7 @@ class ActivoCustomerController extends Controller
         if (Auth::user()->admin)
         {
             $customers = Customer::Search($request->name)
-                ->where('status', '3')
+                ->where('status', '4')
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);
@@ -40,7 +40,7 @@ class ActivoCustomerController extends Controller
         else {
             $customers = Customer::Search($request->name)
                 ->where('user_id', Auth::user()->id)
-                ->where('status', '3')
+                ->where('status', '4')
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);
@@ -51,7 +51,7 @@ class ActivoCustomerController extends Controller
          *  Cargamos todos los clientes del Vendedor
          */
         if($customers->count() == 0) {
-            Flash::warning('No Posee Clientes Activos!!');
+            Flash::error('No Posee Clientes Activos!!');
             return redirect()->route('home');
         }
 

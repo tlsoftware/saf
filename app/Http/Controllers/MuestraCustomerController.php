@@ -21,6 +21,7 @@ class MuestraCustomerController extends Controller
 
         return view('muestras.index')
             ->with('customer', $customer)
+            ->with('status', '2')
             ->with(compact('managements', $managements));
     }
 
@@ -51,7 +52,7 @@ class MuestraCustomerController extends Controller
          *  Cargamos todos los clientes del Vendedor
          */
         if($customers->count() == 0) {
-            Flash::warning('No Posee Clientes con Muestras Entregadas!!');
+            Flash::error('No Posee Clientes con Muestras Entregadas!!');
             return redirect()->route('home');
         }
 

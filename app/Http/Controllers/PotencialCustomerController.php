@@ -20,6 +20,7 @@ class PotencialCustomerController extends Controller
             ->orderBY('created_at', 'DESC')
             ->limit('3')
             ->get();
+
         if(Auth::user()->admin) {
             $users = User::pluck('name', 'id')->toArray();
             return view('potenciales.index')
@@ -39,7 +40,7 @@ class PotencialCustomerController extends Controller
         {
             $customers = Customer::Search($request->name)
                 ->where('status', '1')
-                ->where('next_mng', '>', Carbon::now())
+                //->where('next_mng', '>', Carbon::now())
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);
@@ -61,7 +62,7 @@ class PotencialCustomerController extends Controller
              *  Cargamos todos los clientes del Vendedor
              */
         if($customers->count() == 0) {
-            Flash::warning('No Posee Potenciales Clientes Asociados!!');
+            Flash::error('No Posee Potenciales Clientes Asociados!!');
             return redirect()->route('home');
         }
 

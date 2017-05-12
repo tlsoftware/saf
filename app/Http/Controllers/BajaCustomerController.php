@@ -39,7 +39,7 @@ class BajaCustomerController extends Controller
          *  Cargamos todos los clientes del Vendedor
          */
         if($customers->count() == 0) {
-            Flash::warning('No Posee Clientes en Baja!!');
+            Flash::error('No Posee Clientes en Baja!!');
         }
 
         return view('home')

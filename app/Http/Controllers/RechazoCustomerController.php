@@ -16,7 +16,7 @@ class RechazoCustomerController extends Controller
         if (Auth::user()->admin)
         {
             $customers = Customer::Search($request->name)
-                ->where('status', '4')
+                ->where('status', '3')
                 // ->where('next_mng', '>', Carbon::now())
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
@@ -28,7 +28,7 @@ class RechazoCustomerController extends Controller
         else {
             $customers = Customer::Search($request->name)
                 ->where('user_id', Auth::user()->id)
-                ->where('status', '4')
+                ->where('status', '3')
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);
@@ -39,7 +39,8 @@ class RechazoCustomerController extends Controller
          *  Cargamos todos los clientes del Vendedor
          */
         if($customers->count() == 0) {
-            Flash::warning('No Posee Clientes en Rechazos!!');
+            Flash::error('No Posee Clientes en Rechazos!!');
+            return redirect()->route('home');
         }
 
         return view('home')
