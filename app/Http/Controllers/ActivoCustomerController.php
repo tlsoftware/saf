@@ -51,7 +51,7 @@ class ActivoCustomerController extends Controller
          *  Cargamos todos los clientes del Vendedor
          */
         if($customers->count() == 0) {
-            Flash::warning('No Posee Clientes Activos!!');
+            Flash::error('No Posee Clientes Activos!!');
             return redirect()->route('home');
         }
 

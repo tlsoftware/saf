@@ -9,7 +9,7 @@
 @elseif($customer->status == '4')
     <td> Cliente Activo </td>
 @elseif($customer->status == '5')
-    <td> Bajas </td>
+    <td> Baja </td>
 @else()
     <td> STATUS ERROR </td>
 @endif

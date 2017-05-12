@@ -27,7 +27,7 @@ class CreateCustomersTable extends Migration
             $table->string('email2', 100)->nullable()->default(null);
             $table->string('email3', 100)->nullable()->default(null);
             $table->string('web', 100)->nullable()->default(null);
-            $table->enum('status', [0, 1, 2, 3, 4])->default(0);
+            $table->enum('status', [0, 1, 2, 3, 4, 5])->default(0);
             $table->dateTime('last_mng')->nullable()->default(null);
             $table->date('next_mng');
 

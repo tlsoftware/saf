@@ -17,8 +17,12 @@ class ManagementController extends Controller
 {
     public function store(Request $request, $id)
     {
+        $status = $request->status;
+        // $description = $request->description;
+        // $st_details = $request->st_details;
 
-        if (! ($request->status == '3' || $request->status == '5'))
+
+        if (! ($status == '3' || $status == '5'))
             $this->validate($request, [
                 'next_mng' => 'after:today|required',
                 'dispatch_date' => 'after:yesterday',
@@ -37,8 +41,6 @@ class ManagementController extends Controller
         }
 
         $customer = Customer::find($id);
-
-        $status = $request->status;
         $next_mng = $next;
         $last_mng = Carbon::now();
 

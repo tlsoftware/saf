@@ -62,7 +62,7 @@ class PotencialCustomerController extends Controller
              *  Cargamos todos los clientes del Vendedor
              */
         if($customers->count() == 0) {
-            Flash::warning('No Posee Potenciales Clientes Asociados!!');
+            Flash::error('No Posee Potenciales Clientes Asociados!!');
             return redirect()->route('home');
         }
 
