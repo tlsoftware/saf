@@ -94,5 +94,7 @@ class UserController extends Controller
 
         Flash::warning('Se migraron los Clientes con Exito!!');
 
-        return redirect()->route('users.index');    }
+        return redirect()->route('users.index');
+    }
+
 }
