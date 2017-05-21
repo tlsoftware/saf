@@ -38,7 +38,7 @@ $factory->define(App\Customer::class, function (Faker\Generator $faker) {
         'phone1' => "+569". $faker->randomNumber($nbDigits = 8),
         'email1' => $faker->email,
         'web' => $faker->safeEmailDomain,
-        'next_mng' => null,
+        'last_mng' => null,
         'next_mng' => $faker->dateTimeBetween('- 7 days', 'now'),
         'user_id' => $faker->numberBetween($min = 1, $max = 2),
         'bstype_id' => $faker->numberBetween($min = 1, $max = 2)
