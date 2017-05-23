@@ -15,7 +15,7 @@
                                 <div class="form-group">
                                     {{ Form::label('description', 'Nueva Gestión', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-9">
-                                        {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '2', 'cols' => '40', 'style' => 'resize:none', 'required']) }}
+                                        {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => '6', 'cols' => '40', 'style' => 'resize:none', 'required']) }}
                                     </div>
                                 </div>
                                 <div class="form-group">

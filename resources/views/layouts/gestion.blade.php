@@ -11,7 +11,7 @@
                 <td>{{ $management->user->name }}</td>
                 <td>
                     <div class="col-sm-12">
-                        {{ Form::textarea('description', $management->description, ['class' => 'form-control', 'rows' => '2', 'cols' => '50', 'style' => 'resize:none', 'disabled']) }}
+                        {{ Form::textarea('description', $management->description, ['class' => 'form-control', 'rows' => '6', 'cols' => '50', 'style' => 'resize:none', 'disabled']) }}
                     </div>
                 </td>
                 <td>{{ \Carbon\Carbon::parse($management->created_at)->format('d-m-Y H:i') }}</td>
