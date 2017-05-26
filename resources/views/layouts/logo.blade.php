@@ -1,6 +1,6 @@
 <a href="{{ route('home') }}">
 	<svg version="1.1"
-	 x="0px" y="0px" width="100px" viewBox="-12.377 -12.99 336 174" enable-background="new -12.377 -12.99 336 174"
+	 x="0px" y="0px" width="200px" viewBox="-12.377 -12.99 336 174" enable-background="new -12.377 -12.99 336 174"
 	 xml:space="preserve">
 <defs>
 </defs>
