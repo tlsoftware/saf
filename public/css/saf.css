@@ -1,0 +1,58 @@
+body {
+    margin-left: 50px;
+}
+
+#left-heading {
+    font-size: 24px;
+    margin-left: 10px;
+}
+
+#right-heading {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+#left {
+    float:left;
+}
+
+table thead th {
+    text-align: center;
+    font-size: 18px;
+    background-color: rgba(32, 32, 32, 0.31);
+}
+
+td {
+    text-align: left;
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+.navbar-nav li a {
+    margin-top: 28px;
+    font-size: 20px;
+}
+
+.navbar-header a svg {
+    margin-left: 10px;
+}
+
+.navbar-right li a {
+    margin-right: 25px;
+}
+
+.login-header {
+    color: #000000;
+    padding-left: 30px;
+    font-family: 'Convergence', sans-serif;
+    font-size: 45px;
+    line-height: 120px;
+}
+
+.panel-heading {
+    font-size: 22px;
+}
+
+.form-group .control-label {
+    font-size: 16px;
+}

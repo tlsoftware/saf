@@ -13,7 +13,7 @@
 
 use App\Detail;
 
-Route::get('carga', 'CargaController@loadExcel')->name('carga');
+// Route::get('carga', 'CargaController@loadExcel')->name('carga');
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

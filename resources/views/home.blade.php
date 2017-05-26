@@ -1,12 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-primary">
-                <div class="panel-heading"><strong>Clientes Pendientes por Gestionar</strong>
-                    <span class="label label-danger col-md-offset-8">Total Pendientes: {{ $customers->total() }}</span>
+                <div class="panel-heading">
+                        <div class="row">
+                            <div id="left">
+                                <span id="left-heading"><strong>Clientes Pendientes por Gestionar</strong></span>
+                            </div>
+                            <div class="pull-right">
+                                <span class="label label-danger" id="right-heading">Total Pendientes: {{ $customers->total() }}</span>
+                            </div>
+                        </div>
                 </div>
                     <div class="panel-body">
                         <a href="{{ route('customers.create') }}" class="btn btn-info">Nuevo Cliente</a>
@@ -38,7 +45,8 @@
                             <tbody>
                             @foreach($customers as $customer)
                                 <tr>
-                                    <td align="center"><a href="{{ route('managements', $customer->id) }}" class="btn btn-primary"><span class="glyphicon glyphicon-saved"></span></a>
+                                    <td class="text-center">
+                                        <a href="{{ route('managements', $customer->id) }}" class="btn btn-primary"><span class="glyphicon glyphicon-saved"></span></a>
                                     </td>
                                     <td>{{ $customer->name }}</td>
                                     <td>{{ $customer->contact_name }}</td>

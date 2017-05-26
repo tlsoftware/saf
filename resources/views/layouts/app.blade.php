@@ -11,8 +11,10 @@
     <title>{{ config('app.name', 'Sistema Alman Foods') }}</title>
 
     <!-- Styles -->
+    <link href="/css/saf.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css')}}">
+    <link href="https://fonts.googleapis.com/css?family=Convergence" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -24,51 +26,55 @@
 <body>
     <div id="app">
         <!-- <header role="banner" class="navbar-fixed-top"> -->
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <!-- Branding Image -->
-                    @if (!Auth::guest())
-                        @include('layouts.logo')
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="navbar-header">
+                        <!-- Branding Image -->
+                            @include('layouts.logo')
+                    </div>
+                    @if(Auth::guest())
+                        <div class="nav navbar-nav navbar-left">
+                            <span class="login-header"><strong>Software Alman Foods</strong></span>
+                        </div>
                     @endif
-                </div>
+                    <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                        <!-- Left Side Of Navbar -->
+                        <ul class="nav navbar-nav navbar-left ">
+                            @if (!Auth::guest())
+                                @include('layouts.leftnav')
+                            @endif
+                        </ul>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-left ">
-                        @if (!Auth::guest())
-                            @include('layouts.leftnav')
-                        @endif
-                    </ul>
+                        <!-- Right Side Of Navbar -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <!-- Authentication Links -->
+                            @if (Auth::guest())
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                            @else
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                    </a>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ url('/logout') }}"
-                                            onclick="event.preventDefault();
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="{{ url('/logout') }}"
+                                               onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
+                                                Logout
+                                            </a>
 
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
+                                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
