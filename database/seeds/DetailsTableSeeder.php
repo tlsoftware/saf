@@ -13,9 +13,8 @@ class DetailsTableSeeder extends Seeder
     public function run()
     {
 
-        /*
-        *      Potencial Cliente  = 1
-        */
+        //    Potencial Cliente  = 1
+
 
         $detail = new Detail();
         $detail->name = 'En Gestion';
@@ -47,9 +46,8 @@ class DetailsTableSeeder extends Seeder
         $detail->status_id = 1;
         $detail->save();
 
+       //     Muestras = 2
         /*
-         *      Muestras = 2
-         */
 
         $detail = new Detail();
         $detail->name = 'Sin Contactar';
@@ -77,9 +75,8 @@ class DetailsTableSeeder extends Seeder
         $detail->save();
 
 
-        /*
-         *      Rechazos = 3
-        */
+        //      Rechazos = 3
+
 
         $detail = new Detail();
         $detail->name = 'Usan Tomates Naturales';
@@ -111,9 +108,9 @@ class DetailsTableSeeder extends Seeder
         $detail->status_id = 3;
         $detail->save();
 
-        /*
-         *      Clientes Activos = 4
-        */
+
+        //       Clientes Activos = 4
+
 
         $detail = new Detail();
         $detail->name = 'En Gestion';
@@ -135,9 +132,9 @@ class DetailsTableSeeder extends Seeder
         $detail->status_id = 4;
         $detail->save();
 
-        /*
-        *      Bajas = 5
-       */
+
+       //      Bajas = 5
+
 
         $detail = new Detail();
         $detail->name = 'Precio';
@@ -163,6 +160,6 @@ class DetailsTableSeeder extends Seeder
         $detail->name = 'Otros';
         $detail->status_id = 5;
         $detail->save();
-
+*/
     }
 }

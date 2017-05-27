@@ -9,7 +9,7 @@
                          <span class="label label-danger col-md-offset-9">@include('layouts.status2')</span>
                     </div>
                     <div class="panel-body">
-                        <a href="{{ route('managements.showgestion', $customer->id) }}" class="btn btn-info">Nueva Gestión</a>
+                        <a href="{{ route('managements.showgestion', $customer->id) }}" class="btn btn-info">Nueva Gestion</a>
                         <a href="{{ route('managements.showmuestra', $customer->id) }}" class="btn btn-info">Entrega de Muestras</a>
                         <a href="{{ route('managements.showdatos', $customer->id) }}" class="btn btn-info">Datos Adicionales</a>
                         <a href="{{ route('managements.showventa', $customer->id) }}" class="btn btn-info">Agregar Venta</a>

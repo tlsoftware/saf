@@ -16,6 +16,7 @@ class StatusTableSeeder extends Seeder
         $status->name = 'Potencial Cliente';
         $status->save();
 
+        /*
         $status = new Status();
         $status->name = 'Muestras';
         $status->save();
@@ -31,5 +32,6 @@ class StatusTableSeeder extends Seeder
         $status = new Status();
         $status->name = 'Bajas';
         $status->save();
+        */
     }
 }

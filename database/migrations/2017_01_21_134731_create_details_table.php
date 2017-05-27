@@ -13,11 +13,11 @@ class CreateDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('details', function (Blueprint $table) {
+        Schema::create('statuses_details', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('status_id')->unsigned();
 
+            $table->integer('status_id')->unsigned();
             $table->foreign('status_id')->references('id')->on('statuses');
 
             $table->timestamps();

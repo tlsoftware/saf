@@ -51,6 +51,28 @@ Route::resource('products', 'ProductController');
 
 Route::resource('customers', 'CustomerController');
 
+Route::get('mantenedor-estatus', [
+    'uses'  => 'StatusController@index',
+    'as'    => 'statuses'
+]);
+Route::get('mantenedor-estatus-create', [
+   'uses'   => 'StatusController@create',
+    'as'    => 'admin.statuses.create'
+]);
+Route::post('mantenedor-estatus-create', [
+    'uses'   => 'StatusController@store',
+    'as'    => 'admin.statuses.store'
+]);
+
+Route::get('mantenedor-status-edit/{detail}', [
+   'uses'   => 'StatusController@edit',
+    'as'    => 'admin.statuses.edit'
+]);
+Route::put('mantenedor-status-edit/{detail}', [
+    'uses'   => 'StatusController@update',
+    'as'     => 'admin.statuses.update'
+]);
+
 Route::get('/managements/{id}', [
     'uses' => 'ManagementController@show',
     'as'   => 'managements'
@@ -145,13 +167,14 @@ Route::get('todos/show', [
     'as'   => 'todos.show'
 ]);
 
-Route::get('form', [
-    'uses'  => 'StatusController@index',
-    'as'    => 'form'
-]);
+
 
 Route::get('/ajax-call', function(){
     $id = Input::get('status_id');
     $details = Detail::where('status_id', '=', $id)->get();
     return Response::json($details);
+});
+
+Route::get('managements/modals/add_management', function () {
+   return view('managements.modals.add_management');
 });
