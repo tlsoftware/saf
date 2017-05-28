@@ -10,7 +10,7 @@ class StatusController extends Controller
 {
     public function index()
     {
-        $statuses = Detail::paginate(5);
+        $statuses = Detail::paginate(10);
 
         return view('admin.statuses.index', compact('statuses'));
     }

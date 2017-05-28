@@ -14,6 +14,7 @@
     <link href="/css/saf.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
     <link href="https://fonts.googleapis.com/css?family=Convergence" rel="stylesheet">
 
     <!-- Scripts -->
@@ -86,5 +87,7 @@
     <!-- Scripts -->
     <script src="{{ asset('jquery/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/saf.js') }}"></script>
+    <script href="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 </body>
 </html>

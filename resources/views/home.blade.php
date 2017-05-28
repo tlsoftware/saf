@@ -16,7 +16,7 @@
                         </div>
                 </div>
                     <div class="panel-body">
-                        <a href="{{ route('customers.create') }}" class="btn btn-info">Nuevo Cliente</a>
+                        <a href="{{ route('customers.create') }}" class="btn btn-info" id="new_customer">Nuevo Cliente</a>
                         <!-- BUSCAR CLIENTES -->
                         {!! Form::open(['route' => 'home', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
                             <div class="input-group">
@@ -28,7 +28,7 @@
                         {!! Form::close() !!}
                         <!-- FIN DEL BUSCADOR -->
                         <hr>
-                        <table class="table table-striped table-bordered table-hover table-condensed">
+                        <table class="table table-striped table-bordered table-hover table-condensed" id="home_table">
                             <thead>
                             <th>Gestión</th>
                             <th>Nombre Comercial</th>
