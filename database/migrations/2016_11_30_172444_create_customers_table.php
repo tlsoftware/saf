@@ -30,8 +30,8 @@ class CreateCustomersTable extends Migration
             $table->dateTime('last_mng')->nullable()->default(null);
             $table->date('next_mng');
 
-            $table->integer('status_id')->unsigned();
-            $table->foreign('status_id')->references('id')->on('statuses_details');
+            $table->integer('status_detail_id')->unsigned();
+            $table->foreign('status_detail_id')->references('id')->on('statuses_details');
 
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');

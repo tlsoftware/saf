@@ -12,26 +12,27 @@ class StatusTableSeeder extends Seeder
      */
     public function run()
     {
-        $status = new Status();
-        $status->name = 'Potencial Cliente';
-        $status->save();
-
-        /*
-        $status = new Status();
-        $status->name = 'Muestras';
-        $status->save();
 
         $status = new Status();
-        $status->name = 'Rechazos';
+        $status->name = 'Potencial Cliente';  // 1
+        $status->save();
+
+
+        $status = new Status();
+        $status->name = 'Muestras';   // 2
         $status->save();
 
         $status = new Status();
-        $status->name = 'Cliente Activo';
+        $status->name = 'Rechazos';  // 3
         $status->save();
 
         $status = new Status();
-        $status->name = 'Bajas';
+        $status->name = 'Cliente Activo';  //4
         $status->save();
-        */
+
+        $status = new Status();
+        $status->name = 'Bajas';   //5
+        $status->save();
+
     }
 }

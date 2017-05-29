@@ -87,7 +87,37 @@
     <!-- Scripts -->
     <script src="{{ asset('jquery/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/select2.full.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/select2.css') }}">
     <script src="{{ asset('js/saf.js') }}"></script>
     <script href="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('select').select2();
+
+            $.fn.populateSelect = function (values) {
+                var options = '';
+                $.each(values, function (key, row) {
+                   options += '<option value="' + row.value + '">' + row.text + '</option>';
+                });
+                $(this).html(options);
+            }
+
+            $('#status_detail_id').empty();
+
+            $('#status_id').change(function () {
+              $('#status_detail_id').empty();
+              var status_id = $(this).val();
+
+              if (status_id == '') {
+                $('#status_detail_id').empty();
+              } else {
+                  $.getJSON('/details-statuses/' + status_id , null, function (values) {
+                      $('#status_detail_id').populateSelect(values);
+                  });
+              }
+            });
+        });
+    </script>
 </body>
 </html>

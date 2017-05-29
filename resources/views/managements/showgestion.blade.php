@@ -23,13 +23,18 @@
                                     <div class="col-sm-3">
                                         {{ Form::date('next_mng', null, ['class' => 'form-control', 'required']) }}
                                     </div>
-                                    <div class="form-group">
-                                        {{ Form::label('st_status', 'Estatus', ['class' => 'col-sm-2 control-label']) }}
-                                        <div class="col-sm-3">
-                                            {{ Form::select('st_details', ['En Gestión', 'Positivo con Correo' ,'Positivo sin Correo', 'No Contesta', 'Envio Catalogo', 'Solicitud de Muestras' ], 0, ['class' => 'form-control']) }}
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-3">
+                                        {!! Field::select('status_id', \App\Status::pluck('name', 'id')->toArray(), array('class' => 'form-control')) !!}
+                                    </div>
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-sm-3">
+                                    {!! Field::select('status_detail_id', \App\Detail::pluck('name', 'id')->toArray(), array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
+
                                 <div class="form-group" align="center">
                                     {{ Form::submit('Agregar', ['class' => 'btn btn-primary']) }}
                                 </div>

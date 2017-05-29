@@ -13,8 +13,7 @@ class DetailsTableSeeder extends Seeder
     public function run()
     {
 
-        //    Potencial Cliente  = 1
-
+        //   Potencial Cliente  = 1
 
         $detail = new Detail();
         $detail->name = 'En Gestion';
@@ -46,8 +45,9 @@ class DetailsTableSeeder extends Seeder
         $detail->status_id = 1;
         $detail->save();
 
+
        //     Muestras = 2
-        /*
+
 
         $detail = new Detail();
         $detail->name = 'Sin Contactar';
@@ -160,6 +160,6 @@ class DetailsTableSeeder extends Seeder
         $detail->name = 'Otros';
         $detail->status_id = 5;
         $detail->save();
-*/
+
     }
 }

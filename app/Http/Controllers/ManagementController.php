@@ -17,10 +17,9 @@ class ManagementController extends Controller
 {
     public function store(Request $request, $id)
     {
-        $status = $request->status;
+        $status = $request->status_id;
         // $description = $request->description;
-        // $st_details = $request->st_details;
-
+        $status_detail_id = $request->status_detail_id;
 
         if (! ($status == '3' || $status == '5'))
             $this->validate($request, [
@@ -44,7 +43,11 @@ class ManagementController extends Controller
         $next_mng = $next;
         $last_mng = Carbon::now();
 
-        $data = array('status' => $status, 'next_mng' => $next_mng, 'last_mng' => $last_mng);
+        $data = array(
+            'status' => $status_detail_id,
+            'next_mng' => $next_mng,
+            'last_mng' => $last_mng
+        );
 
         $customer->update($data);
 
