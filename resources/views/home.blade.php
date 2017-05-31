@@ -65,7 +65,7 @@
                                     <!-- PROXIMA GESTION -->
                                     <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>
                                     <!-- STATUS -->
-                                    @include('layouts.status')
+                                    <td> {{ $customer->status_detail->name }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

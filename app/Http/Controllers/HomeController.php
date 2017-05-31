@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Detail;
 use Auth;
 use App\Customer;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
     }
 
     /**
@@ -28,25 +30,18 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        /*
-         *
-         * Estatus:
-         *      SIN GESTION     => 0
-         *      POTENCIALES     => 1
-         *      MUESTRAS        => 2
-         *      ACTIVOS         => 3
-         *      RECHAZADOS      => 4
-         *      BAJAS           => 5
-         *
-         */
-
+        $potencial_ids = Detail::where('status_id', 1)->pluck('id')->toArray();
+        $muestra_ids   = Detail::where('status_id', 2)->pluck('id')->toArray();
+        $rechazo_ids   = Detail::where('status_id', 3)->pluck('id')->toArray();
+        $activo_ids    = Detail::where('status_id', 4)->pluck('id')->toArray();
+        $baja_ids      = Detail::where('status_id', 5)->pluck('id')->toArray();
 
         // PERFIL ADMINISTRADOR
         if (Auth::user()->admin) {
             $customers = Customer::Search($request->name)
                 // CLIENTES SIN GESTION   (status => 0)
                 ->where('next_mng', '<=', Carbon::now())
-                ->where('status', '0')
+                ->where('status_detail_id', 1)
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);
@@ -56,7 +51,7 @@ class HomeController extends Controller
                 // CLIENTES POTENCIALES (status => 1)
                 $customers = Customer::Search($request->name)
                     ->where('next_mng', '<=', Carbon::now())
-                    ->where('status', '1')
+                    ->whereIn('status_detail_id', $potencial_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -67,7 +62,7 @@ class HomeController extends Controller
                 // CLIENTES MUESTRAS (status => 2)
                 $customers = Customer::Search($request->name)
                     ->where('next_mng', '<=', Carbon::now())
-                    ->where('status', '2')
+                    ->whereIn('status_detail_id', $muestra_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -78,7 +73,7 @@ class HomeController extends Controller
                 // CLIENTES ACTIVOS (status => 3)
                 $customers = Customer::Search($request->name)
                     ->where('next_mng', '<=', Carbon::now())
-                    ->where('status', '3')
+                    ->whereIn('status_detail_id', $activo_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -88,7 +83,7 @@ class HomeController extends Controller
             if ($customers->count() == 0) {
                 // CLIENTES POTENCIALES (status => 1)
                 $customers = Customer::Search($request->name)
-                    ->where('status', '1')
+                    ->whereIn('status_detail_id', $potencial_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -96,7 +91,7 @@ class HomeController extends Controller
             if ($customers->count() == 0) {
                 // CLIENTES MUESTRAS
                 $customers = Customer::Search($request->name)
-                    ->where('status', '2')
+                    ->whereIn('status_detail_id', $muestra_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -104,7 +99,7 @@ class HomeController extends Controller
             if ($customers->count() == 0) {
                 // CLIENTES ACTIVOS
                 $customers = Customer::Search($request->name)
-                    ->where('status', '3')
+                    ->whereIn('status_detail_id', $activo_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -121,7 +116,7 @@ class HomeController extends Controller
                 // CLIENTES SIN GESTION
                 ->where('user_id', Auth::user()->id)
                 ->where('next_mng', '<=', Carbon::now())
-                ->where('status', '0')
+                ->whereIn('status_detail_id', 1)
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->paginate(10);
@@ -132,7 +127,7 @@ class HomeController extends Controller
                 $customers = Customer::Search($request->name)
                     ->where('next_mng', '<=', Carbon::now())
                     ->where('user_id', Auth::user()->id)
-                    ->where('status', '1')
+                    ->whereIn('status_detail_id', $potencial_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -144,7 +139,7 @@ class HomeController extends Controller
                 $customers = Customer::Search($request->name)
                     ->where('user_id', Auth::user()->id)
                     ->where('next_mng', '<=', Carbon::now())
-                    ->where('status', '2')
+                    ->whereIn('status_detail_id', $muestra_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -156,7 +151,7 @@ class HomeController extends Controller
                 $customers = Customer::Search($request->name)
                     ->where('user_id', Auth::user()->id)
                     ->where('next_mng', '<=', Carbon::now())
-                    ->where('status', '3')
+                    ->whereIn('status_detail_id', $activo_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -167,7 +162,7 @@ class HomeController extends Controller
                 // CLIENTES POTENCIALES
                 $customers = Customer::Search($request->name)
                     ->where('user_id', Auth::user()->id)
-                    ->where('status', '1')
+                    ->whereIn('status_detail_id', $potencial_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -176,7 +171,7 @@ class HomeController extends Controller
                 // CLIENTES MUESTRAS
                 $customers = Customer::Search($request->name)
                     ->where('user_id', Auth::user()->id)
-                    ->where('status', '2')
+                    ->whereIn('status_detail_id', $muestra_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);
@@ -185,7 +180,7 @@ class HomeController extends Controller
                 // CLIENTES ACTIVOS
                 $customers = Customer::Search($request->name)
                     ->where('user_id', Auth::user()->id)
-                    ->where('status', '3')
+                    ->whereIn('status_detail_id', $activo_ids)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->paginate(10);

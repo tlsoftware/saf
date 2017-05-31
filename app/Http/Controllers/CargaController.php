@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Detail;
 use App\Management;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,11 +23,11 @@ class CargaController extends Controller
 
             Excel::load($file, function($reader) {
 
+                // $reader->skip(969);
                 // $reader->take(1);
                 // DB::enableQueryLog();
 
                 foreach ($reader->get() as $customer) {
-
                     // dd($customer->toArray());
 
                     $newCustomer = new Customer();
@@ -43,63 +45,47 @@ class CargaController extends Controller
                     $newCustomer->email3 = $customer->correo_3;
                     $newCustomer->web = $customer->web;
 
-                    $management->st_details = '0';
-
-                    switch (strtolower($customer->estatus)) {
-                        case 'rechazado':
-                            $newCustomer->status = '3';
-
-                            break;
-                        case 'en gestion':
-                            $newCustomer->status = '1';
-                            break;
-                        case 'en gestion ':
-                            $newCustomer->status = '1';
-                            break;
-                        case 'gestion':
-                            $newCustomer->status = '1';
-                            break;
-                        case 'no contesta':
-                            $newCustomer->status = '1';
-                            $management->st_details = '3';
-                            break;
-                        case 'correo por confirmar':
-                            $newCustomer->status = '1';
-                            break;
-                        case 'devuelto':
-                            $newCustomer->status = '1';
-                            break;
-                        case 'agregado':
-                            $newCustomer->status = '1';
-                            break;
-                        case 'envia lista de precio':
-                            $newCustomer->status = '1';
-                            $management->st_details = '4';
-                            break;
-                        case 'envio de catalogo':
-                            $newCustomer->status = '1';
-                            $management->st_details = '4';
-                            break;
-                        case 'muestra':
-                            $newCustomer->status = '2';
-                            $management->st_details = '2';
-                            break;
-                        case 'no contesta':
-                            $newCustomer->status = '1';
-                            $management->st_details = '3';
-                            break;
-                        case 'posible':
-                            $newCustomer->status = '1';
-                            $management->st_details = '0';
-                            break;
-                        case 'venta':
-                            $newCustomer->status = '4';
-                            $management->st_details = '3';
-                            break;
-                        default:
-                            $newCustomer->status = '1';
-
+// dd($customer->estatus);
+                    if (strtolower($customer->estatus) == 'cerrado') {
+                        $customer->estatus = 'Otros';
+                    } else if (strtolower($customer->estatus) == 'concentrado') {
+                        $customer->estatus = 'Usan Concentrado';
+                    } else if (strtolower($customer->estatus) == 'gestion') {
+                        $customer->estatus = 'En Gestion';
+                    } else if (strtolower($customer->estatus) == 'muestras') {
+                        $customer->estatus = 'Sin Contactar';
+                    } else if (strtolower($customer->estatus) == 'envia lista de precio') {
+                        $customer->estatus = 'Envia lista de Precios';
+                    } else if ($customer->estatus == '') {
+                        $customer->estatus = 'Sin Gestion';
                     }
+                    // dd($customer->estatus);
+                    $status_detail_id = Detail::where('name', strtolower($customer->estatus))->pluck('id')->toArray();
+
+                    if ($status_detail_id) {
+                        $newCustomer->status_detail_id = $status_detail_id[0];
+                    } else {
+                        // dd($status_detail_id);
+                        dd($customer->estatus);
+                    }
+                    /*
+                    Agregado: Potencial Cliente.
+                    Cerrado (Otras): Baja
+                    Concentrado (Usan Concentrado): Rechazos.
+                    Correo por Confirmar: Potencial Cliente.
+                    Devuelto: Potencial Cliente
+                    En Gestion: Potencial Cliente
+                    Envia lista de Precios: Potencial Cliente
+                    Envio de Catalogo: Potencial Cliente.
+                    Futuros Productos (En Gestión): Potencial Cliente.
+                    Gestion: Potencial Cliente.
+                    Muestras (Sin contactar): Muestras.
+                    No Contesta (En Gestión): Potencial Cliente.
+                    Posible (En Gestión): Potencial Cliente.
+                    Rechazado: Rechazo
+                    Venta: Activos
+                    */
+
 
                     if ($customer->fecha_primer_contacto === null) {
                         $customer->fecha_primer_contacto = '21/05/2017';
