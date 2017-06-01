@@ -15,7 +15,8 @@
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Convergence" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -84,25 +85,24 @@
     </div>
 
     <!-- Scripts -->
-    <script type="text/javascript" src="{{ asset('jquery/jquery-3.1.1.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/select2.css') }}">
-    <script type="text/javascript" src="{{ asset('js/select2.full.js') }}"></script>
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"></script>
-
-    <script type="text/javascript" src="{{ asset('js/saf.js') }}"></script>
+    <script type="text/javascript" href="{{ asset('js/saf.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('#home_table').DataTable({
                 "oLanguage": {
                     "sUrl": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                 }
             });
 
+            //@todo Llenar Select de Estus Detallado al Cambias Estatus
+            $('#status_id').change(function () {
+               $('#status_detail_id').hide();
+            });
         });
     </script>
 </body>

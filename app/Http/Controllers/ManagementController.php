@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bstype;
+use App\Detail;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Management;
@@ -69,43 +70,44 @@ class ManagementController extends Controller
     public function show($id)
     {
         $customer = Customer::find($id);
-        $status = $customer->status;
+        $status_id = $customer->status_detail->status->id;
+        $status_detail_ids = Detail::where('status_id', $status_id)->pluck('id')->toArray();
 
         // PERFIL ADMINISTRADOR
         if (Auth::user()->admin) {
             // Get Previous Customer ID
             $previous = Customer::where('id', '<', $customer->id)
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->max('id');
 
             // Get Next Customer ID
             $next = Customer::where('id', '>', $customer->id)
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->min('id');
         } else {
             // Get Previous Customer ID
             $previous = Customer::where('id', '<', $customer->id)
                 ->where('user_id', Auth::user()->id)
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->max('id');
 
             // Get Next Customer ID
             $next = Customer::where('id', '>', $customer->id)
                 ->where('user_id', Auth::user()->id)
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->min('id');
         }
 
         // Redireccionar al Primero
         if (!$next) {
             $next = Customer::first()
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->min('id');
         }
         // Redireccionar al Ultimo
         if (!$previous) {
             $previous = Customer::latest()
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->max('id');
         }
 

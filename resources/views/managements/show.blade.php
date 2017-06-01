@@ -93,6 +93,7 @@
                                     <div class="col-sm-2">
                                         {{ Form::text('quantity', $customer->bstype->quantity, ['class' => 'form-control']) }}
                                     </div>
+                                    <!-- @todo Agregar Estatus en Vista de Customers -->
                                 </div>
                             <div class="form-group">
                                 {{ Form::label('next_mng', 'Próxima Gestión', ['class' => 'col-sm-2 control-label']) }}

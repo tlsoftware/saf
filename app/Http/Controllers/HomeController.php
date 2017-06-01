@@ -116,7 +116,7 @@ class HomeController extends Controller
             // CLIENTES SIN GESTION
             $customers = Customer::where('user_id', Auth::user()->id)
                 ->where('next_mng', '<=', Carbon::now())
-                ->whereIn('status_detail_id', 1)
+                ->where('status_detail_id', 1)
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->get();
