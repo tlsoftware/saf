@@ -2,36 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Detail;
 use Auth;
 use App\Customer;
-use App\Management;
 use Laracasts\Flash\Flash;
-use Carbon\Carbon;
 
 class RechazoCustomerController extends Controller
 {
-    public function show(Request $request)
+    public function show()
     {
+        $rechazo_ids   = Detail::where('status_id', 3)->pluck('id')->toArray();
+        $status = 'Rechazos';
+
         if (Auth::user()->admin)
         {
-            $customers = Customer::Search($request->name)
-                ->where('status', '3')
+            $customers = Customer::whereIn('status_detail_id', $rechazo_ids)
                 // ->where('next_mng', '>', Carbon::now())
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
-                ->paginate(10);
+                ->get();
 
         }
 
         // Si es Vendedor carga solo los clientes pendientes de ese Vendedor
         else {
-            $customers = Customer::Search($request->name)
-                ->where('user_id', Auth::user()->id)
-                ->where('status', '3')
+            $customers = Customer::where('user_id', Auth::user()->id)
+                ->whereIn('status_detail_id', $rechazo_ids)
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
-                ->paginate(10);
+                ->get();
 
         }
         /*
@@ -44,7 +43,8 @@ class RechazoCustomerController extends Controller
         }
 
         return view('home')
-            ->with('customers', $customers);
+            ->with('customers', $customers)
+            ->with('status', $status);
 
     }
 }
