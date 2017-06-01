@@ -19,16 +19,18 @@
                         <a href="{{ route('customers.create') }}" class="btn btn-info" id="new_customer">Nuevo Cliente</a>
                         <!-- BUSCAR CLIENTES -->
                         {!! Form::open(['route' => 'home', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
-                            <div class="input-group">
+                        <!--
+                        <div class="input-group">
                                 {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Buscar Cliente..', 'aria-describedby' => 'search']) !!}
                                 <span class="input-group-addon" id="search">
                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                 </span>
                             </div>
+                        -->
                         {!! Form::close() !!}
                         <!-- FIN DEL BUSCADOR -->
                         <hr>
-                        <table class="table table-striped table-bordered table-hover table-condensed" id="home_table">
+                        <table class="table table-striped table-bordered table-hover table-condensed dataTable" id="home_table">
                             <thead>
                             <th>Gestión</th>
                             <th>Nombre Comercial</th>

@@ -14,7 +14,6 @@
     <link href="/css/saf.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
     <link href="https://fonts.googleapis.com/css?family=Convergence" rel="stylesheet">
 
     <!-- Scripts -->
@@ -85,38 +84,25 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('jquery/jquery-3.1.1.min.js') }}"></script>
-    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/select2.full.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('css/select2.css') }}">
-    <script src="{{ asset('js/saf.js') }}"></script>
-    <script href="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="{{ asset('jquery/jquery-3.1.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/select2.css') }}">
+    <script type="text/javascript" src="{{ asset('js/select2.full.js') }}"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"></script>
+
+    <script type="text/javascript" src="{{ asset('js/saf.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            $('select').select2();
-
-            $.fn.populateSelect = function (values) {
-                var options = '';
-                $.each(values, function (key, row) {
-                   options += '<option value="' + row.value + '">' + row.text + '</option>';
-                });
-                $(this).html(options);
-            }
-
-            $('#status_detail_id').empty();
-
-            $('#status_id').change(function () {
-              $('#status_detail_id').empty();
-              var status_id = $(this).val();
-
-              if (status_id == '') {
-                $('#status_detail_id').empty();
-              } else {
-                  $.getJSON('/details-statuses/' + status_id , null, function (values) {
-                      $('#status_detail_id').populateSelect(values);
-                  });
-              }
+            $('#home_table').DataTable({
+                "oLanguage": {
+                    "sUrl": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                }
             });
+
         });
     </script>
 </body>
