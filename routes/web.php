@@ -173,7 +173,10 @@ Route::get('managements/modals/add_management', function () {
 });
 
 Route::get('details-statuses/{status_id}', function ($status_id) {
-   $status_detail = Detail::where('status_id', $status_id)
+    if ( ! Request::ajax())
+        return response('Forbidden.', 403);
+
+    $status_detail = Detail::where('status_id', $status_id)
        ->select('id as value', 'name as text')
        ->get()->toArray();
 

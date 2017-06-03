@@ -143,10 +143,10 @@
                 }
             });
 
-            //@todo Llenar Select de Estus Detallado al Cambias Estatus
-            $('#status_id').change(function () {
-               $('#status_detail_id').hide();
+            $("#myModal").$("#addManagement").click(function () {
+               alert('Enviar Formulario');
             });
+
         });
     </script>
 </body>

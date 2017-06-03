@@ -20,21 +20,19 @@
                                 </div>
                                 <div class="form-group">
                                     {{ Form::label('next_mng', 'Próxima Gestión', ['class' => 'col-sm-2 control-label']) }}
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         {{ Form::date('next_mng', null, ['class' => 'form-control', 'required']) }}
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-1"></div>
-                                    <div class="col-sm-3">
-                                        {!! Field::select('status_id', \App\Status::pluck('name', 'id')->toArray(), array('class' => 'form-control')) !!}
+                                    {{ Form::label('status_id', 'Estatus', ['class' => 'col-sm-1 control-label']) }}
+                                    <div class="col-sm-2">
+                                        {!! Form::select('status_id', \App\Status::pluck('name', 'id')->toArray(), array('class' => 'form-control')) !!}
                                     </div>
-                                    <div class="col-sm-2"></div>
+                                    {{ Form::label('status_detail_id', 'Estatus Detallado', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">
-                                    {!! Field::select('status_detail_id', \App\Detail::pluck('name', 'id')->toArray(), array('class' => 'form-control')) !!}
+                                        {!! Form::select('status_detail_id', \App\Detail::pluck('name', 'id')->toArray(), array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
-
+                            <hr>
                                 <div class="form-group" align="center">
                                     {{ Form::submit('Agregar', ['class' => 'btn btn-primary']) }}
                                 </div>

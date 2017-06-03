@@ -10,6 +10,8 @@
                     </div>
                     <div class="panel-body">
                         <a href="{{ route('managements.showgestion', $customer->id) }}" class="btn btn-info">Nueva Gestion</a>
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-id="{{ $customer->id }}">Open Modal</button>
+
                         <a href="{{ route('managements.showmuestra', $customer->id) }}" class="btn btn-info">Entrega de Muestras</a>
                         <a href="{{ route('managements.showdatos', $customer->id) }}" class="btn btn-info">Datos Adicionales</a>
                         <a href="{{ route('managements.showventa', $customer->id) }}" class="btn btn-info">Agregar Venta</a>
@@ -108,7 +110,10 @@
                             <hr>
                             @include('layouts.gestion')
                             </fieldset>
-                            <hr>
+                            {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
+                                @include('managements.modals.add_management')
+                            {!! Form::close() !!}
+                        <hr>
                             <div class="group-form" align="center">
                                 <a href="{{ URL::to( 'managements/' . $previous ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-backward"></span></a>
                                 <a href="{{ URL::to( 'managements/' . $next ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-forward"></span></a>
