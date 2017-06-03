@@ -89,13 +89,57 @@
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"></script>
     <script type="text/javascript" href="{{ asset('js/saf.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            $('select').select2();
+
+            $.fn.populateSelect = function (values) {
+                var options = '';
+                $.each(values, function (key, row) {
+                    options += '<option value="' + row.value + '">' + row.text + '</option>';
+                });
+                $(this).html(options);
+            }
+
+            $('#status_id').change(function() {
+                $('#status_detail_id').empty().change();
+
+                var status_id= $(this).val();
+
+                if (status_id == "") {
+                    $('#status_detail_id').empty().change();
+                } else {
+                    $.getJSON('/details-statuses/' + status_id, function(values) {
+                        $('#status_detail_id').populateSelect(values);
+                    });
+                }
+            });
+
             $('#home_table').DataTable({
                 "oLanguage": {
-                    "sUrl": "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    "sProcessing":     "Procesando...",
+                    "sLengthMenu":     "Mostrar _MENU_ registros",
+                    "sZeroRecords":    "No se encontraron resultados",
+                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix":    "",
+                    "sSearch":         "Buscar:",
+                    "sUrl":            "",
+                    "sInfoThousands":  ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":     "Último",
+                        "sNext":     "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
                 }
             });
 

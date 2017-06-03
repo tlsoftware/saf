@@ -13,6 +13,7 @@
 
 use App\Detail;
 
+// Realizar carga de Registros desde Excel
 Route::get('carga', 'CargaController@loadExcel')->name('carga');
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
@@ -167,24 +168,16 @@ Route::get('todos/show', [
     'as'   => 'todos.show'
 ]);
 
-
-
-Route::get('/ajax-call', function(){
-    $id = Input::get('status_id');
-    $details = Detail::where('status_id', '=', $id)->get();
-    return Response::json($details);
-});
-
 Route::get('managements/modals/add_management', function () {
    return view('managements.modals.add_management');
 });
 
-Route::get('dropdowns', function () {
-   return view('components/dropdowns');
-});
-
 Route::get('details-statuses/{status_id}', function ($status_id) {
-   return Detail::where('status_id', $status_id)
+   $status_detail = Detail::where('status_id', $status_id)
        ->select('id as value', 'name as text')
-       ->get();
+       ->get()->toArray();
+
+   array_unshift($status_detail, ['value' => '', 'text' => '-- Seleccione --']);
+
+    return $status_detail;
 });

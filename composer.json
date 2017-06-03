@@ -9,7 +9,9 @@
         "laravel/framework": "5.3.*",
         "laravelcollective/html": "^5.3.0",
         "laracasts/flash": "^2.0",
-        "styde/html": "~1.2"
+        "styde/html": "~1.2",
+        "barryvdh/laravel-ide-helper": "^2.3",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
