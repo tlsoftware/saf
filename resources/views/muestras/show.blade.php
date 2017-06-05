@@ -19,7 +19,7 @@
                     {!! Form::close() !!}
                     <!-- FIN DEL BUSCADOR -->
                         <hr>
-                        <table class="table table-striped table-bordered table-hover table-condensed">
+                        <table class="table table-striped table-bordered table-hover table-condensed dataTable" id="muestra_table">
                             <thead>
                             <th>Gestión</th>
                             <th>Nombre Comercial</th>

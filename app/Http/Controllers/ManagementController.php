@@ -18,14 +18,19 @@ class ManagementController extends Controller
 {
     public function store(Request $request, $id)
     {
-        $status = $request->status_id;
         // $description = $request->description;
         $status_detail_id = $request->status_detail_id;
+        $status = Detail::find($status_detail_id)->status->id;
+        $status2 = $request->status;
+        // dd($status_detail_id);
 
-        if (! ($status == '3' || $status == '5'))
+        dd($request->all());
+
+        if (! ($status == 2 || $status == 5))
             $this->validate($request, [
                 'next_mng' => 'after:today|required',
                 'dispatch_date' => 'after:yesterday',
+                'product_id'    => 'required'
             ]);
 
         $management = new Management($request->all());
@@ -159,6 +164,7 @@ class ManagementController extends Controller
     {
         $customer = Customer::find($id);
         $products = Product::pluck('name', 'id')->toArray();
+        $statuses_detail = Detail::where('status_id', '=',2)->pluck('name', 'id')->toArray();
 
         $managements = Management::where('customer_id', $customer->id)
             ->orderBY('created_at', 'DESC')
@@ -171,13 +177,15 @@ class ManagementController extends Controller
                 ->with('customer', $customer)
                 ->with(compact('managements', $managements))
                 ->with(compact('users', $users))
-                ->with(compact('products', $products));
+                ->with(compact('products', $products))
+                ->with(compact('statuses_detail', $statuses_detail));
         }
 
         return View::make('managements.showmuestra')
             ->with('customer', $customer)
             ->with(compact('managements', $managements))
-            ->with(compact('products', $products));
+            ->with(compact('products', $products))
+            ->with(compact('statuses_detail', $statuses_detail));
     }
 
     public function showDatos($id)
