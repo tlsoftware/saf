@@ -32,15 +32,15 @@ class UsersTableSeeder extends Seeder
         $user->save();
 
         $user = new User();
-        $user->name = 'Maria';
+        $user->name = 'María';
         $user->email = 'maria@alman.cl';
         $user->password = '123123';
         $user->admin = 0;
         $user->save();
 
         $user = new User();
-        $user->name = 'Dayana';
-        $user->email = 'dayana@alman.cl';
+        $user->name = 'Dayanna';
+        $user->email = 'dayanna@alman.cl';
         $user->password = '123123';
         $user->admin = 0;
         $user->save();
