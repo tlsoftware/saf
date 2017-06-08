@@ -9,17 +9,15 @@
                          <span class="label label-danger col-md-offset-9">@include('layouts.status2')</span>
                     </div>
                     <div class="panel-body">
-                        <a href="{{ route('managements.showgestion', $customer->id) }}" class="btn btn-info">Nueva Gestion</a>
-                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-id="{{ $customer->id }}">Open Modal</button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addManagement" data-id="{{ $customer->id }}">Nueva Gestion</button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addMuestra" data-id="{{ $customer->id }}">Entrega de Muestra</button>
 
-                        <a href="{{ route('managements.showmuestra', $customer->id) }}" class="btn btn-info">Entrega de Muestras</a>
                         <a href="{{ route('managements.showdatos', $customer->id) }}" class="btn btn-info">Datos Adicionales</a>
                         <a href="{{ route('managements.showventa', $customer->id) }}" class="btn btn-info">Agregar Venta</a>
                         <a href="{{ route('managements.showrechazo', $customer->id) }}" class="btn btn-info">Rechazo</a>
                         <a href="{{ route('managements.showbaja', $customer->id) }}" class="btn btn-info">Baja</a>
                         <a href="#" class="btn btn-info">Consulta</a>
                         <hr>
-                        {!! Form::open(['route' => 'home', 'method' => 'POST']) !!}
                         <fieldset disabled>
                         <div class="form-horizontal">
                                 <div class="form-group">
@@ -112,6 +110,7 @@
                             </fieldset>
                             {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
                                 @include('managements.modals.add_management')
+                                @include('managements.modals.add_muestra')
                             {!! Form::close() !!}
                         <hr>
                             <div class="group-form" align="center">
@@ -119,7 +118,6 @@
                                 <a href="{{ URL::to( 'managements/' . $next ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-forward"></span></a>
                             </div>
                         </div>
-                        {{form::close()}}
                     </div>
                 </div>
             </div>

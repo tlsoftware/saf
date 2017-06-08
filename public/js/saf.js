@@ -50,16 +50,22 @@ $(document).ready(function() {
         }
     });
 
+    /*
     $("#addManagement").click(function () {
+        var customerId = $(this).data('id');
+        console.log(customerId);
         alert('Enviar Formulario');
     });
+    */
 
-    var date = new Date();
-    date.setDate(date.getDate()-1);
-
+    var startDate = new Date();
+    var endDate = new Date();
+    startDate.setDate(startDate.getDate() + 1);
+    endDate.setDate(endDate.getDate() + 8);
     $('.datepicker').datepicker({
         format: "dd/mm/yyyy",
-        startDate: date,
+        startDate: startDate,
+        endDate: endDate,
         todayBtn: true,
         language: "es",
         daysOfWeekDisabled: "0,6",

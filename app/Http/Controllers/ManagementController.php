@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bstype;
 use App\Detail;
 use App\Product;
+use DateTime;
 use Illuminate\Http\Request;
 use App\Management;
 use App\Customer;
@@ -20,18 +21,25 @@ class ManagementController extends Controller
     {
         // $description = $request->description;
         $status_detail_id = $request->status_detail_id;
-        $status = Detail::find($status_detail_id)->status->id;
+       // $status = Detail::find($status_detail_id)->status->id;
         $status2 = $request->status;
-        // dd($status_detail_id);
 
-        dd($request->all());
+        /*
+        $this->validate($request, [
+            'next_mng' => 'after:today|required',
+        ]);
 
-        if (! ($status == 2 || $status == 5))
+        if ($status2 == 1)
             $this->validate($request, [
-                'next_mng' => 'after:today|required',
                 'dispatch_date' => 'after:yesterday',
                 'product_id'    => 'required'
             ]);
+        */
+        $request->next_mng = $this->DateConvertEsToUs($request->next_mng);
+
+        if ($request->dispatch_date) {
+            $request->dispatch_date = $this->DateConvertEsToUs($request->dispatch_date);
+        }
 
         $management = new Management($request->all());
         $management->customer_id = $id;
@@ -57,7 +65,7 @@ class ManagementController extends Controller
 
         $customer->update($data);
 
-        Flash::success("Se ha agregado una Nueva Gestion de forma exitosa!!");
+        // Flash::success("Se ha agregado una Nueva Gestion de forma exitosa!!");
 
         return redirect()->action('HomeController@index');
     }
@@ -320,6 +328,13 @@ class ManagementController extends Controller
             ->with('customer', $customer)
             ->with(compact('managements', $managements))
             ->with(compact('products', $products));
+    }
+
+    public function DateConvertEsToUs($date)
+    {
+        $usDate = explode( '/', $date );
+
+        return $usDate[2]."-".$usDate[1]."-".$usDate[0];
     }
 
 }
