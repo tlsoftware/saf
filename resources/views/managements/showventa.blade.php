@@ -6,7 +6,7 @@
             <div class="col-md-12 col-md-offset-0">
                 @include('layouts.clientinfo')
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Agrregar Nueva Gestión (Venta) -> <strong>{{ $customer->name }}</strong></div>
+                    <div class="panel-heading">Agregar Nueva Gestión (Venta) -> <strong>{{ $customer->name }}</strong></div>
                     @include('layouts.errors')
                     <div class="panel-body">
                         {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
@@ -66,11 +66,4 @@
             </div>
         </div>
     </div>
-    <script>
-    $('.datepicker').datepicker({
-        format: "dd/mm/yyyy",
-        language: "es",
-        autoclose: true
-    });
-</script>
 @endsection

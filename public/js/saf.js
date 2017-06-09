@@ -16,11 +16,15 @@ $(document).ready(function() {
 
         if (status_id == "") {
             $('#status_detail_id').empty().change();
-        } else {
-            $.getJSON('/details-statuses/' + status_id, function(values) {
-                $('#status_detail_id').populateSelect(values);
-            });
+        } else if (status_id == "3" || status_id == "5") {
+            $('#field_next_mng').css('display', 'none');
+        } else
+        {
+            $('#field_next_mng').css('display', 'block');
         }
+        $.getJSON('/details-statuses/' + status_id, function(values) {
+            $('#status_detail_id').populateSelect(values);
+        });
     });
 
     $('#home_table, #muestra_table').DataTable({
@@ -71,7 +75,7 @@ $(document).ready(function() {
         daysOfWeekDisabled: "0,6",
         todayHighlight: true,
         autoclose: true
-    });
+    }).css('width', '200px');
 
 });
 

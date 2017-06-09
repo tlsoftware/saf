@@ -6,17 +6,13 @@
             <div class="col-md-12 col-md-offset-0">
                 <div class="panel panel-primary">
                     <div class="panel-heading"><strong> Formulario de Gestión </strong>
-                         <span class="label label-danger col-md-offset-9">@include('layouts.status2')</span>
+                         <span class="label label-danger pull-right">{{ $customer->status_detail->status->name }} ({{ $customer->status_detail->name }})</span>
                     </div>
                     <div class="panel-body">
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addManagement" data-id="{{ $customer->id }}">Nueva Gestion</button>
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addMuestra" data-id="{{ $customer->id }}">Entrega de Muestra</button>
-
-                        <a href="{{ route('managements.showdatos', $customer->id) }}" class="btn btn-info">Datos Adicionales</a>
-                        <a href="{{ route('managements.showventa', $customer->id) }}" class="btn btn-info">Agregar Venta</a>
-                        <a href="{{ route('managements.showrechazo', $customer->id) }}" class="btn btn-info">Rechazo</a>
-                        <a href="{{ route('managements.showbaja', $customer->id) }}" class="btn btn-info">Baja</a>
-                        <a href="#" class="btn btn-info">Consulta</a>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addVenta" data-id="{{ $customer->id }}">Agregar Venta</button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addDatos" data-id="{{ $customer->id }}">Datos Adicionales</button>
                         <hr>
                         <fieldset disabled>
                         <div class="form-horizontal">
@@ -108,10 +104,11 @@
                             <hr>
                             @include('layouts.gestion')
                             </fieldset>
-                            {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
+
                                 @include('managements.modals.add_management')
                                 @include('managements.modals.add_muestra')
-                            {!! Form::close() !!}
+                                @include('managements.modals.add_venta')
+                                @include('managements.modals.add_datos')
                         <hr>
                             <div class="group-form" align="center">
                                 <a href="{{ URL::to( 'managements/' . $previous ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-backward"></span></a>

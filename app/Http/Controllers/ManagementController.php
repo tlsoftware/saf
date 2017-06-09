@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bstype;
 use App\Detail;
 use App\Product;
+use App\Status;
 use DateTime;
 use Illuminate\Http\Request;
 use App\Management;
@@ -21,9 +22,9 @@ class ManagementController extends Controller
     {
         // $description = $request->description;
         $status_detail_id = $request->status_detail_id;
-       // $status = Detail::find($status_detail_id)->status->id;
+        $status_id = $request->status_id;
+        $status = Detail::find($status_detail_id)->status_id;
         $status2 = $request->status;
-
         /*
         $this->validate($request, [
             'next_mng' => 'after:today|required',
@@ -35,37 +36,33 @@ class ManagementController extends Controller
                 'product_id'    => 'required'
             ]);
         */
-        $request->next_mng = $this->DateConvertEsToUs($request->next_mng);
-
-        if ($request->dispatch_date) {
-            $request->dispatch_date = $this->DateConvertEsToUs($request->dispatch_date);
-        }
 
         $management = new Management($request->all());
+        if ($management->dispatch_date != '') {
+            $management->dispatch_date = $this->DateConvertEsToUs($management->dispatch_date);
+        }
         $management->customer_id = $id;
         $management->user_id = Auth::user()->id;
         $management->save();
 
+        $next = '2100-12-31';
         // Determinar si la fecha ingresada por el Usuario es Vacia o Mayor a 7 dias
-        $next = $request->next_mng;
-
-        if($next == '') {
+        if ($request->next_mng != '') {
+            $next = $this->DateConvertEsToUs($request->next_mng);
+        } else if ($status_id != 5 && $status_id != 3){
             $next = Carbon::now()->addWeekdays(7)->format('Y-m-d');
         }
 
         $customer = Customer::find($id);
-        $next_mng = $next;
-        $last_mng = Carbon::now();
-
         $data = array(
-            'status' => $status_detail_id,
-            'next_mng' => $next_mng,
-            'last_mng' => $last_mng
+            'status_detail_id' => $status_detail_id,
+            'next_mng' => $next,
+            'last_mng' => Carbon::now()
         );
 
         $customer->update($data);
 
-        // Flash::success("Se ha agregado una Nueva Gestion de forma exitosa!!");
+        Flash::success("Se ha agregado una Nueva Gestion de forma exitosa!!");
 
         return redirect()->action('HomeController@index');
     }

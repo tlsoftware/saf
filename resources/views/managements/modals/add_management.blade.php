@@ -1,4 +1,5 @@
-    <!-- Modal -->
+{!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
+<!-- Modal -->
     <div class="modal fade" id="addManagement" role="dialog">
         <div class="modal-dialog">
 
@@ -15,7 +16,7 @@
                             {!! Field::textarea('description', array('class' => 'form-control', 'required', 'style' => 'resize:none', 'rows' => '6', 'cols' => '30')) !!}
                         </div>
                         <div class="form-group">
-                            {!! Field::text('next_mng', null, ['class' => 'form-control datepicker', 'required', 'style' => 'width:200px', 'readonly']) !!}
+                            {!! Field::text('next_mng', null, ['class' => 'form-control datepicker', 'required', 'readonly']) !!}
                         </div>
                         <div class="form-group">
                             {!! Field::select('status_id', \App\Status::pluck('name', 'id')->toArray(), array('class' => 'form-control', 'style' => 'width:200px', 'required')) !!}
@@ -33,3 +34,4 @@
 
         </div>
     </div>
+{!! Form::close() !!}
