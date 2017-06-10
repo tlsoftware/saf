@@ -17,9 +17,9 @@
                 {!! Field::select('product_id', \App\Product::pluck('name', 'id')->toArray(), null, ['class' => 'form-control', 'required', 'style' => 'width:500px']) !!}
                 {!! Field::number('quantity', 1, ['class' => 'form-control', 'required']) !!}
                 {!! Field::number('price', 0, ['class' => 'form-control', 'required']) !!}
-                {!! Field::text('dispatch_date', null, ['class' => 'form-control datepicker', 'required', 'readonly']) !!}
+                {!! Field::text('dispatch_date', null, ['class' => 'datepickerventa', 'required', 'readonly']) !!}
                 {!! Field::time('dispatch_time', null, ['class' => 'form-control']) !!}
-                {!! Field::text('next_mng', null, ['class' => 'form-control datepicker', 'required', 'readonly']) !!}
+                {!! Field::text('next_mng', null, ['class' => 'datepicker', 'required', 'readonly']) !!}
             </div>
             <hr>
             <div class="form-group" align="center">

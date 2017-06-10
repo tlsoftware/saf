@@ -1,6 +1,11 @@
 $(document).ready(function() {
     $('select').select2();
 
+    $('body').bind('copy',function(e) {
+        e.preventDefault();
+        return false;
+    });
+
     $.fn.populateSelect = function (values) {
         var options = '';
         $.each(values, function (key, row) {
@@ -70,6 +75,21 @@ $(document).ready(function() {
         format: "dd/mm/yyyy",
         startDate: startDate,
         endDate: endDate,
+        todayBtn: true,
+        language: "es",
+        daysOfWeekDisabled: "0,6",
+        todayHighlight: true,
+        autoclose: true
+    }).css('width', '200px');
+
+    var startDateVenta = new Date();
+    var endDateVenta = new Date();
+    startDateVenta.setDate(startDateVenta.getDate() + 0);
+    endDateVenta.setDate(endDateVenta.getDate() + 8);
+    $('.datepickerventa').datepicker({
+        format: "dd/mm/yyyy",
+        startDate: startDateVenta,
+        endDate: endDateVenta,
         todayBtn: true,
         language: "es",
         daysOfWeekDisabled: "0,6",
