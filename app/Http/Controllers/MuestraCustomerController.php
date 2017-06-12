@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Detail;
 use Illuminate\Http\Request;
 use Auth;
 use App\Customer;
@@ -25,26 +26,26 @@ class MuestraCustomerController extends Controller
             ->with(compact('managements', $managements));
     }
 
-    public function show(Request $request)
+    public function show()
     {
+        $muestra_ids   = Detail::where('status_id', 2)->pluck('id')->toArray();
+        $status = 'Muestras';
         if (Auth::user()->admin)
         {
-            $customers = Customer::Search($request->name)
-                ->where('status', '2')
+            $customers = Customer::whereIn('status_detail_id', $muestra_ids)
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
-                ->paginate(10);
+                ->get();
 
         }
 
         // Si es Vendedor carga solo los clientes pendientes de ese Vendedor
         else {
-            $customers = Customer::Search($request->name)
-                ->where('user_id', Auth::user()->id)
-                ->where('status', '2')
+            $customers = Customer::where('user_id', Auth::user()->id)
+                ->whereIn('status_detail_id', $muestra_ids)
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
-                ->paginate(10);
+                ->get();
 
         }
         /*
@@ -62,6 +63,7 @@ class MuestraCustomerController extends Controller
         */
 
         return view('home')
-            ->with('customers', $customers);
+            ->with('customers', $customers)
+            ->with('status', $status);
     }
 }

@@ -112,6 +112,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'status_id' => 'Estatus',
+        'status_detail_id' => 'Estatus Detallado',
+        'next_mng' => 'Fecha de Proxima Gestion'
+    ],
 
 ];

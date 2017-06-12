@@ -8,7 +8,7 @@ class Customer extends Model
 {
     protected $fillable = [
         'rut', 'bs_name', 'name', 'contact_name', 'position', 'phone1',
-        'phone2', 'phone3', 'email1', 'email2', 'email3', 'web', 'status',
+        'phone2', 'phone3', 'email1', 'email2', 'email3', 'web', 'status_detail_id',
         'next_mng', 'user_id', 'created_at', 'bstype_id'
     ];
 
@@ -27,6 +27,11 @@ class Customer extends Model
     public function scopeSearch($query, $name)
     {
         return $query->where('name', 'LIKE', "%$name%");
+    }
+
+    public function status_detail()
+    {
+        return $this->belongsTo('App\Detail');
     }
 
 }

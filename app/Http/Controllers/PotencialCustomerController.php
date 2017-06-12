@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Detail;
 use App\Customer;
 use App\Management;
 use App\User;
@@ -34,27 +33,28 @@ class PotencialCustomerController extends Controller
             ->with(compact('managements', $managements));
     }
 
-    public function show(Request $request)
+    public function show()
     {
+        $potencial_ids = Detail::where('status_id', 1)->pluck('id')->toArray();
+        $status = 'Clientes Potenciales';
+
         if (Auth::user()->admin)
         {
-            $customers = Customer::Search($request->name)
-                ->where('status', '1')
+            $customers = Customer::whereIn('status_detail_id', $potencial_ids)
                 //->where('next_mng', '>', Carbon::now())
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
-                ->paginate(10);
+                ->get();
 
         }
 
         // Si es Vendedor carga solo los clientes pendientes de ese Vendedor
         else {
-            $customers = Customer::Search($request->name)
-                ->where('user_id', Auth::user()->id)
-                ->where('status', '1')
+            $customers = Customer::where('user_id', Auth::user()->id)
+                ->whereIn('status_detail_id', $potencial_ids)
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
-                ->paginate(10);
+                ->get();
 
         }
             /*
@@ -71,7 +71,8 @@ class PotencialCustomerController extends Controller
             ->with('customers', $customers);
         */
         return view('home')
-            ->with('customers', $customers);
+            ->with('customers', $customers)
+            ->with('status', $status);
     }
 
     public function detalle($id)

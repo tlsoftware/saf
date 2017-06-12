@@ -13,7 +13,8 @@
 
 use App\Detail;
 
-// Route::get('carga', 'CargaController@loadExcel')->name('carga');
+// Realizar carga de Registros desde Excel
+Route::get('carga', 'CargaController@loadExcel')->name('carga');
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
@@ -50,6 +51,28 @@ Route::put('users/migrate/{id}', [
 Route::resource('products', 'ProductController');
 
 Route::resource('customers', 'CustomerController');
+
+Route::get('mantenedor-estatus', [
+    'uses'  => 'StatusController@index',
+    'as'    => 'statuses'
+]);
+Route::get('mantenedor-estatus-create', [
+   'uses'   => 'StatusController@create',
+    'as'    => 'admin.statuses.create'
+]);
+Route::post('mantenedor-estatus-create', [
+    'uses'   => 'StatusController@store',
+    'as'    => 'admin.statuses.store'
+]);
+
+Route::get('mantenedor-status-edit/{detail}', [
+   'uses'   => 'StatusController@edit',
+    'as'    => 'admin.statuses.edit'
+]);
+Route::put('mantenedor-status-edit/{detail}', [
+    'uses'   => 'StatusController@update',
+    'as'     => 'admin.statuses.update'
+]);
 
 Route::get('/managements/{id}', [
     'uses' => 'ManagementController@show',
@@ -145,13 +168,19 @@ Route::get('todos/show', [
     'as'   => 'todos.show'
 ]);
 
-Route::get('form', [
-    'uses'  => 'StatusController@index',
-    'as'    => 'form'
-]);
+Route::get('managements/modals/add_management', function () {
+   return view('managements.modals.add_management');
+});
 
-Route::get('/ajax-call', function(){
-    $id = Input::get('status_id');
-    $details = Detail::where('status_id', '=', $id)->get();
-    return Response::json($details);
+Route::get('details-statuses/{status_id}', function ($status_id) {
+    if ( ! Request::ajax())
+        return response('Forbidden.', 403);
+
+    $status_detail = Detail::where('status_id', $status_id)
+       ->select('id as value', 'name as text')
+       ->get()->toArray();
+
+   array_unshift($status_detail, ['value' => '', 'text' => '-- Seleccione --']);
+
+    return $status_detail;
 });

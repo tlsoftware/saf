@@ -8,27 +8,21 @@
                 <div class="panel-heading">
                         <div class="row">
                             <div id="left">
-                                <span id="left-heading"><strong>Clientes Pendientes por Gestionar</strong></span>
+                                <span id="left-heading"><strong>Clientes Pendientes por Gestionar </strong> </span>
                             </div>
                             <div class="pull-right">
-                                <span class="label label-danger" id="right-heading">Total Pendientes: {{ $customers->total() }}</span>
+                                <span class="label label-danger" id="right-heading">Total Pendientes: {{ $customers->count() }}</span>
                             </div>
                         </div>
                 </div>
                     <div class="panel-body">
-                        <a href="{{ route('customers.create') }}" class="btn btn-info">Nuevo Cliente</a>
-                        <!-- BUSCAR CLIENTES -->
-                        {!! Form::open(['route' => 'home', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
-                            <div class="input-group">
-                                {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Buscar Cliente..', 'aria-describedby' => 'search']) !!}
-                                <span class="input-group-addon" id="search">
-                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                </span>
-                            </div>
-                        {!! Form::close() !!}
-                        <!-- FIN DEL BUSCADOR -->
+                        <a href="{{ route('customers.create') }}" class="btn btn-info" id="new_customer">Nuevo Cliente</a>
+                        <div class="pull-right">
+                            <span class="glyphicon glyphicon-tag" style="font-size: larger" aria-hidden="true"> <strong> {{ $status }} </strong> </span>
+                        </div>
+                    </div>
                         <hr>
-                        <table class="table table-striped table-bordered table-hover table-condensed">
+                        <table class="table table-striped table-bordered table-hover table-condensed dataTable" id="home_table">
                             <thead>
                             <th>Gestión</th>
                             <th>Nombre Comercial</th>
@@ -40,7 +34,10 @@
                             @endif
                             <th>Última Gestión</th>
                             <th>Próxima Gestión</th>
-                            <th>Estatus</th>
+                            @if($status == 'Todos los Clientes')
+                                <th>Estatus General</th>
+                            @endif
+                            <th>Estatus Detallado</th>
                             </thead>
                             <tbody>
                             @foreach($customers as $customer)
@@ -65,14 +62,14 @@
                                     <!-- PROXIMA GESTION -->
                                     <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>
                                     <!-- STATUS -->
-                                    @include('layouts.status')
+                                    @if($status == 'Todos los Clientes')
+                                        <td> {{ $customer->status_detail->status->name }}</td>
+                                    @endif
+                                    <td> {{ $customer->status_detail->name }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="text-center">
-                            {!! $customers->render() !!}
-                        </div>
                     </div>
             </div>
         </div>

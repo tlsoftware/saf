@@ -8,16 +8,7 @@
                     <div class="panel-heading"> Clientes Potenciales </div>
                     <div class="panel-body">
                         <a href="{{ route('customers.create') }}" class="btn btn-info">Nuevo Cliente</a>
-                    <!-- BUSCAR CLIENTES -->
-                        {!! Form::open(['route' => 'potenciales.show', 'method' => 'GET', 'class' => 'navbar-form navbar-right']) !!}
-                        <div class="input-group">
-                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Buscar Cliente..', 'aria-describedby' => 'search']) !!}
-                            <span class="input-group-addon" id="search">
-                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                    </span>
-                        </div>
-                    {!! Form::close() !!}
-                    <!-- FIN DEL BUSCADOR -->
+
                         <hr>
                         <table class="table table-striped table-bordered table-hover table-condensed">
                             <thead>
@@ -63,9 +54,6 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="text-center">
-                            {!! $customers->render() !!}
-                        </div>
                     </div>
                 </div>
             </div>

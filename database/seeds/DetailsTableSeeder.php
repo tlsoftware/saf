@@ -13,9 +13,12 @@ class DetailsTableSeeder extends Seeder
     public function run()
     {
 
-        /*
-        *      Potencial Cliente  = 1
-        */
+        $detail = new Detail();
+        $detail->name = 'Sin Gestion';
+        $detail->status_id = 1;
+        $detail->save();
+
+        //   Potencial Cliente  = 1
 
         $detail = new Detail();
         $detail->name = 'En Gestion';
@@ -38,18 +41,49 @@ class DetailsTableSeeder extends Seeder
         $detail->save();
 
         $detail = new Detail();
-        $detail->name = 'Envio Catalogo';
-        $detail->status_id = 1;
-        $detail->save();
-
-        $detail = new Detail();
         $detail->name = 'Solicitud de Muestras';
         $detail->status_id = 1;
         $detail->save();
 
-        /*
-         *      Muestras = 2
-         */
+        $detail = new Detail();
+        $detail->name = 'Agregado';
+        $detail->status_id = 1;
+        $detail->save();
+
+        $detail = new Detail();
+        $detail->name = 'Correo por Confirmar';
+        $detail->status_id = 1;
+        $detail->save();
+
+        $detail = new Detail();
+        $detail->name = 'Devuelto';
+        $detail->status_id = 1;
+        $detail->save();
+
+        $detail = new Detail();
+        $detail->name = 'Envia lista de Precios';
+        $detail->status_id = 1;
+        $detail->save();
+
+        $detail = new Detail();
+        $detail->name = 'Envio de Catalogo';
+        $detail->status_id = 1;
+        $detail->save();
+
+        $detail = new Detail();
+        $detail->name = 'Futuros Productos';
+        $detail->status_id = 1;
+        $detail->save();
+
+        $detail = new Detail();
+        $detail->name = 'Posible';
+        $detail->status_id = 1;
+        $detail->save();
+
+
+
+       //     Muestras = 2
+
 
         $detail = new Detail();
         $detail->name = 'Sin Contactar';
@@ -71,16 +105,7 @@ class DetailsTableSeeder extends Seeder
         $detail->status_id = 2;
         $detail->save();
 
-        $detail = new Detail();
-        $detail->name = 'Rechazado';
-        $detail->status_id = 2;
-        $detail->save();
-
-
-        /*
-         *      Rechazos = 3
-        */
-
+        //      Rechazos = 3
         $detail = new Detail();
         $detail->name = 'Usan Tomates Naturales';
         $detail->status_id = 3;
@@ -111,14 +136,13 @@ class DetailsTableSeeder extends Seeder
         $detail->status_id = 3;
         $detail->save();
 
-        /*
-         *      Clientes Activos = 4
-        */
-
         $detail = new Detail();
-        $detail->name = 'En Gestion';
-        $detail->status_id = 4;
+        $detail->name = 'Rechazado';
+        $detail->status_id = 2;
         $detail->save();
+
+
+        //       Clientes Activos = 4
 
         $detail = new Detail();
         $detail->name = 'Baja';
@@ -135,9 +159,9 @@ class DetailsTableSeeder extends Seeder
         $detail->status_id = 4;
         $detail->save();
 
-        /*
-        *      Bajas = 5
-       */
+
+       //      Bajas = 5
+
 
         $detail = new Detail();
         $detail->name = 'Precio';

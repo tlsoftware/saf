@@ -15,7 +15,8 @@
     <link href="/css/app.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Convergence" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
@@ -84,7 +85,16 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('jquery/jquery-3.1.1.min.js') }}"></script>
-    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <!-- Datepicker Files -->
+    <link rel="stylesheet" href="/datePicker/css/bootstrap-datepicker3.css">
+    <link rel="stylesheet" href="/datePicker/css/bootstrap-datepicker.standalone.css">
+    <script src="/datePicker/js/bootstrap-datepicker.js"></script>
+    <!-- Languaje -->
+    <script src="/datePicker/locales/bootstrap-datepicker.es.min.js"></script>
+    <script type="text/javascript" src="/js/saf.js"></script>
 </body>
 </html>

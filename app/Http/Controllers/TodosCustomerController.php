@@ -11,27 +11,24 @@ use Carbon\Carbon;
 
 class TodosCustomerController extends Controller
 {
-    public function show(Request $request)
+    public function show()
     {
+        $status = 'Todos los Clientes';
         if (Auth::user()->admin)
         {
-            $customers = Customer::Search($request->name)
-                // ->where('status', '4')
-                // ->where('next_mng', '>', Carbon::now())
-                ->orderBy('next_mng', 'asc')
+            $customers = Customer::orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
-                ->paginate(10);
+                ->get();
 
         }
 
         // Si es Vendedor carga solo los clientes pendientes de ese Vendedor
         else {
-            $customers = Customer::Search($request->name)
-                ->where('user_id', Auth::user()->id)
+            $customers = Customer::where('user_id', Auth::user()->id)
                 // ->where('status', '4')
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
-                ->paginate(10);
+                ->get();
 
         }
         /*
@@ -43,7 +40,8 @@ class TodosCustomerController extends Controller
         }
 
         return view('home')
-            ->with('customers', $customers);
+            ->with('customers', $customers)
+            ->with('status', $status);
 
     }
 }

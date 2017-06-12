@@ -30,7 +30,6 @@ td {
 
 .navbar-nav li a {
     font-size: 20px;
-    margin-top: 55px;
 }
 
 .navbar-header a svg {
@@ -55,4 +54,8 @@ td {
 
 .form-group .control-label {
     font-size: 16px;
+}
+
+#app-navbar-collapse {
+    margin-top: 55px;
 }

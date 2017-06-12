@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Bstype;
+use App\Detail;
 use App\Product;
+use App\Status;
+use DateTime;
 use Illuminate\Http\Request;
 use App\Management;
 use App\Customer;
@@ -17,34 +20,45 @@ class ManagementController extends Controller
 {
     public function store(Request $request, $id)
     {
-        $status = $request->status;
         // $description = $request->description;
-        // $st_details = $request->st_details;
+        $status_detail_id = $request->status_detail_id;
+        $status_id = $request->status_id;
+        $status = Detail::find($status_detail_id)->status_id;
+        $status2 = $request->status;
+        /*
+        $this->validate($request, [
+            'next_mng' => 'after:today|required',
+        ]);
 
-
-        if (! ($status == '3' || $status == '5'))
+        if ($status2 == 1)
             $this->validate($request, [
-                'next_mng' => 'after:today|required',
                 'dispatch_date' => 'after:yesterday',
+                'product_id'    => 'required'
             ]);
+        */
 
         $management = new Management($request->all());
+        if ($management->dispatch_date != '') {
+            $management->dispatch_date = $this->DateConvertEsToUs($management->dispatch_date);
+        }
         $management->customer_id = $id;
         $management->user_id = Auth::user()->id;
         $management->save();
 
+        $next = '2100-12-31';
         // Determinar si la fecha ingresada por el Usuario es Vacia o Mayor a 7 dias
-        $next = $request->next_mng;
-
-        if($next == '') {
+        if ($request->next_mng != '') {
+            $next = $this->DateConvertEsToUs($request->next_mng);
+        } else if ($status_id != 5 && $status_id != 3){
             $next = Carbon::now()->addWeekdays(7)->format('Y-m-d');
         }
 
         $customer = Customer::find($id);
-        $next_mng = $next;
-        $last_mng = Carbon::now();
-
-        $data = array('status' => $status, 'next_mng' => $next_mng, 'last_mng' => $last_mng);
+        $data = array(
+            'status_detail_id' => $status_detail_id,
+            'next_mng' => $next,
+            'last_mng' => Carbon::now()
+        );
 
         $customer->update($data);
 
@@ -66,43 +80,44 @@ class ManagementController extends Controller
     public function show($id)
     {
         $customer = Customer::find($id);
-        $status = $customer->status;
+        $status_id = $customer->status_detail->status->id;
+        $status_detail_ids = Detail::where('status_id', $status_id)->pluck('id')->toArray();
 
         // PERFIL ADMINISTRADOR
         if (Auth::user()->admin) {
             // Get Previous Customer ID
             $previous = Customer::where('id', '<', $customer->id)
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->max('id');
 
             // Get Next Customer ID
             $next = Customer::where('id', '>', $customer->id)
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->min('id');
         } else {
             // Get Previous Customer ID
             $previous = Customer::where('id', '<', $customer->id)
                 ->where('user_id', Auth::user()->id)
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->max('id');
 
             // Get Next Customer ID
             $next = Customer::where('id', '>', $customer->id)
                 ->where('user_id', Auth::user()->id)
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->min('id');
         }
 
         // Redireccionar al Primero
         if (!$next) {
             $next = Customer::first()
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->min('id');
         }
         // Redireccionar al Ultimo
         if (!$previous) {
             $previous = Customer::latest()
-                ->where('status', $status)
+                ->whereIn('status_detail_id', $status_detail_ids)
                 ->max('id');
         }
 
@@ -154,6 +169,7 @@ class ManagementController extends Controller
     {
         $customer = Customer::find($id);
         $products = Product::pluck('name', 'id')->toArray();
+        $statuses_detail = Detail::where('status_id', '=',2)->pluck('name', 'id')->toArray();
 
         $managements = Management::where('customer_id', $customer->id)
             ->orderBY('created_at', 'DESC')
@@ -166,13 +182,15 @@ class ManagementController extends Controller
                 ->with('customer', $customer)
                 ->with(compact('managements', $managements))
                 ->with(compact('users', $users))
-                ->with(compact('products', $products));
+                ->with(compact('products', $products))
+                ->with(compact('statuses_detail', $statuses_detail));
         }
 
         return View::make('managements.showmuestra')
             ->with('customer', $customer)
             ->with(compact('managements', $managements))
-            ->with(compact('products', $products));
+            ->with(compact('products', $products))
+            ->with(compact('statuses_detail', $statuses_detail));
     }
 
     public function showDatos($id)
@@ -214,17 +232,14 @@ class ManagementController extends Controller
         $customer->fill($request->all());
 
         if (! $mng = Management::where('customer_id', $id)->first()) {
-            $st_details = 'En Gestion'; 
-            $customer->status = '1';
-        } else {
-            $st_details = $mng->st_details;
-        } 
+            $customer->status_detail_id = 2;
+        }
 
         $management = new Management();
         $management->customer_id = $id;
         $management->user_id = Auth::user()->id;
         $management->description = "Se actualizaron datos de Contacto";
-        $management->st_details = $st_details;
+        // $management->st_details = $st_details;
         $management->product_id = null;
 
         if ($management->save()) {
@@ -307,6 +322,13 @@ class ManagementController extends Controller
             ->with('customer', $customer)
             ->with(compact('managements', $managements))
             ->with(compact('products', $products));
+    }
+
+    public function DateConvertEsToUs($date)
+    {
+        $usDate = explode( '/', $date );
+
+        return $usDate[2]."-".$usDate[1]."-".$usDate[0];
     }
 
 }
