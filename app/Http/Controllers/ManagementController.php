@@ -232,17 +232,14 @@ class ManagementController extends Controller
         $customer->fill($request->all());
 
         if (! $mng = Management::where('customer_id', $id)->first()) {
-            $st_details = 'En Gestion'; 
-            $customer->status = '1';
-        } else {
-            $st_details = $mng->st_details;
-        } 
+            $customer->status_detail_id = 2;
+        }
 
         $management = new Management();
         $management->customer_id = $id;
         $management->user_id = Auth::user()->id;
         $management->description = "Se actualizaron datos de Contacto";
-        $management->st_details = $st_details;
+        // $management->st_details = $st_details;
         $management->product_id = null;
 
         if ($management->save()) {
