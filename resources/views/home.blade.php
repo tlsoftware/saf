@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                         <div class="row">
                             <div id="left">
-                                <span id="left-heading"><strong>Clientes Pendientes por Gestionar </strong> </span>
+                                <span id="left-heading"><strong>Clientes Pendientes por Gestionar ({{ $status }})</strong> </span>
                             </div>
                             <div class="pull-right">
                                 <span class="label label-danger" id="right-heading">Total Pendientes: {{ $customers->count() }}</span>
@@ -17,9 +17,6 @@
                 </div>
                     <div class="panel-body">
                         <a href="{{ route('customers.create') }}" class="btn btn-info" id="new_customer">Nuevo Cliente</a>
-                        <div class="pull-right">
-                            <span class="glyphicon glyphicon-tag" style="font-size: larger" aria-hidden="true"> <strong> {{ $status }} </strong> </span>
-                        </div>
                     </div>
                         <hr>
                         <table class="table table-striped table-bordered table-hover table-condensed dataTable" id="home_table">

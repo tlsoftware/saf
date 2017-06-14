@@ -27,7 +27,7 @@ class ActivoCustomerController extends Controller
     public function show()
     {
         $activo_ids    = Detail::where('status_id', 4)->pluck('id')->toArray();
-        $status = 'Cliente Activo';
+        $status = 'Clientes Activos';
 
         if (Auth::user()->admin)
         {
