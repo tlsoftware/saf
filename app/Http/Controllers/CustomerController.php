@@ -70,6 +70,7 @@ class CustomerController extends Controller
         if(!$request->user_id)
             $customer->user_id = Auth::user()->id;
 
+        $customer->status_detail_id = 1;
         $customer->save();
 
         Flash::success("Se ha registrado el cliente de forma exitosa!!");
