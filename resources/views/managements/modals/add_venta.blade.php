@@ -14,7 +14,12 @@
 
                 {{ Field::hidden('status_detail_id', 27) }}
                 {!! Field::textarea('description', null, ['class' => 'form-control', 'rows' => '6', 'cols' => '40', 'style' => 'resize:none', 'required']) !!}
-                {!! Field::select('product_id', \App\Product::pluck('name', 'id')->toArray(), null, ['class' => 'form-control', 'required', 'style' => 'width:500px']) !!}
+                <a href="#" class="btn btn-info btn-sm" id="add_product">
+                    <span class="glyphicon glyphicon-plus">Agregar Producto</span>
+                </a>
+                <div id="add_product_div">
+                    {!! Field::selectMultiple('product_id', \App\Product::pluck('name', 'id')->toArray(), null, ['class' => 'add_product_select', 'required', 'style' => 'width:500px']) !!}
+                </div>
                 {!! Field::number('quantity', 1, ['class' => 'form-control', 'required']) !!}
                 {!! Field::number('price', 0, ['class' => 'form-control', 'required']) !!}
                 {!! Field::text('dispatch_date', null, ['class' => 'datepickerventa', 'required', 'readonly']) !!}

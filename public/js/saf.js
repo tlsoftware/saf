@@ -32,6 +32,7 @@ $(document).ready(function() {
         });
     });
 
+    $.fn.dataTable.moment( 'DD-MM-YYYY' );
     $('#home_table, #muestra_table').DataTable({
         "oLanguage": {
             "sProcessing":     "Procesando...",
