@@ -98,5 +98,9 @@ $(document).ready(function() {
         autoclose: true
     }).css('width', '200px');
 
+    $('#loadFile').click(function () {
+        $('#loadingModal').modal('show');
+    });
+
 });
 

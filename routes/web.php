@@ -184,3 +184,7 @@ Route::get('details-statuses/{status_id}', function ($status_id) {
 
     return $status_detail;
 });
+
+Route::get('upload', 'ImportController@index')->name('carga_masiva');
+Route::post('import', 'ImportController@uploadFile');
+Route::get('import', 'ImportController@import');

@@ -8,6 +8,7 @@
             <li><a href="{{ route('users.index') }}">Usuarios</a></li>
             <li><a href="{{ route('products.index') }}">Productos</a></li>
             <li><a href="{{ route('statuses') }}">Estatus</a></li>
+            <li><a href="{{ route('carga_masiva') }}">Carga Masiva</a></li>
         </ul>
     </li>
 

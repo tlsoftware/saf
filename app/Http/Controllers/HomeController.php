@@ -30,12 +30,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $potencial_ids = Detail::where('status_id', 1)->pluck('id')->toArray();
-        $muestra_ids   = Detail::where('status_id', 2)->pluck('id')->toArray();
-        // $rechazo_ids   = Detail::where('status_id', 3)->pluck('id')->toArray();
-        $activo_ids    = Detail::where('status_id', 4)->pluck('id')->toArray();
-        // $baja_ids      = Detail::where('status_id', 5)->pluck('id')->toArray();
-
         // PERFIL ADMINISTRADOR
         if (Auth::user()->admin) {
             // CLIENTES SIN GESTION   (status => 0)
@@ -51,7 +45,7 @@ class HomeController extends Controller
             if ($customers->count() == 0) {
                 // CLIENTES POTENCIALES (status => 1)
                 $customers = Customer::where('next_mng', '<=', Carbon::now())
-                    ->whereIn('status_detail_id', $potencial_ids)
+                    ->whereIn('status_detail_id', Detail::getPotentials())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -61,7 +55,7 @@ class HomeController extends Controller
             if ($customers->count() == 0) {
                 // CLIENTES MUESTRAS (status => 2)
                 $customers = Customer::where('next_mng', '<=', Carbon::now())
-                    ->whereIn('status_detail_id', $muestra_ids)
+                    ->whereIn('status_detail_id', Detail::getSamples())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -72,7 +66,7 @@ class HomeController extends Controller
             if ($customers->count() == 0) {
                 // CLIENTES ACTIVOS (status => 3)
                 $customers = Customer::where('next_mng', '<=', Carbon::now())
-                    ->whereIn('status_detail_id', $activo_ids)
+                    ->whereIn('status_detail_id', Detail::getActives())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -82,7 +76,7 @@ class HomeController extends Controller
             }
             if ($customers->count() == 0) {
                 // CLIENTES POTENCIALES (status => 1)
-                $customers = Customer::whereIn('status_detail_id', $potencial_ids)
+                $customers = Customer::whereIn('status_detail_id', Detail::getPotentials())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -91,7 +85,7 @@ class HomeController extends Controller
             }
             if ($customers->count() == 0) {
                 // CLIENTES MUESTRAS
-                $customers = Customer::whereIn('status_detail_id', $muestra_ids)
+                $customers = Customer::whereIn('status_detail_id', Detail::getSamples())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -99,7 +93,7 @@ class HomeController extends Controller
             }
             if ($customers->count() == 0) {
                 // CLIENTES ACTIVOS
-                $customers = Customer::whereIn('status_detail_id', $activo_ids)
+                $customers = Customer::whereIn('status_detail_id', Detail::getActives())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -127,7 +121,7 @@ class HomeController extends Controller
                 // CLIENTES POTENCIALES
                 $customers = Customer::where('next_mng', '<=', Carbon::now())
                     ->where('user_id', Auth::user()->id)
-                    ->whereIn('status_detail_id', $potencial_ids)
+                    ->whereIn('status_detail_id', Detail::getPotentials())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -140,7 +134,7 @@ class HomeController extends Controller
                 // CLIENTES MUESTRAS
                 $customers = Customer::where('user_id', Auth::user()->id)
                     ->where('next_mng', '<=', Carbon::now())
-                    ->whereIn('status_detail_id', $muestra_ids)
+                    ->whereIn('status_detail_id', Detail::getSamples())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -153,7 +147,7 @@ class HomeController extends Controller
                 // CLIENTES ACTIVOS
                 $customers = Customer::where('user_id', Auth::user()->id)
                     ->where('next_mng', '<=', Carbon::now())
-                    ->whereIn('status_detail_id', $activo_ids)
+                    ->whereIn('status_detail_id', Detail::getActives())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -164,7 +158,7 @@ class HomeController extends Controller
             if ($customers->count() == 0) {
                 // CLIENTES POTENCIALES
                 $customers = Customer::where('user_id', Auth::user()->id)
-                    ->whereIn('status_detail_id', $potencial_ids)
+                    ->whereIn('status_detail_id', Detail::getPotentials())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -173,7 +167,7 @@ class HomeController extends Controller
             if ($customers->count() == 0) {
                 // CLIENTES MUESTRAS
                 $customers = Customer::where('user_id', Auth::user()->id)
-                    ->whereIn('status_detail_id', $muestra_ids)
+                    ->whereIn('status_detail_id', Detail::getSamples())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -182,7 +176,7 @@ class HomeController extends Controller
             if ($customers->count() == 0) {
                 // CLIENTES ACTIVOS
                 $customers = Customer::where('user_id', Auth::user()->id)
-                    ->whereIn('status_detail_id', $activo_ids)
+                    ->whereIn('status_detail_id', Detail::getActives())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -190,8 +184,7 @@ class HomeController extends Controller
             }
         }
 
-        return view('home')
-            ->with('customers', $customers)
-            ->with('status', $status);
+        return view('home')->with('customers', $customers)->with('status', $status);
     }
+
 }
