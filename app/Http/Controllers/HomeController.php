@@ -28,8 +28,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $dateFrom = self::convert_date_es_to_en($request->dateFrom);
+        $dateTo = self::convert_date_es_to_en($request->dateTo);
+
         // PERFIL ADMINISTRADOR
         if (Auth::user()->admin) {
             // CLIENTES SIN GESTION   (status => 0)
@@ -46,15 +49,18 @@ class HomeController extends Controller
                 // CLIENTES POTENCIALES (status => 1)
                 $customers = Customer::where('next_mng', '<=', Carbon::now())
                     ->whereIn('status_detail_id', Detail::getPotentials())
+                    ->nextMng($dateFrom, $dateTo)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
+
                 $status = 'Potenciales Clientes';
                 // No existen clientes POTENCIALES
             }
             if ($customers->count() == 0) {
                 // CLIENTES MUESTRAS (status => 2)
-                $customers = Customer::where('next_mng', '<=', Carbon::now())
+                $customers = Customer::nextMng($dateFrom, $dateTo)
+                    ->where('next_mng', '<=', Carbon::now())
                     ->whereIn('status_detail_id', Detail::getSamples())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
@@ -185,6 +191,20 @@ class HomeController extends Controller
         }
 
         return view('home')->with('customers', $customers)->with('status', $status);
+    }
+
+    public static function convert_date_es_to_en($date)
+    {
+        if (strlen($date) < 10) return "";
+        $date = self::left($date, 10);
+        $date = str_replace("-", "/", $date);
+        if ($date == '00/00/0000') return "";
+        $parts = explode("/", $date);
+        return $parts[2] . '-' . $parts[1] . '-' . $parts[0];
+    }
+
+    public static function left($string, $count){
+        return substr($string, 0, $count);
     }
 
 }

@@ -34,4 +34,12 @@ class Customer extends Model
         return $this->belongsTo('App\Detail');
     }
 
+    public function scopeNextMng($query, $dateFrom, $dateTo)
+    {
+        // dd('Scope: ' . $dateFrom . ' ' . $dateTo);
+        if (trim($dateFrom) != "" && trim($dateTo != "")) {
+            $query->whereBetween('next_mng', [$dateFrom, $dateTo]);
+        }
+    }
+
 }
