@@ -331,4 +331,15 @@ class ManagementController extends Controller
         return $usDate[2]."-".$usDate[1]."-".$usDate[0];
     }
 
+    public function dailyManagement()
+    {
+        $today = date('Y-m-d');
+        $fecha1 = $today . ' 00:00:00';
+        $fecha2 = $today . ' 23:59:59';
+        $managements = Management::whereBetween('created_at', [$fecha1, $fecha2])->get();
+
+        return view('admin.gestiones.index')
+            ->with('managements', $managements);
+    }
+
 }

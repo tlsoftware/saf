@@ -188,3 +188,8 @@ Route::get('details-statuses/{status_id}', function ($status_id) {
 Route::get('upload', 'ImportController@index')->name('carga_masiva');
 Route::post('import', 'ImportController@uploadFile');
 Route::get('import', 'ImportController@import');
+
+Route::get('admin/gestiones', [
+    'uses' => 'ManagementController@dailyManagement',
+    'as'   => 'gestiones'
+]);
