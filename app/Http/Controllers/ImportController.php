@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class ImportController extends Controller
 {
     protected $load_file = "";
+    protected $delimiter  = ';';
 
     public function index()
     {
@@ -47,10 +48,11 @@ class ImportController extends Controller
     {
         DB::transaction(function () {
 
+
             Excel::load($this->load_file, function($reader) {
 
                 // $reader->skip(6);
-                // $reader->take(1);
+                // $reader->take(10);
                 // DB::enableQueryLog();
 
                 foreach ($reader->get() as $customer) {
@@ -111,7 +113,8 @@ class ImportController extends Controller
                     */
 
                     $last_mng = $this->handleDate($customer->fecha_ultimo_contacto);
-                    $newCustomer->next_mng = Carbon::now('America/Santiago');
+                    // $newCustomer->next_mng = Carbon::now('America/Santiago');
+                    $newCustomer->next_mng = $this->handleDate($customer->fecha_proxima_gestion);
 
                     $user_id = 2;
                     if (trim($customer->vendedor) == 'Maria' || trim($customer->vendedor) == 'María')
@@ -210,7 +213,7 @@ class ImportController extends Controller
     public function handleDate($date)
     {
         if ($date === null || ctype_alpha(substr($date, 0, 2))) {
-            $date = '21/05/2017';
+            $date = '21/06/2017';
         }
 
         $delimiter = (! strpos($date, '/'))

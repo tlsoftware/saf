@@ -28,8 +28,8 @@ class MuestraCustomerController extends Controller
 
     public function show()
     {
-        $muestra_ids   = Detail::where('status_id', 2)->pluck('id')->toArray();
-        $status = 'Muestras';
+        $muestra_ids   = Detail::getSamples();
+
         if (Auth::user()->admin)
         {
             $customers = Customer::whereIn('status_detail_id', $muestra_ids)
@@ -54,7 +54,7 @@ class MuestraCustomerController extends Controller
          */
         if($customers->count() == 0) {
             Flash::error('No Posee Clientes con Muestras Entregadas!!');
-            return redirect()->route('home');
+            return view('muestras.show');
         }
 
         /*
@@ -62,8 +62,7 @@ class MuestraCustomerController extends Controller
             ->with('customers', $customers);
         */
 
-        return view('home')
-            ->with('customers', $customers)
-            ->with('status', $status);
+        return view('muestras.show')
+            ->with('customers', $customers);
     }
 }

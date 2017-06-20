@@ -11,8 +11,7 @@ class RechazoCustomerController extends Controller
 {
     public function show()
     {
-        $rechazo_ids   = Detail::where('status_id', 3)->pluck('id')->toArray();
-        $status = 'Rechazos';
+        $rechazo_ids   = Detail::getRejected();
 
         if (Auth::user()->admin)
         {
@@ -42,9 +41,8 @@ class RechazoCustomerController extends Controller
             return redirect()->route('home');
         }
 
-        return view('home')
-            ->with('customers', $customers)
-            ->with('status', $status);
+        return view('rechazos.show')
+            ->with('customers', $customers);
 
     }
 }

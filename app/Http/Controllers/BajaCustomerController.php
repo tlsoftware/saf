@@ -11,8 +11,8 @@ class BajaCustomerController extends Controller
 {
     public function show()
     {
-        $baja_ids      = Detail::where('status_id', 5)->pluck('id')->toArray();
-        $status = 'Bajas';
+        $baja_ids      = Detail::getLowCustomer();
+
         if (Auth::user()->admin)
         {
             $customers = Customer::whereIn('status_detail_id', $baja_ids)
@@ -38,10 +38,10 @@ class BajaCustomerController extends Controller
          */
         if($customers->count() == 0) {
             Flash::error('No Posee Clientes en Baja!!');
+            return redirect()->route('home');
         }
 
-        return view('home')
-            ->with('customers', $customers)
-            ->with('status', $status);
+        return view('bajas.show')
+            ->with('customers', $customers);
     }
 }

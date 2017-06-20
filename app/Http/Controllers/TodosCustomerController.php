@@ -13,7 +13,6 @@ class TodosCustomerController extends Controller
 {
     public function show()
     {
-        $status = 'Todos los Clientes';
         if (Auth::user()->admin)
         {
             $customers = Customer::orderBy('next_mng', 'asc')
@@ -37,11 +36,11 @@ class TodosCustomerController extends Controller
          */
         if($customers->count() == 0) {
             Flash::error('No Posee Clientes Asociados!!');
+            return redirect()->route('home');
         }
 
-        return view('home')
-            ->with('customers', $customers)
-            ->with('status', $status);
+        return view('todos.show')
+            ->with('customers', $customers);
 
     }
 }

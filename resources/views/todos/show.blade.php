@@ -4,11 +4,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 col-md-offset-0">
-                <div class="panel panel-default">
+                <div class="panel panel-success">
                     <div class="panel-heading">
                         <div class="row">
                             <div id="left">
-                                <span id="left-heading"><strong>Clientes Bajas</strong> </span>
+                                <span id="left-heading"><strong>Todos los Clientes</strong> </span>
                             </div>
                             <div class="pull-right">
                                 <span class="label label-danger" id="right-heading">Total: {{ $customers->count() }}</span>

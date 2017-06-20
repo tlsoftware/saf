@@ -1,3 +1,4 @@
+{!! Form::open(['route' => 'home', 'method' => 'GET', 'class' => 'navbar-form navbar-left pull-right', 'role' => 'search']) !!}
 <div>
     <div class="col-md-5">
         <div class="input-group">
@@ -13,3 +14,4 @@
         <button type="submit" class="btn btn-info" id="filterButton">Filtrar</button>
     </div>
 </div><!-- /.row -->
+{!! Form::close() !!}

@@ -35,8 +35,8 @@ class PotencialCustomerController extends Controller
 
     public function show()
     {
-        $potencial_ids = Detail::where('status_id', 1)->pluck('id')->toArray();
-        $status = 'Clientes Potenciales';
+        $potencial_ids = Detail::getPotentials();
+        // $status = 'Clientes Potenciales';
 
         if (Auth::user()->admin)
         {
@@ -70,9 +70,8 @@ class PotencialCustomerController extends Controller
         return view('potenciales.show')
             ->with('customers', $customers);
         */
-        return view('home')
-            ->with('customers', $customers)
-            ->with('status', $status);
+        return view('potenciales.show')
+            ->with('customers', $customers);
     }
 
     public function detalle($id)

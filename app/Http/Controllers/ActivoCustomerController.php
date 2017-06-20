@@ -26,8 +26,7 @@ class ActivoCustomerController extends Controller
 
     public function show()
     {
-        $activo_ids    = Detail::where('status_id', 4)->pluck('id')->toArray();
-        $status = 'Clientes Activos';
+        $activo_ids    = Detail::getActives();
 
         if (Auth::user()->admin)
         {
@@ -53,15 +52,14 @@ class ActivoCustomerController extends Controller
          */
         if($customers->count() == 0) {
             Flash::error('No Posee Clientes Activos!!');
-            return redirect()->route('home');
+            return redirect()->route('activos.show');
         }
 
         /* return view('activos.show')
             ->with('customers', $customers);
 
         */
-        return view('home')
-            ->with('customers', $customers)
-            ->with('status', $status);
+        return view('activos.show')
+            ->with('customers', $customers);
     }
 }
