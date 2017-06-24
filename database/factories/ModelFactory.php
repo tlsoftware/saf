@@ -11,7 +11,7 @@
 |
 */
 
-/*
+
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -24,7 +24,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-*/
 
 
 $factory->define(App\Customer::class, function (Faker\Generator $faker) {

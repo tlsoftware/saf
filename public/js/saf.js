@@ -72,7 +72,7 @@ $(document).ready(function() {
     var endDate = new Date();
     startDate.setDate(startDate.getDate() + 1);
     endDate.setDate(endDate.getDate() + 8);
-    $('.datepicker').datepicker({
+    $('.datepicker').datetimepicker({
         format: "dd/mm/yyyy",
         startDate: startDate,
         endDate: endDate,

@@ -19,31 +19,32 @@ class UsersTableSeeder extends Seeder
         $user->name = 'Ricardo Alzurutt';
         $user->email = 'ralzurutt@alman.cl';
         $user->password = '123123';
-        $user->admin = 1;
+        $user->role = 'admin';
         $user->save();
         /*
          * Creacion de Usuario role Vendedor
          */
+        /*
         $user = new User();
         $user->name = 'Leonardo González';
         $user->email = 'leonardo@alman.cl';
         $user->password = '123123';
-        $user->admin = 1;
+        $user->type = 0;
         $user->save();
 
         $user = new User();
         $user->name = 'María';
         $user->email = 'maria@alman.cl';
         $user->password = '123123';
-        $user->admin = 0;
+        $user->profile = 2;
         $user->save();
 
         $user = new User();
         $user->name = 'Dayanna';
         $user->email = 'dayanna@alman.cl';
         $user->password = '123123';
-        $user->admin = 0;
+        $user->profile = 1;
         $user->save();
-
+    */
     }
 }
