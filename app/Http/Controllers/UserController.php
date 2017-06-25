@@ -10,7 +10,6 @@ use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
-
     protected $roles = [
         '' => '-- Seleccione --',
         'admin' => 'Administrador',
@@ -28,18 +27,15 @@ class UserController extends Controller
             ->with('users', $users);
     }
 
-
     public function create()
     {
         return view('admin.users.create')
             ->with('roles', $this->roles);
     }
 
-
     public function store(Request $request)
     {
         $user = new User($request->all());
-        // $user->password = bcrypt($request->password);
         $user->save();
 
         Flash::success("Se ha registrado " . $user->name . " de forma exitosa!");
@@ -47,19 +43,16 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-
     public function show($id)
     {
         //
     }
-
 
     public function edit($id)
     {
         $user = User::find($id);
         return view('admin.users.edit')->with('user', $user);
     }
-
 
     public function update(Request $request, $id)
     {
@@ -71,7 +64,6 @@ class UserController extends Controller
 
         return redirect()->route('users.index');
     }
-
 
     public function destroy($id)
     {
