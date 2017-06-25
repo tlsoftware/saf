@@ -26,10 +26,15 @@ Route::post('register', 'Auth\RegisterController@register');
 
 // Auth::routes();
 
-Route::get('/home', [
-    'uses' => 'HomeController@index',
-    'as'   => 'home'
-]);
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home', [
+        'uses' => 'HomeController@index',
+        'as'   => 'home'
+    ]);
+
+});
+
+
 
 Route::resource('users', 'UserController');
 Route::get('users/{id}/destroy', [

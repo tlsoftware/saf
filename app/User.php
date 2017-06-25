@@ -39,4 +39,15 @@ class User extends Authenticatable
     public function setPasswordAttribute($value){
         $this->attributes['password'] = bcrypt($value);
     }
+
+    public function isAdmin()
+    {
+        return $this->role == 'admin' ? true : false;
+    }
+
+    public function isSupervisor()
+    {
+        return $this->role == 'supervisor' ? true : false;
+    }
+
 }
