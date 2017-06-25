@@ -17,6 +17,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $roles = [
+      'admin'       => 'Administrador',
+      'supervisor'  => 'Supervisor',
+      'user'        => 'Vendedor'
+    ];
+
     public function customers() {
         return $this->hasMany('App\Customer');
     }
@@ -48,6 +54,12 @@ class User extends Authenticatable
     public function isSupervisor()
     {
         return $this->role == 'supervisor' ? true : false;
+    }
+
+    public function getRole()
+    {
+        return $this->roles[$this->role];
+
     }
 
 }

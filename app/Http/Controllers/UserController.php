@@ -11,19 +11,28 @@ use App\Http\Requests\UserRequest;
 class UserController extends Controller
 {
 
+    protected $roles = [
+        '' => '-- Seleccione --',
+        'admin' => 'Administrador',
+        'supervisor' => 'Supervisor',
+        'user' => 'Vendedor'
+    ];
+
     public function index(Request $request)
     {
         $users = User::Search($request->name)
             ->orderBy('id', 'ASC')
             ->paginate(5);
 
-        return view('admin.users.index')->with('users', $users);
+        return view('admin.users.index')
+            ->with('users', $users);
     }
 
 
     public function create()
     {
-        return view('admin.users.create');
+        return view('admin.users.create')
+            ->with('roles', $this->roles);
     }
 
 

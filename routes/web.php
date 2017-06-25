@@ -27,6 +27,28 @@ Route::post('register', 'Auth\RegisterController@register');
 // Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::group(['prefix' => 'admin'], function () {
+
+        Route::resource('users', 'UserController');
+
+        Route::get('users/{id}/destroy', [
+            'uses'  => 'UserController@destroy',
+            'as'   => 'users.destroy'
+        ]);
+
+        Route::get('/users/migrate/{id}', [
+            'uses' => 'UserController@migrate',
+            'as'   => 'migrate'
+        ]);
+
+        Route::put('users/migrate/{id}', [
+            'uses'  => 'UserController@storeMigrate',
+            'as'   => 'migrate'
+        ]);
+
+    });
+
     Route::get('/home', [
         'uses' => 'HomeController@index',
         'as'   => 'home'
@@ -36,21 +58,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-Route::resource('users', 'UserController');
-Route::get('users/{id}/destroy', [
-   'uses'  => 'UserController@destroy',
-    'as'   => 'users.destroy'
-]);
 
-Route::get('/users/migrate/{id}', [
-    'uses' => 'UserController@migrate',
-    'as'   => 'migrate'
-]);
-
-Route::put('users/migrate/{id}', [
-    'uses'  => 'UserController@storeMigrate',
-    'as'   => 'migrate'
-]);
 
 
 Route::resource('products', 'ProductController');
