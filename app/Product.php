@@ -12,8 +12,8 @@ class Product extends Model
         'code', 'name',
     ];
 
-    public function managements() {
-        return $this->hasMany('App\Management');
+    public function sale() {
+        return $this->belongsTo('App\Sale');
 
     }
 }

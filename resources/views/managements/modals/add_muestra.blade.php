@@ -12,8 +12,10 @@
             <div class="modal-body" style="padding:40px 50px;">
                 {!! Form::open(['route' => ['managements.store', $customer->id], 'method' => 'POST']) !!}
                 {!! Field::hidden('status_detail_id', 17)  !!}
+                {!! Field::hidden('quantity', 0)  !!}
+                {!! Field::hidden('price', 0)  !!}
                 {!! Field::textarea('description', null, ['class' => 'form-control', 'rows' => '6', 'cols' => '40', 'style' => 'resize:none', 'required']) !!}
-                {!! Field::select('product_id', \App\Product::pluck('name', 'id')->toArray(), null, ['class' => 'form-control', 'style' => 'width:500px', 'required']) !!}
+                {!! Field::selectMultiple('product_id[]', \App\Product::pluck('name', 'id')->toArray(), null, ['class' => 'form-control', 'style' => 'width:500px', 'required']) !!}
                 {!! Field::text('dispatch_date', null, ['class' => 'form-control datepicker', 'required', 'readonly', 'placeholder' => 'Indique Fecha'])  !!}
                 {!! Field::time('dispatch_time', null, ['class' => 'form-control']) !!}
                 {!! Field::text('next_mng', null, ['class' => 'form-control datepicker', 'required', 'readonly', 'placeholder' => 'Indique Fecha'])  !!}

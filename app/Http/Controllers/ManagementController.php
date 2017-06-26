@@ -7,6 +7,7 @@ use App\Detail;
 use App\Email;
 use App\Phone;
 use App\Product;
+use App\Sale;
 use App\Status;
 use DateTime;
 use Illuminate\Http\Request;
@@ -39,44 +40,61 @@ class ManagementController extends Controller
                 'product_id'    => 'required'
             ]);
         */
-        if ($status_detail_id == 17) {
-            // Se esta Agregando una Muestra
-            dd('Agregando Muestra');
+
+        DB::beginTransaction();
+
+        try {
+            $management = new Management($request->all());
+            if ($management->dispatch_date != '') {
+                $management->dispatch_date = $this->DateConvertEsToUs($management->dispatch_date);
+            }
+            $management->customer_id = $id;
+            $management->user_id = Auth::user()->id;
+            $management->save();
+
+            if ($status_detail_id == 17 or $status_detail_id == 27) {
+                // Se esta Agregando una Muestra
+                foreach ($request->product_id as $product) {
+                    $sale = new Sale();
+                    $sale->quantity = $request->quantity;
+                    $sale->price = $request->price;
+                    $sale->management_id = $management->id;
+                    $sale->product_id = $product;
+                    $sale->save();
+                }
+            }
+
+            $next = '2100-12-31';
+            // Determinar si la fecha ingresada por el Usuario es Vacia o Mayor a 7 dias
+            if ($request->next_mng != '') {
+                $next = $this->DateConvertEsToUs($request->next_mng);
+            } else if ($status_id != 5 && $status_id != 3){
+                $next = Carbon::now()->addWeekdays(7)->format('Y-m-d');
+            }
+
+            $customer = Customer::find($id);
+            $data = array(
+                'status_detail_id' => $status_detail_id,
+                'next_mng' => $next,
+                'last_mng' => Carbon::now()
+            );
+
+            $customer->update($data);
+
+            DB::commit();
+
+            Flash::success("Se ha agregado una Nueva Gestion de forma exitosa!!");
+
+            return redirect()->action('HomeController@index');
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Flash::error("No se ha podido agregar Gestion!!");
+
+            return redirect()->back();
         }
 
-        if ($status_detail_id == 27) {
-            // Se esta agregando una Venta
-            dd('Agregando Venta');
-        }
 
-        $management = new Management($request->all());
-        if ($management->dispatch_date != '') {
-            $management->dispatch_date = $this->DateConvertEsToUs($management->dispatch_date);
-        }
-        $management->customer_id = $id;
-        $management->user_id = Auth::user()->id;
-        $management->save();
-
-        $next = '2100-12-31';
-        // Determinar si la fecha ingresada por el Usuario es Vacia o Mayor a 7 dias
-        if ($request->next_mng != '') {
-            $next = $this->DateConvertEsToUs($request->next_mng);
-        } else if ($status_id != 5 && $status_id != 3){
-            $next = Carbon::now()->addWeekdays(7)->format('Y-m-d');
-        }
-
-        $customer = Customer::find($id);
-        $data = array(
-            'status_detail_id' => $status_detail_id,
-            'next_mng' => $next,
-            'last_mng' => Carbon::now()
-        );
-
-        $customer->update($data);
-
-        Flash::success("Se ha agregado una Nueva Gestion de forma exitosa!!");
-
-        return redirect()->action('HomeController@index');
     }
 
     public function create($id)
