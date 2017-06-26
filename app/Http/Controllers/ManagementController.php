@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Bstype;
 use App\Detail;
+use App\Email;
+use App\Phone;
 use App\Product;
 use App\Status;
 use DateTime;
@@ -11,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Management;
 use App\Customer;
 use App\User;
+use Illuminate\Support\Facades\DB;
 use Laracasts\Flash\Flash;
 use Carbon\Carbon;
 use Auth;
@@ -36,6 +39,15 @@ class ManagementController extends Controller
                 'product_id'    => 'required'
             ]);
         */
+        if ($status_detail_id == 17) {
+            // Se esta Agregando una Muestra
+            dd('Agregando Muestra');
+        }
+
+        if ($status_detail_id == 27) {
+            // Se esta agregando una Venta
+            dd('Agregando Venta');
+        }
 
         $management = new Management($request->all());
         if ($management->dispatch_date != '') {
@@ -217,9 +229,6 @@ class ManagementController extends Controller
 
     public function storeDatos(Request $request, $id)
     {
-        
-        $customer = Customer::find($id);
-
         $this->validate($request, [
             'phone2' => [
                 'regex:/^\+56[9|2][0-9]{8}$/',
@@ -229,24 +238,45 @@ class ManagementController extends Controller
             ]
         ]);
 
-        $customer->fill($request->all());
+        DB::beginTransaction();
 
-        if (! $mng = Management::where('customer_id', $id)->first()) {
-            $customer->status_detail_id = 2;
-        }
+        try {
+            $customer = Customer::find($id);
+            $customer->fill($request->all());
 
-        $management = new Management();
-        $management->customer_id = $id;
-        $management->user_id = Auth::user()->id;
-        $management->description = "Se actualizaron datos de Contacto";
-        // $management->st_details = $st_details;
-        $management->product_id = null;
+            if (! $mng = Management::where('customer_id', $id)->first()) {
+                $customer->status_detail_id = 2;
+            }
 
-        if ($management->save()) {
             $customer->save();
-        }
 
-        return redirect()->action('HomeController@index');
+            $management = new Management();
+            $management->customer_id = $id;
+            $management->user_id = Auth::user()->id;
+            $management->description = "Se actualizaron datos de Contacto";
+            // $management->st_details = $st_details;
+            // $management->product_id = null;
+
+            $management->save();
+
+            $phone = Phone::find($customer->contact->phone->id);
+            $phone->fill($request->all());
+            $phone->save();
+
+            $email = Email::find($customer->contact->email->id);
+            $email->fill($request->all());
+            $email->save();
+
+            DB::commit();
+
+            Flash::success("Se actualizaron los datos Satisfactoriamente!!");
+            return redirect()->back();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Flash::error("Se produjo un Error Actualizando los Datos!!");
+            return redirect()->back();
+
+        }
     }
 
     public function showVenta($id)

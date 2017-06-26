@@ -64,10 +64,10 @@
                                     {{ Form::text('email1', $customer->contact->email->email1, ['class' => 'form-control']) }}
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('email2', $customer->contact->email->email1, ['class' => 'form-control']) }}
+                                    {{ Form::text('email2', $customer->contact->email->email2, ['class' => 'form-control']) }}
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('email3', $customer->contact->email->email1, ['class' => 'form-control']) }}
+                                    {{ Form::text('email3', $customer->contact->email->email3, ['class' => 'form-control']) }}
                                 </div>
                             </div>
                             <div class="form-group">

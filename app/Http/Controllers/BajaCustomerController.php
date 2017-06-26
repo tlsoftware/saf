@@ -38,7 +38,6 @@ class BajaCustomerController extends Controller
          */
         if($customers->count() == 0) {
             Flash::error('No Posee Clientes en Baja!!');
-            return redirect()->route('home');
         }
 
         return view('bajas.show')

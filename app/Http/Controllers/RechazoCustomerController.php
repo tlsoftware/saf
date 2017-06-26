@@ -38,7 +38,6 @@ class RechazoCustomerController extends Controller
          */
         if($customers->count() == 0) {
             Flash::error('No Posee Clientes en Rechazos!!');
-            return redirect()->route('home');
         }
 
         return view('rechazos.show')

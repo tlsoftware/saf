@@ -54,7 +54,6 @@ class MuestraCustomerController extends Controller
          */
         if($customers->count() == 0) {
             Flash::error('No Posee Clientes con Muestras Entregadas!!');
-            return view('muestras.show');
         }
 
         /*

@@ -69,35 +69,35 @@ class CustomerController extends Controller
         DB::beginTransaction();
 
         try {
-        $customer = new Customer($request->all());
+            $customer = new Customer($request->all());
 
-        $customer->next_mng = Carbon::now();
+            $customer->next_mng = Carbon::now();
 
-        if(!$request->user_id)
-            $customer->user_id = Auth::user()->id;
+            if(!$request->user_id)
+                $customer->user_id = Auth::user()->id;
 
-        $customer->status_detail_id = 1;
-        $customer->save();
+            $customer->status_detail_id = 1;
+            $customer->save();
 
-        $contact = new Contact();
-        $contact->name = $request->contact_name;
-        $contact->position = $request->position;
-        $contact->customer_id = $customer->id;
-        $contact->save();
+            $contact = new Contact();
+            $contact->name = $request->contact_name;
+            $contact->position = $request->position;
+            $contact->customer_id = $customer->id;
+            $contact->save();
 
-        $phone = new Phone($request->all());
-        $phone->contact_id = $contact->id;
-        $phone->save();
+            $phone = new Phone($request->all());
+            $phone->contact_id = $contact->id;
+            $phone->save();
 
-        $email = new Email($request->all());
-        $email->contact_id = $contact->id;
-        $email->save();
+            $email = new Email($request->all());
+            $email->contact_id = $contact->id;
+            $email->save();
 
-        DB::commit();
+            DB::commit();
 
-        Flash::success("Se ha registrado el cliente de forma exitosa!!");
+            Flash::success("Se ha registrado el cliente de forma exitosa!!");
 
-        return redirect()->action('HomeController@index');
+            return redirect()->action('HomeController@index');
 
         } catch (\Exception $exception) {
             DB::rollBack();

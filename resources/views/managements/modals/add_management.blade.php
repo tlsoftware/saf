@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group">
                             {!! Field::select('status_id', \App\Status::pluck('name', 'id')->toArray(), array('class' => 'form-control', 'style' => 'width:200px', 'required')) !!}
-                            {!! Field::select('status_detail_id', \App\Detail::pluck('name', 'id')->toArray(), array('class' => 'form-control', 'style' => 'width:200px', 'required')) !!}
+                            {!! Field::select('status_detail_id', null, array('class' => 'form-control', 'style' => 'width:200px', 'required')) !!}
                         </div>
                 </div>
                 <div class="modal-footer">

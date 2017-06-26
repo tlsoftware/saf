@@ -52,7 +52,6 @@ class ActivoCustomerController extends Controller
          */
         if($customers->count() == 0) {
             Flash::error('No Posee Clientes Activos!!');
-            return redirect()->route('activos.show');
         }
 
         /* return view('activos.show')

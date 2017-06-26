@@ -36,7 +36,6 @@ class TodosCustomerController extends Controller
          */
         if($customers->count() == 0) {
             Flash::error('No Posee Clientes Asociados!!');
-            return redirect()->route('home');
         }
 
         return view('todos.show')
