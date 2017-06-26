@@ -33,8 +33,10 @@ class HomeController extends Controller
         $dateFrom = self::convert_date_es_to_en($request->dateFrom);
         $dateTo = self::convert_date_es_to_en($request->dateTo);
 
+
+
         // PERFIL ADMINISTRADOR
-        if (Auth::user()->admin) {
+        if (Auth::user()->isAdmin()) {
             // CLIENTES SIN GESTION   (status => 0)
             $customers = Customer::where('next_mng', '<=', Carbon::now())
                 ->where('status_detail_id', 1)

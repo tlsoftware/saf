@@ -18,7 +18,11 @@ class CreateCustomersTable extends Migration
             $table->string('rut', 50)->nullable()->default(null);
             $table->string('bs_name', 100)->nullable()->default(null);
             $table->string('name', 100);
-            $table->string('web', 250)->nullable()->default(null);
+            $table->string('address', 150)->nullable()->default(null);
+            $table->string('commune', 100)->nullable()->default(null);
+            $table->string('city', 100)->nullable()->default(null);
+
+            $table->string('web', 150)->nullable()->default(null);
 
             $table->dateTime('last_mng')->nullable()->default(null);
             $table->date('next_mng');

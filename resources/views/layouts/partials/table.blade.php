@@ -5,7 +5,7 @@
         <th>Persona de Contacto</th>
         <th>Teléfono</th>
         <!-- Solo mostrar en case de que sea Administrador -->
-        @if(Auth::user()->admin)
+        @if(Auth::user()->isAdmin())
             <th>Responsable</th>
         @endif
         <th>Última Gestión</th>
@@ -22,11 +22,11 @@
                     <a href="{{ route('managements', $customer->id) }}" class="btn btn-primary"><span class="glyphicon glyphicon-saved"></span></a>
                 </td>
                 <td>{{ $customer->name }}</td>
-                <td>{{ $customer->contact_name }}</td>
-                <td>{{ $customer->phone1 }}</td>
+                <td>{{ $customer->contact->name }}</td>
+                <td>{{ $customer->contact->phone->phone1 }}</td>
                 <!-- Solo mostrar en case de que sea Administrador -->
-                @if(Auth::user()->admin)
-                    <td>{{ $customer->user()->first()->name }}</td>
+                @if(Auth::user()->isAdmin())
+                    <td>{{ $customer->user->name }}</td>
                 @endif
 
             <!-- Validar si el Cliente Posee Gestiones -->

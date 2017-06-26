@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Bstype;
+use App\Contact;
+use App\Email;
+use App\Phone;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Customer;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laracasts\Flash\Flash;
 
 class CustomerController extends Controller
@@ -23,8 +27,7 @@ class CustomerController extends Controller
             ->orderBy('next_mng', 'asc')
             ->paginate(5);
 
-        return view('admin.customers.index')
-            ->with('customers', $customers);
+        return view('customers.index')->with('customers', $customers);
     }
 
     /**
@@ -37,7 +40,7 @@ class CustomerController extends Controller
         $users = User::pluck('name', 'id')->toArray();
         $bstypes = Bstype::pluck('type', 'id')->toArray();
 
-        return view('admin.customers.create')
+        return view('customers.create')
             ->with(compact('users', $users))
             ->with(compact('bstypes', $bstypes));
     }
@@ -50,8 +53,6 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $customer = new Customer($request->all());
 
         $this->validate($request, [
             'phone1' => [
@@ -65,6 +66,11 @@ class CustomerController extends Controller
             ]
         ]);
 
+        DB::beginTransaction();
+
+        try {
+        $customer = new Customer($request->all());
+
         $customer->next_mng = Carbon::now();
 
         if(!$request->user_id)
@@ -73,9 +79,33 @@ class CustomerController extends Controller
         $customer->status_detail_id = 1;
         $customer->save();
 
+        $contact = new Contact();
+        $contact->name = $request->contact_name;
+        $contact->position = $request->position;
+        $contact->customer_id = $customer->id;
+        $contact->save();
+
+        $phone = new Phone($request->all());
+        $phone->contact_id = $contact->id;
+        $phone->save();
+
+        $email = new Email($request->all());
+        $email->contact_id = $contact->id;
+        $email->save();
+
+        DB::commit();
+
         Flash::success("Se ha registrado el cliente de forma exitosa!!");
 
         return redirect()->action('HomeController@index');
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            Flash::Error("No se ha podido crear el Cliente de forma Exitosa!");
+
+            return redirect()->back();
+        }
     }
 
     /**
@@ -89,7 +119,7 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
         $managements = $customer->managements;
 
-        return view('admin.customers.show')
+        return view('customers.show')
             ->with('customer', $customer)
             ->with(compact('managements', $managements));
     }
@@ -107,7 +137,7 @@ class CustomerController extends Controller
 
         $users = User::pluck('name', 'id')->toArray();
 
-        return view('admin.customers.edit')
+        return view('customers.edit')
             ->with('customer', $customer)
             ->with(compact('users', $users));
     }

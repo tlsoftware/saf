@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     protected $fillable = [
-        'rut', 'bs_name', 'name', 'contact_name', 'position', 'phone1',
-        'phone2', 'phone3', 'email1', 'email2', 'email3', 'web', 'status_detail_id',
-        'next_mng', 'user_id', 'created_at', 'bstype_id'
+        'rut', 'bs_name', 'name', 'web', 'status_detail_id', 'next_mng', 'user_id', 'created_at', 'bstype_id'
     ];
 
     public function user() {
@@ -22,6 +20,10 @@ class Customer extends Model
 
     public function bstype() {
         return $this->belongsTo('App\Bstype');
+    }
+
+    public function contact() {
+        return $this->hasOne('App\Contact');
     }
 
     public function scopeSearch($query, $name)

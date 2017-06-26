@@ -17,7 +17,7 @@ class ImportController extends Controller
 
     public function index()
     {
-        return \View::make('upload');
+        return view('admin.upload');
     }
 
     public function uploadFile(Request $request)
