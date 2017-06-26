@@ -8,6 +8,7 @@ use App\Detail;
 use App\Email;
 use App\Management;
 use App\Phone;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -56,8 +57,8 @@ class ImportController extends Controller
 
             Excel::load($this->load_file, function($reader) {
 
-                // $reader->skip(6);
-                $reader->take(10);
+                // $reader->skip(0);
+                // $reader->take(200);
                 // DB::enableQueryLog();
 
                 foreach ($reader->get() as $customer) {
@@ -72,59 +73,13 @@ class ImportController extends Controller
                     $newCustomer->city = $customer->ciudad;
                     $newCustomer->web = $customer->web;
 
-                    if (strtolower(trim($customer->estatus)) == 'cerrado') {
-                        $customer->estatus = 'Otros';
-                    } else if (strtolower(trim($customer->estatus)) == 'concentrado') {
-                        $customer->estatus = 'Usan Concentrado';
-                    } else if (strtolower(trim($customer->estatus)) == 'gestion') {
-                        $customer->estatus = 'En Gestion';
-                    } else if (strtolower(trim($customer->estatus)) == 'muestras') {
-                        $customer->estatus = 'Sin Contactar';
-                    } else if (strtolower(trim($customer->estatus)) == 'envia lista de precio') {
-                        $customer->estatus = 'Envia lista de Precios';
-                    } else if ($customer->estatus == '') {
-                        $customer->estatus = 'Sin Gestion';
-                    }
-                    // dd($customer->estatus);
-                    $status_detail_id = Detail::where('name', strtolower($customer->estatus))->pluck('id')->toArray();
-
-                    if ($status_detail_id) {
-                        $newCustomer->status_detail_id = $status_detail_id[0];
-                    } else {
-                        // dd($status_detail_id);
-                        dd($customer->estatus);
-                    }
-                    /*
-                    Agregado: Potencial Cliente.
-                    Cerrado (Otras): Baja
-                    Concentrado (Usan Concentrado): Rechazos.
-                    Correo por Confirmar: Potencial Cliente.
-                    Devuelto: Potencial Cliente
-                    En Gestion: Potencial Cliente
-                    Envia lista de Precios: Potencial Cliente
-                    Envio de Catalogo: Potencial Cliente.
-                    Futuros Productos (En Gestión): Potencial Cliente.
-                    Gestion: Potencial Cliente.
-                    Muestras (Sin contactar): Muestras.
-                    No Contesta (En Gestión): Potencial Cliente.
-                    Posible (En Gestión): Potencial Cliente.
-                    Rechazado: Rechazo
-                    Venta: Activos
-                    */
+                    $newCustomer->status_detail_id = $this->getStatus($customer->estatus);
 
                     $last_mng = $this->handleDate($customer->ultimo_contacto);
                     // $newCustomer->next_mng = Carbon::now('America/Santiago');
                     // $newCustomer->next_mng = $this->handleDate($customer->fecha_proxima_gestion);
 
                     $newCustomer->next_mng = $this->handleDate(Carbon::now()->addWeekdays(7)->format('Y-m-d'));
-
-                    $user_id = 2;
-                    // $user_id = 1;
-
-                    if (trim($customer->vendedor) == 'Maria' || trim($customer->vendedor) == 'María')
-                        $user_id = 3;
-                    if (trim($customer->vendedor) == 'Dayanna')
-                        $user_id = 4;
 
                     switch (ucfirst(strtolower($customer->clasificacion_restaurant))) {
                         case 'Pizzeria' :
@@ -181,7 +136,7 @@ class ImportController extends Controller
                         default:
                             $id = 17;
                     }
-                    $newCustomer->user_id = $user_id;
+                    $newCustomer->user_id = $this->getUser($customer->vendedor);
                     $newCustomer->bstype_id = $id;
 
                     if ($customer->seguimiento == null)
@@ -192,7 +147,7 @@ class ImportController extends Controller
 
                     $management->description = $customer->seguimiento;
                     $management->created_at = new Carbon($last_mng, 'America/Santiago');
-                    $management->user_id = $user_id;
+                    $management->user_id = $this->getUser($customer->vendedor);
                     $newCustomer->created_at = $created_at;
                     $newCustomer->save();
                     // DB::disableQueryLog();
@@ -202,8 +157,8 @@ class ImportController extends Controller
                     $phone = new Phone();
                     $email = new Email();
 
-                    $contact->name = $customer->nombre . ' ' . $customer->apellido;
-                    $contact->position = $customer->cargo;
+                    $contact->name = ($customer->nombre or $customer->apellido) ? $customer->nombre . ' ' . $customer->apellido : 'N/A';
+                    $contact->position = $customer->cargo ?: 'N/A';
                     $contact->customer_id = $newCustomer->id;
                     $contact->save();
 
@@ -212,13 +167,13 @@ class ImportController extends Controller
                     $phone->phone2 = ($customer->telefono_2 != null) ? $this->strTrim('+56' . $customer->telefono_2) : null;
                     $phone->phone3 = ($customer->telefono_3 != null) ? $this->strTrim('+56' . $customer->telefono_3) : null;
                     $phone->contact_id = $contact->id;
-                    $contact->save();
+                    $phone->save();
 
                     $email->email1 = $customer->correo;
                     $email->email2 = $customer->correo_2;
                     $email->email3 = $customer->correo_3;
                     $email->contact_id = $contact->id;
-                    $contact->save();
+                    $email->save();
                 }
 
             });
@@ -269,4 +224,61 @@ class ImportController extends Controller
 
         return true;
     }
+
+    public function getStatus($status) {
+
+        $status = strtolower(trim($status));
+
+        switch ($status) {
+            case 'cerrado':
+                $status = 'Otros';
+                break;
+            case 'estatus':
+                $status = 'Sin Gestion';
+                break;
+            case '':
+                $status = 'Sin Gestion';
+                break;
+        }
+
+        $status_detail_id = Detail::where('name', 'like', strtolower($status))
+            ->pluck('id')
+            ->toArray();
+
+        return $status_detail_id ? $status_detail_id[0] : abort(404);
+
+        /*
+            if (strtolower(trim($customer->estatus)) == 'cerrado') {
+                $customer->estatus = 'Otros';
+            } else if (strtolower(trim($customer->estatus)) == 'concentrado') {
+                $customer->estatus = 'Usan Concentrado';
+            } else if (strtolower(trim($customer->estatus)) == 'gestion') {
+                $customer->estatus = 'En Gestion';
+            } else if (strtolower(trim($customer->estatus)) == 'muestras') {
+                $customer->estatus = 'Sin Contactar';
+            } else if (strtolower(trim($customer->estatus)) == 'envia lista de precio') {
+                $customer->estatus = 'Envia lista de Precios';
+            } else if ($customer->estatus == '') {
+                $customer->estatus = 'Sin Gestion';
+            } else if ($customer->estatus = 'Estado') {
+                $customer->estatus = 'Sin Gestion';
+            }
+        */
+    }
+
+    public function getUser($vendor)
+    {
+
+        $user_id = User::where('name', 'like', $vendor)
+            ->pluck('id')
+            ->toArray();
+
+        if (trim($vendor) == 'Maria' || trim($vendor) == 'María')
+            return 3;
+        elseif(trim($vendor) == 'Dayanna')
+            return 4;
+        else
+            return 2;
+    }
+
 }

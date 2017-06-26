@@ -61,7 +61,7 @@ class DetailsTableSeeder extends Seeder
         $detail->save();
 
         $detail = new Detail();
-        $detail->name = 'Envia lista de Precios';
+        $detail->name = 'Envia lista de Precio';
         $detail->status_id = 1;
         $detail->save();
 
@@ -101,7 +101,7 @@ class DetailsTableSeeder extends Seeder
         $detail->save();
 
         $detail = new Detail();
-        $detail->name = 'Venta';
+        $detail->name = 'Muestras';
         $detail->status_id = 2;
         $detail->save();
 
@@ -138,7 +138,7 @@ class DetailsTableSeeder extends Seeder
 
         $detail = new Detail();
         $detail->name = 'Rechazado';
-        $detail->status_id = 2;
+        $detail->status_id = 3;
         $detail->save();
 
 
