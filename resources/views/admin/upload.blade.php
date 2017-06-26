@@ -13,7 +13,7 @@
                                 {{ session('error') }}
                             </div>
                         @endif
-                        <form method="POST" action="http://saf.app/import" accept-charset="UTF-8" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('import') }}" accept-charset="UTF-8" enctype="multipart/form-data">
 
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

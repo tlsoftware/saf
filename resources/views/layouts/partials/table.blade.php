@@ -10,7 +10,7 @@
         @endif
         <th>Última Gestión</th>
         <th>Próxima Gestión</th>
-        @if(Route::current()->getName() == 'home')
+        @if(Route::current()->getName() == 'home' or Route::current()->getName('todos.show'))
             <th>Estatus General</th>
         @endif
         <th>Estatus Detallado</th>
@@ -38,7 +38,7 @@
             <!-- PROXIMA GESTION -->
                 <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>
                 <!-- STATUS -->
-                @if(Route::current()->getName() == 'home')
+                @if(Route::current()->getName() == 'home' or Route::current()->getName('todos.show'))
                     <td> {{ $customer->status_detail->status->name }}</td>
                 @endif
                 <td> {{ $customer->status_detail->name }}</td>

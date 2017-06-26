@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Detail;
 use Illuminate\Http\Request;
 use Auth;
 use App\Customer;
@@ -13,7 +14,7 @@ class TodosCustomerController extends Controller
 {
     public function show()
     {
-        if (Auth::user()->isAdmin())
+        if (Auth::user()->isAdmin() or Auth::user()->isSupervisor())
         {
             $customers = Customer::orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
@@ -21,10 +22,11 @@ class TodosCustomerController extends Controller
 
         }
 
-        // Si es Vendedor carga solo los clientes pendientes de ese Vendedor
         else {
             $customers = Customer::where('user_id', Auth::user()->id)
                 // ->where('status', '4')
+                ->whereNotIn('status_detail_id', Detail::getRejected())
+                ->whereNotIn('status_detail_id', Detail::getLowCustomer())
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->get();

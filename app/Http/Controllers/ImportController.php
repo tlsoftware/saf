@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Contact;
 use App\Customer;
 use App\Detail;
+use App\Email;
 use App\Management;
+use App\Phone;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,9 +29,11 @@ class ImportController extends Controller
         $name =  $file->getClientOriginalName();
         $extension = $request->file->extension();
 
+        /*
         if ($extension !== 'txt') {
             return back()->with('error', 'Extension Invalida! La extension del Archivo debe ser CSV');
         }
+        */
 
         if (! \Storage::disk('local')->put($name,  \File::get($file))) {
             return back()->with('error', 'Error Cargando Archivo!');
@@ -52,7 +57,7 @@ class ImportController extends Controller
             Excel::load($this->load_file, function($reader) {
 
                 // $reader->skip(6);
-                // $reader->take(10);
+                $reader->take(10);
                 // DB::enableQueryLog();
 
                 foreach ($reader->get() as $customer) {
@@ -62,14 +67,9 @@ class ImportController extends Controller
                     $newCustomer->rut = $customer->rut;
                     $newCustomer->bs_name = $customer->razon_social;
                     $newCustomer->name = $customer->nombre_fantasia;
-                    $newCustomer->phone1 = ($customer->telefono_1 != null) ? $this->strTrim('+56' . $customer->telefono_1) : null;
-                    $newCustomer->phone2 = ($customer->telefono_2 != null) ? $this->strTrim('+56' . $customer->telefono_2) : null;
-                    $newCustomer->phone3 = ($customer->telefono_3 != null) ? $this->strTrim('+56' . $customer->telefono_3) : null;
-                    $newCustomer->contact_name = $customer->nombre . ' ' . $customer->apellido;
-                    $newCustomer->position = $customer->cargo;
-                    $newCustomer->email1 = $customer->correo;
-                    $newCustomer->email2 = $customer->correo_2;
-                    $newCustomer->email3 = $customer->correo_3;
+                    $newCustomer->address = $customer->direccion;
+                    $newCustomer->commune = $customer->comuna;
+                    $newCustomer->city = $customer->ciudad;
                     $newCustomer->web = $customer->web;
 
                     if (strtolower(trim($customer->estatus)) == 'cerrado') {
@@ -112,20 +112,21 @@ class ImportController extends Controller
                     Venta: Activos
                     */
 
-                    $last_mng = $this->handleDate($customer->fecha_ultimo_contacto);
+                    $last_mng = $this->handleDate($customer->ultimo_contacto);
                     // $newCustomer->next_mng = Carbon::now('America/Santiago');
-                    $newCustomer->next_mng = $this->handleDate($customer->fecha_proxima_gestion);
+                    // $newCustomer->next_mng = $this->handleDate($customer->fecha_proxima_gestion);
+
+                    $newCustomer->next_mng = $this->handleDate(Carbon::now()->addWeekdays(7)->format('Y-m-d'));
 
                     $user_id = 2;
+                    // $user_id = 1;
+
                     if (trim($customer->vendedor) == 'Maria' || trim($customer->vendedor) == 'María')
                         $user_id = 3;
                     if (trim($customer->vendedor) == 'Dayanna')
                         $user_id = 4;
 
                     switch (ucfirst(strtolower($customer->clasificacion_restaurant))) {
-                        case 'Pizzeria' :
-                            $id = 1;
-                            break;
                         case 'Pizzeria' :
                             $id = 1;
                             break;
@@ -196,6 +197,28 @@ class ImportController extends Controller
                     $newCustomer->save();
                     // DB::disableQueryLog();
                     $newCustomer->managements()->save($management);
+
+                    $contact = new Contact();
+                    $phone = new Phone();
+                    $email = new Email();
+
+                    $contact->name = $customer->nombre . ' ' . $customer->apellido;
+                    $contact->position = $customer->cargo;
+                    $contact->customer_id = $newCustomer->id;
+                    $contact->save();
+
+
+                    $phone->phone1 = ($customer->telefono_1 != null) ? $this->strTrim('+56' . $customer->telefono_1) : null;
+                    $phone->phone2 = ($customer->telefono_2 != null) ? $this->strTrim('+56' . $customer->telefono_2) : null;
+                    $phone->phone3 = ($customer->telefono_3 != null) ? $this->strTrim('+56' . $customer->telefono_3) : null;
+                    $phone->contact_id = $contact->id;
+                    $contact->save();
+
+                    $email->email1 = $customer->correo;
+                    $email->email2 = $customer->correo_2;
+                    $email->email3 = $customer->correo_3;
+                    $email->contact_id = $contact->id;
+                    $contact->save();
                 }
 
             });

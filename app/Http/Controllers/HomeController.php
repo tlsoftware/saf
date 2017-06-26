@@ -30,10 +30,8 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $dateFrom = self::convert_date_es_to_en($request->dateFrom);
-        $dateTo = self::convert_date_es_to_en($request->dateTo);
-
-
+        // $dateFrom = self::convert_date_es_to_en($request->dateFrom);
+        // $dateTo = self::convert_date_es_to_en($request->dateTo);
 
         // PERFIL ADMINISTRADOR
         if (Auth::user()->isAdmin()) {
@@ -51,7 +49,7 @@ class HomeController extends Controller
                 // CLIENTES POTENCIALES (status => 1)
                 $customers = Customer::where('next_mng', '<=', Carbon::now())
                     ->whereIn('status_detail_id', Detail::getPotentials())
-                    ->nextMng($dateFrom, $dateTo)
+                    //->nextMng($dateFrom, $dateTo)
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
                     ->get();
@@ -61,8 +59,8 @@ class HomeController extends Controller
             }
             if ($customers->count() == 0) {
                 // CLIENTES MUESTRAS (status => 2)
-                $customers = Customer::nextMng($dateFrom, $dateTo)
-                    ->where('next_mng', '<=', Carbon::now())
+                $customers = Customer::where('next_mng', '<=', Carbon::now())
+                    // ->nextMng($dateFrom, $dateTo)
                     ->whereIn('status_detail_id', Detail::getSamples())
                     ->orderBy('next_mng', 'asc')
                     ->orderBY('last_mng', 'asc')
@@ -81,7 +79,9 @@ class HomeController extends Controller
                 $status = 'Clientes Activos';
 
                 // No existen cientes PENDIENTES POR GESTION
+                Flash::error("No posee Clientes pendientes por Gestion!!");
             }
+            /*
             if ($customers->count() == 0) {
                 // CLIENTES POTENCIALES (status => 1)
                 $customers = Customer::whereIn('status_detail_id', Detail::getPotentials())
@@ -107,6 +107,7 @@ class HomeController extends Controller
                     ->get();
                 $status = 'Clientes Activos';
             }
+            */
         }
 
         /*
@@ -162,7 +163,9 @@ class HomeController extends Controller
                 $status = 'Clientes Activos';
 
                 // No existen cientes PENDIENTES POR GESTION
+                Flash::error("No posee Clientes pendientes por Gestion!!");
             }
+            /*
             if ($customers->count() == 0) {
                 // CLIENTES POTENCIALES
                 $customers = Customer::where('user_id', Auth::user()->id)
@@ -190,9 +193,12 @@ class HomeController extends Controller
                     ->get();
                 $status = 'Clientes Activos';
             }
+            */
         }
 
-        return view('home')->with('customers', $customers)->with('status', $status);
+        return view('home')
+            ->with('customers', $customers)
+            ->with('status', $status);
     }
 
     public static function convert_date_es_to_en($date)

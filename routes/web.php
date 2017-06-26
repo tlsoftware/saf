@@ -69,8 +69,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::get('upload', 'ImportController@index')->name('carga_masiva');
-        Route::post('import', 'ImportController@uploadFile');
-        Route::get('import', 'ImportController@import');
+        Route::post('import', 'ImportController@uploadFile')->name('import');
+        Route::get('import', 'ImportController@import')->name('import');
 
     });
     // Fin vistas de Administracion
