@@ -19,6 +19,6 @@ class Contact extends Model
     }
 
     public function email() {
-        return $this->belongsTo('App\Email');
+        return $this->hasOne('App\Email');
     }
 }

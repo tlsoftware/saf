@@ -33,7 +33,7 @@
                 @if($customer->managements->count())
                     <td>{{ \Carbon\Carbon::parse($customer->managements->last()->created_at)->format('d-m-Y') }}</td>
                 @else
-                    <td> N/A </td>
+                    <td class="text-center"> -- -- --</td>
                 @endif
             <!-- PROXIMA GESTION -->
                 <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>

@@ -36,38 +36,38 @@
                                     </div>
                                 </div>
                             <div class="form-group">
-                                {{ Form::label('contact_name', 'Persona de Contacto', ['class' => 'col-sm-2 control-label']) }}
+                                {{ Form::label('contact_name', 'Contacto', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-4">
-                                    {{ Form::text('contact_name', $customer->contact_name, ['class' => 'form-control']) }}
+                                    {{ Form::text('contact_name', $customer->contact->name, ['class' => 'form-control']) }}
                                 </div>
                                 {{ Form::label('position', 'Cargo', ['class' => 'col-sm-1 control-label']) }}
                                 <div class="col-sm-4">
-                                    {{ Form::text('position', $customer->position, ['class' => 'form-control']) }}
+                                    {{ Form::text('position', $customer->contact->position, ['class' => 'form-control']) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 {{ Form::label('phone1', 'Teléfonos', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-3">
-                                    {{ Form::text('phone1', $customer->phone1, ['class' => 'form-control']) }}
+                                    {{ Form::text('phone1', $customer->contact->phone->phone1, ['class' => 'form-control']) }}
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('phone2', $customer->phone2, ['class' => 'form-control']) }}
+                                    {{ Form::text('phone2', $customer->contact->phone->phone2, ['class' => 'form-control']) }}
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('phone3', $customer->phone3, ['class' => 'form-control']) }}
+                                    {{ Form::text('phone3', $customer->contact->phone->phone3, ['class' => 'form-control']) }}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {{ Form::label('email1', 'Correo', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-3">
-                                    {{ Form::text('email1', $customer->email1, ['class' => 'form-control']) }}
+                                    {{ Form::text('email1', $customer->contact->email->email1, ['class' => 'form-control']) }}
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('email2', $customer->email2, ['class' => 'form-control']) }}
+                                    {{ Form::text('email2', $customer->contact->email->email1, ['class' => 'form-control']) }}
                                 </div>
                                 <div class="col-sm-3">
-                                    {{ Form::text('email3', $customer->email3, ['class' => 'form-control']) }}
+                                    {{ Form::text('email3', $customer->contact->email->email1, ['class' => 'form-control']) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -81,15 +81,6 @@
                                     <div class="col-sm-2">
                                         {{ Form::text('type', $customer->bstype->type, ['class' => 'form-control']) }}
                                     </div>
-                                    {{ Form::label('size', 'Tamaño', ['class' => 'col-sm-1 control-label']) }}
-                                    <div class="col-sm-2">
-                                        {{ Form::text('size', $customer->bstype->size, ['class' => 'form-control']) }}
-                                    </div>
-                                    {{ Form::label('quantity', 'N° Locales', ['class' => 'col-sm-2 control-label']) }}
-                                    <div class="col-sm-2">
-                                        {{ Form::text('quantity', $customer->bstype->quantity, ['class' => 'form-control']) }}
-                                    </div>
-                                    <!-- @todo Agregar Estatus en Vista de Customers -->
                                 </div>
                             <div class="form-group">
                                 {{ Form::label('next_mng', 'Próxima Gestión', ['class' => 'col-sm-2 control-label']) }}
