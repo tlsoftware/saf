@@ -12,8 +12,8 @@
     @foreach($managements as $management)
         <tr>
             <td>{{ $management->customer->name }}</td>
-            <td>{{ $management->customer->contact_name }}</td>
-            <td>{{ $management->customer->phone1 }}</td>
+            <td>{{ $management->customer->contact->name }}</td>
+            <td>{{ $management->customer->contact->phone->phone1 }}</td>
             <td>{{ $management->customer->user()->first()->name }}</td>
             <td>{{ Carbon\Carbon::parse($management->customer->next_mng)->format('d-m-Y') }}</td>
             <td> {{ $management->customer->status_detail->status->name }}</td>
