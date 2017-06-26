@@ -13,7 +13,7 @@ class BajaCustomerController extends Controller
     {
         $baja_ids      = Detail::getLowCustomer();
 
-        if (Auth::user()->admin)
+        if (Auth::user()->isAdmin())
         {
             $customers = Customer::whereIn('status_detail_id', $baja_ids)
                 // ->where('next_mng', '>', Carbon::now())

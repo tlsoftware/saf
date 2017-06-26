@@ -13,7 +13,7 @@ class TodosCustomerController extends Controller
 {
     public function show()
     {
-        if (Auth::user()->admin)
+        if (Auth::user()->isAdmin())
         {
             $customers = Customer::orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')

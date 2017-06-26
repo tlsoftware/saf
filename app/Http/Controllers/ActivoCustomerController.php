@@ -28,7 +28,7 @@ class ActivoCustomerController extends Controller
     {
         $activo_ids    = Detail::getActives();
 
-        if (Auth::user()->admin)
+        if (Auth::user()->isAdmin())
         {
             $customers = Customer::whereIn('status_detail_id', $activo_ids)
                 ->orderBy('next_mng', 'asc')

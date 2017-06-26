@@ -38,7 +38,7 @@ class PotencialCustomerController extends Controller
         $potencial_ids = Detail::getPotentials();
         // $status = 'Clientes Potenciales';
 
-        if (Auth::user()->admin)
+        if (Auth::user()->isAdmin())
         {
             $customers = Customer::whereIn('status_detail_id', $potencial_ids)
                 //->where('next_mng', '>', Carbon::now())

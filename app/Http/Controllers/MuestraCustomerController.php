@@ -30,7 +30,7 @@ class MuestraCustomerController extends Controller
     {
         $muestra_ids   = Detail::getSamples();
 
-        if (Auth::user()->admin)
+        if (Auth::user()->isAdmin())
         {
             $customers = Customer::whereIn('status_detail_id', $muestra_ids)
                 ->orderBy('next_mng', 'asc')

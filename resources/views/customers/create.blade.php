@@ -82,7 +82,7 @@
                                     </div>
                                 </div>
 
-                            @if(Auth::user()->admin)
+                            @if(Auth::user()->isAdmin())
                                 <div class="form-group">
                                     {{ Form::label('user_id', 'Responsable', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-3">

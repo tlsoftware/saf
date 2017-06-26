@@ -13,7 +13,7 @@ class RechazoCustomerController extends Controller
     {
         $rechazo_ids   = Detail::getRejected();
 
-        if (Auth::user()->admin)
+        if (Auth::user()->isAdmin())
         {
             $customers = Customer::whereIn('status_detail_id', $rechazo_ids)
                 // ->where('next_mng', '>', Carbon::now())
