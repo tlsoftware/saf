@@ -24,8 +24,8 @@
                         </div>
 
                         <div class="form-group">
-                            {{ Form::label('admin', 'Perfil de Usuario') }}
-                            {{ Form::select('admin', ['' => 'Seleccione', '0' => 'Vendedor', '1' => 'Administrador'], null, ['class' => 'form-control']) }}
+                            {{ Form::label('role', 'Perfil de Usuario') }}
+                            {{ Form::select('role', $roles, $user->role, ['class' => 'form-control', 'required']) }}
                         </div>
                         <hr>
                         <div class="form-group" align="center">

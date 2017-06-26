@@ -35,6 +35,10 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'email' => 'unique:users',
+        ]);
+
         $user = new User($request->all());
         $user->save();
 
@@ -51,7 +55,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('admin.users.edit')->with('user', $user);
+        return view('admin.users.edit')
+            ->with('user', $user)
+            ->with('roles', $this->roles);
     }
 
     public function update(Request $request, $id)
@@ -71,7 +77,7 @@ class UserController extends Controller
 
         if (!count($user->customers)) {
             $user->delete();
-            Flash::error('El usuario ' . $user->name . ' ha sido borrado de forma Exitosa!!');
+            Flash::success('El usuario ' . $user->name . ' ha sido borrado de forma Exitosa!!');
             return redirect()->route('users.index');
         }
         Flash::error('El usuario ' . $user->name . ' no se pudo eliminar "Tiene Clientes Asociados"!!');
@@ -93,7 +99,7 @@ class UserController extends Controller
         Customer::where('user_id', $id)
             ->update(['user_id' => $request->user2_id]);
 
-        Flash::warning('Se migraron los Clientes con Exito!!');
+        Flash::success('Se migraron los Clientes con Exito!!');
 
         return redirect()->route('users.index');
     }

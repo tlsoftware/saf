@@ -72,7 +72,7 @@ $(document).ready(function() {
     var endDate = new Date();
     startDate.setDate(startDate.getDate() + 1);
     endDate.setDate(endDate.getDate() + 8);
-    $('.datepicker').datetimepicker({
+    $('.datepicker').datepicker({
         format: "dd/mm/yyyy",
         startDate: startDate,
         endDate: endDate,
@@ -103,4 +103,24 @@ $(document).ready(function() {
     });
 
 });
+
+function confirmDelete(e)
+{
+    e.preventDefault();
+    swal({
+        title: 'Esta seguro?',
+        text: "No sera posible revertir esto!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Borrar!'
+    }).then(function () {
+        swal(
+            'Eliminado!',
+            'El usuario fue eliminado',
+            'success'
+        )
+    })
+}
 

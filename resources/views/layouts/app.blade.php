@@ -81,6 +81,7 @@
             </div>
         </nav>
         <!-- </header> -->
+        @include('layouts.errors')
         @include('flash::message')
         @yield('content')
     </div>
