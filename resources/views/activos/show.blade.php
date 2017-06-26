@@ -18,9 +18,6 @@
                     <div class="panel-body">
                         <div class="row">
                             <a href="{{ route('customers.create') }}" class="btn btn-info" id="new_customer">Nuevo Cliente</a>
-                            {!! Form::open(['route' => 'home', 'method' => 'GET', 'class' => 'navbar-form navbar-left pull-right', 'role' => 'search']) !!}
-                            @include('layouts.partials.filter')
-                            {!! Form::close() !!}
                         </div>
                     </div>
                     @include('layouts.partials.table')
