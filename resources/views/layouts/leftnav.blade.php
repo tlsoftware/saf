@@ -9,7 +9,6 @@
             <li><a href="{{ route('products.index') }}">Productos</a></li>
             <li><a href="{{ route('statuses') }}">Estatus</a></li>
             <li><a href="{{ route('carga_masiva') }}">Carga Masiva</a></li>
-            <li><a href="{{ route('gestiones') }}">Gestiones</a></li>
         </ul>
     </li>
 @endif

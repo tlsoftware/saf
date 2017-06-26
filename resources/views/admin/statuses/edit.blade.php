@@ -7,7 +7,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">Editar Estatus</div>
                     <div class="panel-body">
-                        {!! Form::open(['route' => ['admin.statuses.update', $detail], 'method' => 'PUT']) !!}
+                        {!! Form::open(['route' => ['statuses.update', $detail], 'method' => 'PUT']) !!}
                         <div class="form-group">
                             {{ Form::label('status_id', 'Estatus General') }}
                             {{ Form::select('status_id', $statuses, $detail->status_id, ['class' => 'form-control', 'required']) }}

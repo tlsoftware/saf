@@ -15,12 +15,10 @@ class ProductController extends Controller
         return view('admin.products.index')->with('products', $products);
     }
 
-
     public function create()
     {
         return view('admin.products.create');
     }
-
 
     public function store(Request $request)
     {
@@ -32,12 +30,10 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
 
-
     public function show($id)
     {
         //
     }
-
 
     public function edit($id)
     {
@@ -45,10 +41,12 @@ class ProductController extends Controller
         return view('admin.products.edit')->with('product', $product);
     }
 
-
     public function update(Request $request, $id)
     {
         $product = Product::find($id);
+
+        dd($product->toArray());
+
         $product->fill($request->all());
         $product->save();
 
@@ -61,12 +59,14 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
+        dd($product->toArray());
+
         if (!count($product->managements)) {
             $product->delete();
             Flash::error('El producto ' . $product->name . ' ha sido borrado de forma Exitosa!!');
             return redirect()->route('products.index');
         }
         Flash::error('El producto ' . $product->name . ' no se pudo eliminar "Tiene Ventas Asociadas"!!');
-        return redirect()->route('product.index');
+        return redirect()->route('products.index');
     }
 }

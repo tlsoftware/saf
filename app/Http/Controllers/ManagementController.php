@@ -338,7 +338,7 @@ class ManagementController extends Controller
         $fecha2 = $today . ' 23:59:59';
         $managements = Management::whereBetween('created_at', [$fecha1, $fecha2])->get();
 
-        return view('admin.gestiones.index')
+        return view('supervisor.gestiones.index')
             ->with('managements', $managements);
     }
 

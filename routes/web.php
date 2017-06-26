@@ -31,22 +31,53 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'admin'], function () {
 
         Route::resource('users', 'UserController');
-
         Route::get('users/{id}/destroy', [
             'uses'  => 'UserController@destroy',
             'as'   => 'users.destroy'
         ]);
-
         Route::get('/users/migrate/{id}', [
             'uses' => 'UserController@migrate',
             'as'   => 'migrate'
         ]);
-
         Route::put('users/migrate/{id}', [
             'uses'  => 'UserController@storeMigrate',
             'as'   => 'migrate'
         ]);
 
+        Route::resource('products', 'ProductController');
+
+        Route::resource('customers', 'CustomerController');
+
+        Route::get('mantenedor-estatus', [
+            'uses'  => 'StatusController@index',
+            'as'    => 'statuses'
+        ]);
+        Route::get('mantenedor-estatus-create', [
+            'uses'   => 'StatusController@create',
+            'as'    => 'statuses.create'
+        ]);
+        Route::post('mantenedor-estatus-create', [
+            'uses'   => 'StatusController@store',
+            'as'    => 'statuses.store'
+        ]);
+        Route::get('mantenedor-status-edit/{detail}', [
+            'uses'   => 'StatusController@edit',
+            'as'    => 'statuses.edit'
+        ]);
+        Route::put('mantenedor-status-edit/{detail}', [
+            'uses'   => 'StatusController@update',
+            'as'     => 'statuses.update'
+        ]);
+
+    });
+    // Fin vistas de Administracion
+
+    Route::group(['prefix' => 'supervisor'], function () {
+
+        Route::get('gestiones', [
+            'uses' => 'ManagementController@dailyManagement',
+            'as' => 'gestiones'
+        ]);
     });
 
     Route::get('/home', [
@@ -61,31 +92,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-Route::resource('products', 'ProductController');
 
-Route::resource('customers', 'CustomerController');
 
-Route::get('mantenedor-estatus', [
-    'uses'  => 'StatusController@index',
-    'as'    => 'statuses'
-]);
-Route::get('mantenedor-estatus-create', [
-   'uses'   => 'StatusController@create',
-    'as'    => 'admin.statuses.create'
-]);
-Route::post('mantenedor-estatus-create', [
-    'uses'   => 'StatusController@store',
-    'as'    => 'admin.statuses.store'
-]);
 
-Route::get('mantenedor-status-edit/{detail}', [
-   'uses'   => 'StatusController@edit',
-    'as'    => 'admin.statuses.edit'
-]);
-Route::put('mantenedor-status-edit/{detail}', [
-    'uses'   => 'StatusController@update',
-    'as'     => 'admin.statuses.update'
-]);
+
 
 Route::get('/managements/{id}', [
     'uses' => 'ManagementController@show',
@@ -202,7 +212,4 @@ Route::get('upload', 'ImportController@index')->name('carga_masiva');
 Route::post('import', 'ImportController@uploadFile');
 Route::get('import', 'ImportController@import');
 
-Route::get('admin/gestiones', [
-    'uses' => 'ManagementController@dailyManagement',
-    'as'   => 'gestiones'
-]);
+

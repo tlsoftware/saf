@@ -11,7 +11,6 @@
                         <hr>
                         <table class="table table-striped table-bordered table-hover table-condensed">
                             <thead>
-                                <th>ID</th>
                                 <th>Código</th>
                                 <th>Producto</th>
                                 <th>Acción</th>
@@ -19,12 +18,10 @@
                             <tbody>
                             @foreach($products as $product)
                                 <tr>
-                                    <td>{{ $product->id }}</td>
                                     <td>{{ $product->code }}</td>
                                     <td>{{ $product->name }}</td>
                                     <td>
                                         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a>
-                                        <a href="{{ route('products.destroy', $product->id) }}" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas eliminar el Producto? {{ $product->code }}')"><span class="glyphicon glyphicon-remove"></span></a>
                                     </td>
                                 </tr>
                             @endforeach
