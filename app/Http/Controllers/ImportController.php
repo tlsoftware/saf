@@ -57,8 +57,8 @@ class ImportController extends Controller
 
             Excel::load($this->load_file, function($reader) {
 
-                // $reader->skip(7);
-                // $reader->take(1);
+                //$reader->skip(10);
+               //$reader->take(10);
                 $reader->formatDates(true, 'd/m/Y');
 
                 // DB::enableQueryLog();
@@ -76,13 +76,13 @@ class ImportController extends Controller
                     $newCustomer->web = $customer->web;
                     $newCustomer->status_detail_id = $this->getStatus($customer->estatus);
 
-                    $last_mng = $this->handleDate($customer->ultimo_contacto);
+                    $lastMng = $this->handleDate($customer->ultimo_contacto);
 
                     if (in_array($newCustomer->status_detail_id, Detail::getLowCustomer()) or
                         in_array($newCustomer->status_detail_id, Detail::getRejected())) {
                         $newCustomer->next_mng = '2100-12-31';
                     } else {
-                        $newCustomer->next_mng = $last_mng->addWeekdays(7)->format('Y-m-d');
+                        $newCustomer->next_mng = ($lastMng)->addWeekdays(7)->format('Y-m-d');
                     }
 
                     $newCustomer->user_id = $this->getUser($customer->vendedor);
@@ -95,10 +95,12 @@ class ImportController extends Controller
                     $created_at = $this->handleDate(substr($customer->seguimiento, 0, 10));
 
                     $management->description = $customer->seguimiento;
-                    $management->created_at = new Carbon($last_mng, 'America/Santiago');
+                    $management->created_at = $this->handleDate($customer->ultimo_contacto);
                     $management->user_id = $this->getUser($customer->vendedor);
                     $newCustomer->created_at = $created_at;
+                    $newCustomer->last_mng = $this->handleDate($customer->ultimo_contacto);
                     $newCustomer->save();
+
                     // DB::disableQueryLog();
                     $newCustomer->managements()->save($management);
 

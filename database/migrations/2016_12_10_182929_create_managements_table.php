@@ -16,6 +16,7 @@ class CreateManagementsTable extends Migration
         Schema::create('managements', function (Blueprint $table) {
             $table->increments('id');
             $table->text('description');
+
             $table->date('dispatch_date')->nullable()->default(null);
             $table->time('dispatch_time')->nullable()->default(null);
 
