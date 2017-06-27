@@ -16,4 +16,12 @@ class Bstype extends Model
         return $this->hasMany('App\Customer');
 
     }
+
+    public static function getClassificationIdByName($classification_name) {
+        $classification_name = $classification_name ?: 'Varios';
+
+        return self::where('type', 'like', $classification_name)
+            ->pluck('id')
+            ->first() ?: 17;
+    }
 }

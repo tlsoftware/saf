@@ -33,16 +33,41 @@ class HomeController extends Controller
         // $dateFrom = self::convert_date_es_to_en($request->dateFrom);
         // $dateTo = self::convert_date_es_to_en($request->dateTo);
 
+        // Clientes con Promesa de Compra
+        $purchase_promise_id = Detail::getPurchasePromise();
+        $tracking_sample_id = Detail::getTrackingSamples();
+
         // PERFIL ADMINISTRADOR
         if (Auth::user()->isAdmin()) {
-            // CLIENTES SIN GESTION   (status => 0)
             $customers = Customer::where('next_mng', '<=', Carbon::now())
-                ->where('status_detail_id', 1)
+                ->where('status_detail_id', $purchase_promise_id)
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->get();
 
-            $status = 'Clientes sin Gestion';
+            $status = 'Promesa de Compra';
+
+            if ($customers->count() == 0) {
+                // CLIENTES SIN GESTION   (status => 0)
+                $customers = Customer::where('next_mng', '<=', Carbon::now())
+                    ->where('status_detail_id', $tracking_sample_id)
+                    ->orderBy('next_mng', 'asc')
+                    ->orderBY('last_mng', 'asc')
+                    ->get();
+
+                $status = 'Muestras - En Seguimiento';
+            }
+
+            if ($customers->count() == 0) {
+                // CLIENTES SIN GESTION   (status => 0)
+                $customers = Customer::where('next_mng', '<=', Carbon::now())
+                    ->where('status_detail_id', 1)
+                    ->orderBy('next_mng', 'asc')
+                    ->orderBY('last_mng', 'asc')
+                    ->get();
+
+                $status = 'Promesa de Compra';
+            }
 
             // No existen clientes SIN GESTION
             if ($customers->count() == 0) {
@@ -116,14 +141,37 @@ class HomeController extends Controller
          * ****************************************
          */
         else {
-            // CLIENTES SIN GESTION
+
             $customers = Customer::where('user_id', Auth::user()->id)
                 ->where('next_mng', '<=', Carbon::now())
-                ->where('status_detail_id', 1)
+                ->where('status_detail_id', $purchase_promise_id)
                 ->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
                 ->get();
-            $status = 'Clientes sin Gestion';
+
+            $status = 'Promesa de Compra';
+
+            if ($customers->count() == 0) {
+                // CLIENTES SIN GESTION   (status => 0)
+                $customers = Customer::where('user_id', Auth::user()->id)
+                    ->where('next_mng', '<=', Carbon::now())
+                    ->where('status_detail_id', $tracking_sample_id)
+                    ->orderBy('next_mng', 'asc')
+                    ->orderBY('last_mng', 'asc')
+                    ->get();
+
+                $status = 'Muestras - En Seguimiento';
+            }
+            if ($customers->count() == 0) {
+                // CLIENTES SIN GESTION
+                $customers = Customer::where('user_id', Auth::user()->id)
+                    ->where('next_mng', '<=', Carbon::now())
+                    ->where('status_detail_id', 1)
+                    ->orderBy('next_mng', 'asc')
+                    ->orderBY('last_mng', 'asc')
+                    ->get();
+                $status = 'Clientes sin Gestion';
+            }
 
             // No existen clientes SIN GESTION
             if ($customers->count() == 0) {

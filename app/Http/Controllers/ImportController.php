@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bstype;
 use App\Contact;
 use App\Customer;
 use App\Detail;
@@ -54,11 +55,12 @@ class ImportController extends Controller
     {
         DB::transaction(function () {
 
-
             Excel::load($this->load_file, function($reader) {
 
-                // $reader->skip(0);
-                // $reader->take(200);
+                // $reader->skip(7);
+                // $reader->take(1);
+                $reader->formatDates(true, 'd/m/Y');
+
                 // DB::enableQueryLog();
 
                 foreach ($reader->get() as $customer) {
@@ -72,72 +74,19 @@ class ImportController extends Controller
                     $newCustomer->commune = $customer->comuna;
                     $newCustomer->city = $customer->ciudad;
                     $newCustomer->web = $customer->web;
-
                     $newCustomer->status_detail_id = $this->getStatus($customer->estatus);
 
                     $last_mng = $this->handleDate($customer->ultimo_contacto);
-                    // $newCustomer->next_mng = Carbon::now('America/Santiago');
-                    // $newCustomer->next_mng = $this->handleDate($customer->fecha_proxima_gestion);
 
-                    $newCustomer->next_mng = $this->handleDate(Carbon::now()->addWeekdays(7)->format('Y-m-d'));
-
-                    switch (ucfirst(strtolower($customer->clasificacion_restaurant))) {
-                        case 'Pizzeria' :
-                            $id = 1;
-                            break;
-                        case 'Italiana' :
-                            $id = 2;
-                            break;
-                        case 'Bar' :
-                            $id = 3;
-                            break;
-                        case 'Bazar' :
-                            $id = 4;
-                            break;
-                        case 'Cafe' :
-                            $id = 5;
-                            break;
-                        case 'Carnes' :
-                            $id = 6;
-                            break;
-                        case 'Cerveceria' :
-                            $id = 8;
-                            break;
-                        case 'Comida' :
-                            $id = 9;
-                            break;
-                        case 'Comidas' :
-                            $id = 10;
-                            break;
-                        case 'Distribuidora' :
-                            $id = 11;
-                            break;
-                        case 'Empanadas' :
-                            $id = 12;
-                            break;
-                        case 'Fabrica' :
-                            $id = 13;
-                            break;
-                        case 'Hotel' :
-                            $id = 14;
-                            break;
-                        case 'Pastas' :
-                            $id = 15;
-                            break;
-                        case 'Restaurant' :
-                            $id = 16;
-                            break;
-                        case 'Varios' :
-                            $id = 17;
-                            break;
-                        case 'Vegetariano' :
-                            $id = 18;
-                            break;
-                        default:
-                            $id = 17;
+                    if (in_array($newCustomer->status_detail_id, Detail::getLowCustomer()) or
+                        in_array($newCustomer->status_detail_id, Detail::getRejected())) {
+                        $newCustomer->next_mng = '2100-12-31';
+                    } else {
+                        $newCustomer->next_mng = $last_mng->addWeekdays(7)->format('Y-m-d');
                     }
+
                     $newCustomer->user_id = $this->getUser($customer->vendedor);
-                    $newCustomer->bstype_id = $id;
+                    $newCustomer->bstype_id = $this->getBsType($customer->clasificacion_restaurant);
 
                     if ($customer->seguimiento == null)
                     {
@@ -191,7 +140,7 @@ class ImportController extends Controller
     public function handleDate($date)
     {
         if ($date === null || ctype_alpha(substr($date, 0, 2))) {
-            $date = '21/06/2017';
+            $date = date('d/m/Y');
         }
 
         $delimiter = (! strpos($date, '/'))
@@ -200,14 +149,14 @@ class ImportController extends Controller
         $date_formated = explode($delimiter, $date);
 
         try {
-            if ($date_formated[1] > 12) {
-                $aux = $date_formated[0];
-                $date_formated[0] = $date_formated[1];
-                $date_formated[1] = $aux;
+            if ($date_formated[0] > 12) {
+                $aux = $date_formated[1];
+                $date_formated[1] = $date_formated[0];
+                $date_formated[0] = $aux;
             }
 
-            $day = str_pad($date_formated[0], 2, 0, STR_PAD_LEFT);
-            $month = str_pad($date_formated[1], 2, 0, STR_PAD_LEFT);
+            $day = str_pad($date_formated[1], 2, 0, STR_PAD_LEFT);
+            $month = str_pad($date_formated[0], 2, 0, STR_PAD_LEFT);
             $year = $date_formated[2];
             if(strlen($year) == 2)
                 $year = '20' . $date_formated[2];
@@ -268,17 +217,80 @@ class ImportController extends Controller
 
     public function getUser($vendor)
     {
-
+        /*
         $user_id = User::where('name', 'like', $vendor)
             ->pluck('id')
-            ->toArray();
-
+            ->first();
+        */
         if (trim($vendor) == 'Maria' || trim($vendor) == 'María')
             return 3;
         elseif(trim($vendor) == 'Dayanna')
             return 4;
         else
             return 2;
+    }
+
+    public function getBsType($classification)
+    {
+        return Bstype::getClassificationIdByName($classification) ?: 17;
+
+        /*
+        switch (ucfirst(strtolower())) {
+            case 'Pizzeria' :
+                $id = 1;
+                break;
+            case 'Italiana' :
+                $id = 2;
+                break;
+            case 'Bar' :
+                $id = 3;
+                break;
+            case 'Bazar' :
+                $id = 4;
+                break;
+            case 'Cafe' :
+                $id = 5;
+                break;
+            case 'Carnes' :
+                $id = 6;
+                break;
+            case 'Cerveceria' :
+                $id = 8;
+                break;
+            case 'Comida' :
+                $id = 9;
+                break;
+            case 'Comidas' :
+                $id = 10;
+                break;
+            case 'Distribuidora' :
+                $id = 11;
+                break;
+            case 'Empanadas' :
+                $id = 12;
+                break;
+            case 'Fabrica' :
+                $id = 13;
+                break;
+            case 'Hotel' :
+                $id = 14;
+                break;
+            case 'Pastas' :
+                $id = 15;
+                break;
+            case 'Restaurant' :
+                $id = 16;
+                break;
+            case 'Varios' :
+                $id = 17;
+                break;
+            case 'Vegetariano' :
+                $id = 18;
+                break;
+            default:
+                $id = 17;
+        }
+        */
     }
 
 }

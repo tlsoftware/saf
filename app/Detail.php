@@ -53,5 +53,20 @@ class Detail extends Model
             ->toArray();
     }
 
+    public static function getPurchasePromise()
+    {
+        return self::where('name', 'like', 'Promesa de Compra')->pluck('id')->first();
+
+    }
+
+    public static function getTrackingSamples()
+    {
+        return self::where('name', 'like', 'En Seguimiento')
+            ->whereStatusId(2)
+            ->pluck('id')
+            ->first();
+
+    }
+
 
 }
