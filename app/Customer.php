@@ -52,10 +52,13 @@ class Customer extends Model
              ->take(1)
              ->pluck('description')->toArray();
 
-        $management_array = preg_split("/[\n]+/", $management[0], -1, 1);
-        $last_management = $management_array[count($management_array)-1];
+         if($management) {
+            $management_array = preg_split("/[\n]+/", $management[0], -1, 1);
+            $last_management = $management_array[count($management_array)-1];
 
-        return $last_management;
+             return $last_management;
+         }
+         return "Sin Gestion";
 
     }
 
