@@ -56,6 +56,9 @@ class Customer extends Model
             $management_array = preg_split("/[\n.]+/", $management[0], -1, 1);
             $last_management = $management_array[count($management_array)-1];
 
+            if ($last_management == " ")
+                $last_management = $management_array[count($management_array)-2];
+
              return $last_management;
          }
          return "Sin Gestion";
