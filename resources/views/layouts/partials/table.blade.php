@@ -14,6 +14,7 @@
             <th>Estatus General</th>
         @endif
         <th>Estatus Detallado</th>
+        <th>Ultima Gestion</th>
     </thead>
     <tbody>
         @foreach($customers as $customer)
@@ -42,6 +43,7 @@
                     <td> {{ $customer->status_detail->status->name }}</td>
                 @endif
                 <td> {{ $customer->status_detail->name }}</td>
+                <td> {{ $customer->lastManagement() }}</td>
             </tr>
         @endforeach
     </tbody>

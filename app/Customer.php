@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Management;
 
 class Customer extends Model
 {
@@ -43,5 +44,20 @@ class Customer extends Model
             $query->whereBetween('next_mng', [$dateFrom, $dateTo]);
         }
     }
+
+    public function lastManagement()
+    {
+         $management =  \App\Management::whereCustomerId($this->id)
+             ->orderBy('created_at', 'desc')
+             ->take(1)
+             ->pluck('description')->toArray();
+
+        $management_array = preg_split("/[\n]+/", $management[0], -1, 1);
+        $last_management = $management_array[count($management_array)-1];
+
+        return $last_management;
+
+    }
+
 
 }
