@@ -53,7 +53,7 @@ class Customer extends Model
              ->pluck('description')->toArray();
 
          if($management) {
-            $management_array = preg_split("/[\n]+/", $management[0], -1, 1);
+            $management_array = preg_split("/[\n.]+/", $management[0], -1, 1);
             $last_management = $management_array[count($management_array)-1];
 
              return $last_management;
