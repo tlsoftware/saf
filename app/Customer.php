@@ -60,7 +60,8 @@ class Customer extends Model
         if(strtotime($management_date[0]) <= strtotime('2017-06-26 00:00')) {
             if ($management) {
                 $management_array = preg_split("/[\n.]+/", $management[0], -1, 1);
-                $last_management = $management_array[count($management_array) - 1];
+                if (count($management_array) >= 1)
+                    $last_management = $management_array[count($management_array) - 1];
 
                 if ($last_management == " ")
                     $last_management = $management_array[count($management_array) - 2];
