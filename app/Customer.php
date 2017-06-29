@@ -52,16 +52,24 @@ class Customer extends Model
              ->take(1)
              ->pluck('description')->toArray();
 
-         if($management) {
-            $management_array = preg_split("/[\n.]+/", $management[0], -1, 1);
-            $last_management = $management_array[count($management_array)-1];
+        $management_date =  \App\Management::whereCustomerId($this->id)
+            ->orderBy('created_at', 'desc')
+            ->take(1)
+            ->pluck('created_at')->toArray();
 
-            if ($last_management == " ")
-                $last_management = $management_array[count($management_array)-2];
+        if(strtotime($management_date[0]) <= strtotime('2017-06-26 00:00')) {
+            if ($management) {
+                $management_array = preg_split("/[\n.]+/", $management[0], -1, 1);
+                $last_management = $management_array[count($management_array) - 1];
 
-             return $last_management;
-         }
-         return "Sin Gestion";
+                if ($last_management == " ")
+                    $last_management = $management_array[count($management_array) - 2];
+
+                return $last_management;
+            }
+            return "Sin Gestion";
+        }
+        return $management[0];
 
     }
 
