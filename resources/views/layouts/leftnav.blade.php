@@ -33,8 +33,8 @@
             <li><a href="{{ action('PotencialCustomerController@show') }}">Potenciales</a></li>
             <li><a href="{{ action('MuestraCustomerController@show') }}">Muestras</a></li>
             <li><a href="{{ action('ActivoCustomerController@show') }}">Activos</a></li>
+            <li><a href="{{ action('RechazoCustomerController@show') }}">Rechazos</a></li>
             @if(Auth::user()->isAdmin() or Auth::user()->isSupervisor())
-                <li><a href="{{ action('RechazoCustomerController@show') }}">Rechazos</a></li>
                 <li><a href="{{ action('BajaCustomerController@show') }}">Bajas</a></li>
             @endif
             <li><a href="{{ action('TodosCustomerController@show') }}">Todos</a></li>
