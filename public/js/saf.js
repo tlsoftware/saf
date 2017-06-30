@@ -33,7 +33,7 @@ $(document).ready(function() {
     });
 
     $.fn.dataTable.moment( 'DD-MM-YYYY' );
-    $('#home_table, #muestra_table').DataTable({
+    $('#home_table').DataTable({
         "oLanguage": {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_ registros",
