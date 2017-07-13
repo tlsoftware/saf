@@ -39,6 +39,10 @@ class HomeController extends Controller
 
         // PERFIL ADMINISTRADOR
         if (Auth::user()->isAdmin()) {
+
+            $total_pendientes = Customer::where('next_mng', '<=', Carbon::now())->count();
+
+
             $customers = Customer::where('next_mng', '<=', Carbon::now())
                 ->where('status_detail_id', $purchase_promise_id)
                 ->orderBy('next_mng', 'asc')
@@ -141,6 +145,8 @@ class HomeController extends Controller
          * ****************************************
          */
         else {
+            $total_pendientes = Customer::where('user_id', Auth::user()->id)
+                ->where('next_mng', '<=', Carbon::now())->count();
 
             $customers = Customer::where('user_id', Auth::user()->id)
                 ->where('next_mng', '<=', Carbon::now())
@@ -246,7 +252,8 @@ class HomeController extends Controller
 
         return view('home')
             ->with('customers', $customers)
-            ->with('status', $status);
+            ->with('status', $status)
+            ->with('total_pendientes', $total_pendientes);
     }
 
     public static function convert_date_es_to_en($date)
