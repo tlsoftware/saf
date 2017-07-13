@@ -75,15 +75,20 @@
                             </div>
                             <div class="form-group">
                                 {{ Form::label('email1', 'Correo', ['class' => 'col-sm-2 control-label']) }}
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     {{ Form::text('email1', $customer->contact->email->email1, ['class' => 'form-control']) }}
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     {{ Form::text('email2', $customer->contact->email->email2, ['class' => 'form-control']) }}
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     {{ Form::text('email3', $customer->contact->email->email3, ['class' => 'form-control']) }}
                                 </div>
+                                <fieldset>
+                                <div class="col-sm-2">
+                                    <button class="btn btn-info" id="btn-email"><span class="glyphicon glyphicon-envelope"></span></button>
+                                </div>
+                                </fieldset>
                             </div>
                             <div class="form-group">
                                 {{ Form::label('web', 'Página Web', ['class' => 'col-sm-2 control-label']) }}
