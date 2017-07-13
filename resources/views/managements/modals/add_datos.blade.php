@@ -18,14 +18,14 @@
                     {!! Field::text('phone1', $customer->contact->phone->phone1, ['class' => 'form-control', 'disabled']) !!}
                     {!! Field::text('phone2', $customer->contact->phone->phone2, ['class' => 'form-control', 'placeholder' => '+56912341234']) !!}
                     {!! Field::text('phone3', $customer->contact->phone->phone3, ['class' => 'form-control', 'placeholder' => '+56912341234']) !!}
-                    {!! Field::email('email1', $customer->contact->email->email1, ['class' => 'form-control', 'disabled']) !!}
+                    {!! Field::email('email1', $customer->contact->email->email1, ['class' => 'form-control']) !!}
                     {!! Field::email('email2', $customer->contact->email->email2, ['class' => 'form-control', 'placeholder' => 'example@gmail.com']) !!}
                     {!! Field::email('email3', $customer->contact->email->email3, ['class' => 'form-control', 'placeholder' => 'example@gmail.com']) !!}
             </div>
                 <hr>
                 <div class="form-group" align="center">
                     {{ Form::submit('Agregar', ['class' => 'btn btn-primary']) }}
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
     </div>
