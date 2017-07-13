@@ -47,6 +47,21 @@
                             </div>
 
                             <div class="form-group">
+                                {{ Form::label('address', 'Direccion', ['class' => 'col-sm-2 control-label']) }}
+                                <div class="col-sm-3">
+                                    {{ Form::text('address', $customer->address, ['class' => 'form-control']) }}
+                                </div>
+                                {{ Form::label('commune', 'Comuna', ['class' => 'col-sm-1 control-label']) }}
+                                <div class="col-sm-2">
+                                    {{ Form::text('commune', $customer->commune, ['class' => 'form-control']) }}
+                                </div>
+                                {{ Form::label('city', 'Ciudad', ['class' => 'col-sm-1 control-label']) }}
+                                <div class="col-sm-2">
+                                    {{ Form::text('city', $customer->city, ['class' => 'form-control']) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 {{ Form::label('phone1', 'Teléfonos', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-3">
                                     {{ Form::text('phone1', $customer->contact->phone->phone1, ['class' => 'form-control']) }}

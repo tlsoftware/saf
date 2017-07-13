@@ -8,7 +8,8 @@ use App\Management;
 class Customer extends Model
 {
     protected $fillable = [
-        'rut', 'bs_name', 'name', 'web', 'status_detail_id', 'next_mng', 'user_id', 'created_at', 'bstype_id'
+        'rut', 'bs_name', 'name', 'web', 'status_detail_id', 'next_mng',
+        'user_id', 'created_at', 'bstype_id', 'address', 'commune', 'city'
     ];
 
     public function user() {
