@@ -84,11 +84,11 @@
                                 <div class="col-sm-2">
                                     {{ Form::text('email3', $customer->contact->email->email3, ['class' => 'form-control']) }}
                                 </div>
-                                <fieldset>
+
                                 <div class="col-sm-2">
                                     <button class="btn btn-info" id="btn-email"><span class="glyphicon glyphicon-envelope"></span></button>
+                                    <a href="mailto:{{$customer->contact->email->email1}}">Enviar Correo</a>
                                 </div>
-                                </fieldset>
                             </div>
                             <div class="form-group">
                                 {{ Form::label('web', 'Página Web', ['class' => 'col-sm-2 control-label']) }}
