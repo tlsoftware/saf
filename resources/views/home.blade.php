@@ -11,7 +11,7 @@
                                 <span id="left-heading"><strong>Clientes Pendientes por Gestionar</strong> </span>
                             </div>
                             <div class="pull-right">
-                                <span class="label label-danger" id="right-heading">Total Pendientes: {{ $total_pendientes }}</span>
+                                <span class="label label-danger" id="right-heading">Total Pendientes: {{ count($customers) }}</span>
                             </div>
                         </div>
                 </div>

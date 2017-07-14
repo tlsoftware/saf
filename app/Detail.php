@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Detail extends Model
 {
     protected $table = 'statuses_details';
-    protected $fillable = ['id', 'name', 'status_id'];
+    protected $fillable = ['id', 'name', 'status_id', 'priority'];
 
     public function status() {
         return $this->belongsTo('App\Status');
@@ -66,6 +66,11 @@ class Detail extends Model
             ->pluck('id')
             ->first();
 
+    }
+
+    public static function getStatusDetailIdHome()
+    {
+        return self::whereNotNull('priority')->orderBy('priority', 'ASC')->pluck('id');
     }
 
 
