@@ -201,4 +201,9 @@ Route::group(['middleware' => ['auth']], function () {
         return $status_detail;
     });
 
+    Route::get('cobranzas', [
+        'uses' => 'CobranzasController@index',
+        'as'   => 'cobranzas'
+    ]);
+
 });
