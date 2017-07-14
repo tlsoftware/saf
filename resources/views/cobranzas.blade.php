@@ -8,7 +8,7 @@
                 <div class="panel-heading">
                         <div class="row">
                             <div id="left">
-                                <span id="left-heading"><strong>Clientes Pendientes Cobrar</strong> </span>
+                                <span id="left-heading"><strong>Clientes Pendientes Por Cobrar</strong> </span>
                             </div>
                             <div class="pull-right">
                                 <span class="label label-danger" id="right-heading">Total Pendientes: {{ count($customers) }}</span>

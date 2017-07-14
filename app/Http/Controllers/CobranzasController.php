@@ -18,6 +18,6 @@ class CobranzasController extends Controller
 
         $customers = $q_customers->orderBy('next_mng')->get();
 
-        return view('home')->with('customers', $customers);
+        return view('cobranzas')->with('customers', $customers);
     }
 }
