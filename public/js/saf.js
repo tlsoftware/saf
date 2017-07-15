@@ -60,13 +60,28 @@ $(document).ready(function() {
         }
     });
 
-    /*
-    $("#addManagement").click(function () {
-        var customerId = $(this).data('id');
-        console.log(customerId);
-        alert('Enviar Formulario');
+
+    $('#btn-addVenta').click(function (e) {
+        var rut = $('#rut').val();
+        var bs_name = $('#bs_name').val();
+        var address = $('#address').val();
+        var commune = $('#commune').val();
+        var city = $('#city').val();
+        var phone1 = $('#phone1').val();
+        var email1 = $('#email1').val();
+
+        e.preventDefault();
+
+        if (rut === '' || bs_name === ''  || address === '' || commune === '' || city === '' || phone1 === '' || email1 === '') {
+            swal(
+                'Oops...',
+                'Debe Completar toda la Informacion del Cliente para Poder Ingresar Venta!',
+                'error'
+            );
+            return false;
+        }
     });
-    */
+
 
     var startDate = new Date();
     var endDate = new Date();

@@ -11,7 +11,7 @@
                     <div class="panel-body">
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addManagement" data-id="{{ $customer->id }}">Nueva Gestion</button>
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addMuestra" data-id="{{ $customer->id }}">Entrega de Muestra</button>
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addVenta" data-id="{{ $customer->id }}">Agregar Venta</button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addVenta" data-id="{{ $customer->id }}" id="btn-addVenta">Agregar Venta</button>
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addDatos" data-id="{{ $customer->id }}">Datos Adicionales</button>
                         <hr>
                         <fieldset disabled>
