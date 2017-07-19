@@ -92,8 +92,14 @@
                             </div>
                             <div class="form-group">
                                 {{ Form::label('web', 'Página Web', ['class' => 'col-sm-2 control-label']) }}
-                                <div class="col-sm-9">
+                                <div class="col-sm-4">
                                     {{ Form::text('web', $customer->web, ['class' => 'form-control']) }}
+                                </div>
+                                <div class="col-sm-2">
+                                    <h4><span class="label label-warning">{{ $customer->status_detail->status->name }} ({{ $customer->status_detail->name }})</span></h4>
+                                </div>
+                                <div class="col-sm-2">
+                                    <h4><span class="label label-danger">Ultima Venta: {{ Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($sale->created_at)) >= 0 ? Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($sale->created_at)) . ' dias.' : 'Sin Venta' }}</span></h4>
                                 </div>
                             </div>
                                 <div class="form-group">

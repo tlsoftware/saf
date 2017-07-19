@@ -15,7 +15,7 @@
 
                     {!! Field::text('rut', $customer->rut, ['class' => 'form-control'])  !!}
                     {!! Field::text('bs_name', $customer->bs_name, ['class' => 'form-control']) !!}
-                    {!! Field::text('phone1', $customer->contact->phone->phone1, ['class' => 'form-control', 'disabled']) !!}
+                    {!! Field::text('phone1', $customer->contact->phone->phone1, ['class' => 'form-control']) !!}
                     {!! Field::text('phone2', $customer->contact->phone->phone2, ['class' => 'form-control', 'placeholder' => '+56912341234']) !!}
                     {!! Field::text('phone3', $customer->contact->phone->phone3, ['class' => 'form-control', 'placeholder' => '+56912341234']) !!}
                     {!! Field::email('email1', $customer->contact->email->email1, ['class' => 'form-control']) !!}

@@ -19,4 +19,10 @@ class Sale extends Model
     public function products() {
         return $this->hasMany('App\Product');
     }
+
+    public function getDaysLastSale()
+    {
+        return Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($this->created_at)) ?? 'Sin Venta';
+    }
+
 }

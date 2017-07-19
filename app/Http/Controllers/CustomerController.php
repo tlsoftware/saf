@@ -56,13 +56,13 @@ class CustomerController extends Controller
 
         $this->validate($request, [
             'phone1' => [
-                'regex:/^\+56[9|2][0-9]{8}$/',
+                'regex:/^\+56[9|2|3|7][0-9]{8}$/',
             ],
             'phone2' => [
-                'regex:/^\+56[9|2][0-9]{8}$/',
+                'regex:/^\+56[9|2|3|7][0-9]{8}$/',
             ],
             'phone3' => [
-                'regex:/^\+56[9|2][0-9]{8}$/',
+                'regex:/^\+56[9|2|3|7][0-9]{8}$/',
             ]
         ]);
 
