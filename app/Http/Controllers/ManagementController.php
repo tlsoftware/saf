@@ -113,7 +113,7 @@ class ManagementController extends Controller
         $status_id = $customer->status_detail->status->id;
         $status_detail_ids = Detail::where('status_id', $status_id)->pluck('id')->toArray();
         $management_id = Management::whereCustomerId($id)->pluck('id');
-        $sale = Sale::whereIn('management_id', $management_id)->latest()->first();
+        $sale = (Sale::whereIn('management_id', $management_id)->latest()->first()) ?: false;
 
         // PERFIL ADMINISTRADOR
         if (Auth::user()->admin) {
