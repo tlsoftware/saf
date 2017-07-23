@@ -97,24 +97,4 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function migrate($id)
-    {
-        $user = User::find($id);
-        $users2 = User::pluck('name', 'id')->toArray();
-
-        return view('admin.users.migrate')
-            ->with(compact('users2', $users2))
-            ->with('user', $user);
-    }
-
-    public function storeMigrate(Request $request, $id)
-    {
-        Customer::where('user_id', $id)
-            ->update(['user_id' => $request->user2_id]);
-
-        Flash::success('Se migraron los Clientes con Exito!!');
-
-        return redirect()->route('users.index');
-    }
-
 }

@@ -33,7 +33,8 @@ $(document).ready(function() {
     });
 
     $.fn.dataTable.moment( 'DD-MM-YYYY' );
-    $('#home_table').DataTable({
+
+    $.extend( true, $.fn.dataTable.defaults, {
         "oLanguage": {
             "sProcessing":     "Procesando...",
             "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -60,6 +61,8 @@ $(document).ready(function() {
         }
     });
 
+    $('#home_table').DataTable();
+    $('#migrate_table').DataTable();
 
     $('#btn-addVenta').click(function (e) {
         var rut = $('#rut').val();
@@ -115,6 +118,11 @@ $(document).ready(function() {
 
     $('#loadFile').click(function () {
         $('#loadingModal').modal('show');
+    });
+
+    $('#select_all').click(function() {
+        var c = this.checked;
+        $(':checkbox').prop('checked',c);
     });
 
 });

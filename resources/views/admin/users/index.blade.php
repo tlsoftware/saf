@@ -27,7 +27,7 @@
                                     <td>
                                         <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span></a>
                                         <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger" onclick="return confirm('¿Seguro que deseas eliminar al Usuario? {{ $user->name }}')" id="deleteUser"><span class="glyphicon glyphicon-remove"></span></a>
-                                        <a href="{{ route('migrate', $user->id) }}" class="btn btn-default"><span class="glyphicon glyphicon-transfer"></span></a>
+                                        <a href="{{ url('/admin/migrate/' . $user->id) }}" class="btn btn-default"><span class="glyphicon glyphicon-transfer"></span></a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -36,12 +36,12 @@ Route::group(['middleware' => ['auth']], function () {
             'uses'  => 'UserController@destroy',
             'as'   => 'users.destroy'
         ]);
-        Route::get('/users/migrate/{id}', [
-            'uses' => 'UserController@migrate',
+        Route::get('migrate/{id}', [
+            'uses' => 'MigrateController@index',
             'as'   => 'migrate'
         ]);
-        Route::put('users/migrate/{id}', [
-            'uses'  => 'UserController@storeMigrate',
+        Route::put('migrate', [
+            'uses'  => 'MigrateController@update',
             'as'   => 'migrate'
         ]);
 
