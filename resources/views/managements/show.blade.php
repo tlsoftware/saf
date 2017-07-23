@@ -122,19 +122,18 @@
                                     {{ Form::text('dias', Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($customer->created_at)), ['class' => 'form-control']) }}
                                 </div>
                             </div>
-                            <hr>
-                            @include('layouts.gestion')
-                            </fieldset>
-
-                                @include('managements.modals.add_management')
-                                @include('managements.modals.add_muestra')
-                                @include('managements.modals.add_venta')
-                                @include('managements.modals.add_datos')
+                        </div>
+                        </fieldset>
                         <hr>
-                            <div class="group-form" align="center">
-                                <a href="{{ URL::to( 'managements/' . $previous ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-backward"></span></a>
-                                <a href="{{ URL::to( 'managements/' . $next ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-forward"></span></a>
-                            </div>
+                        @include('layouts.gestion')
+                        @include('managements.modals.add_management')
+                        @include('managements.modals.add_muestra')
+                        @include('managements.modals.add_venta')
+                        @include('managements.modals.add_datos')
+                        <hr>
+                        <div class="group-form" align="center">
+                            <a href="{{ URL::to( 'managements/' . $previous ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-backward"></span></a>
+                            <a href="{{ URL::to( 'managements/' . $next ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-forward"></span></a>
                         </div>
                     </div>
                 </div>

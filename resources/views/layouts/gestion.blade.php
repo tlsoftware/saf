@@ -1,24 +1,21 @@
 @if(count($managements) != 0)
-    <table class="table table-striped table-bordered table-hover table-condensed">
-        <thead>
-            <th class="active">Usuario</th>
-            <th class="active">Gestión</th>
-            <th class="active">Fecha</th>
-        </thead>
-        <tbody>
+    <div class="container">
         @foreach($managements as $management)
-            <tr>
-                <td>{{ $management->user->name }}</td>
-                <td>
-                    <div class="col-sm-12">
-                        {{ Form::textarea('description', $management->description, ['class' => 'form-control', 'rows' => '6', 'cols' => '50', 'style' => 'resize:none', 'disabled']) }}
-                    </div>
-                </td>
-                <td>{{ \Carbon\Carbon::parse($management->created_at)->format('d-m-Y H:i') }}</td>
-            </tr>
+                <h4><span class="glyphicon glyphicon-user"></span> <strong>{{ $management->user->name }}</strong></h4>
+                <h5><span class="glyphicon glyphicon-time"></span> <strong>{{ \Carbon\Carbon::parse($management->created_at)->format('d-m-Y h:i') }}</strong></h5>
+                <p align="justify" style="font-size: medium">
+                    {{ $management->description }}
+                </p>
+            <hr>
         @endforeach
-        </tbody>
-    </table>
+        <!--
+            <h3>
+            <button type="button" id="btn-showmanagements" class="btn btn-info" aria-label="Left Align">
+                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"> Todas</span>
+            </button>
+        </h3>
+        -->
+    </div>
 @else
     <div class="alert alert-danger">
         <strong> El Cliente no posee Gestiones!! </strong>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserToManagementsTable extends Migration
+class AddTypeToSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddUserToManagementsTable extends Migration
      */
     public function up()
     {
-        Schema::table('managements', function (Blueprint $table) {
-            $table->string('user_name');
+        Schema::table('sales', function (Blueprint $table) {
+            $table->boolean('type')->default(0);
         });
     }
 
@@ -25,8 +25,8 @@ class AddUserToManagementsTable extends Migration
      */
     public function down()
     {
-        Schema::table('managements', function (Blueprint $table) {
-            $table->dropColumn('user_name');
+        Schema::table('sales', function (Blueprint $table) {
+            $table->dropColumn('sales');
         });
     }
 }
