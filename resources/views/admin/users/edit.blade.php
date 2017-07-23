@@ -10,7 +10,12 @@
                         {!! Form::open(['route' => ['users.update', $user], 'method' => 'PUT']) !!}
                         <div class="form-group">
                             {{ Form::label('name', 'Nombre') }}
-                            {{ Form::text('name', $user->name, ['class' => 'form-control', 'required', 'placeholder' => 'Nombre Completo']) }}
+                            {{ Form::text('name', $user->name, ['class' => 'form-control', 'required', 'placeholder' => 'Nombre y Apellido']) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ Form::label('username', 'Nombre de Usuario') }}
+                            {{ Form::text('username', $user->username, ['class' => 'form-control', 'required', 'placeholder' => 'Nombre de Usuario']) }}
                         </div>
 
                         <div class="form-group">

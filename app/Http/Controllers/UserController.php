@@ -36,7 +36,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'email' => 'unique:users',
+            'name'      => 'required',
+            'email'     => 'required',
+            'username'  => 'unique:users',
+            'password'  => 'required',
+            'role'      => 'required'
         ]);
 
         $user = new User($request->all());
@@ -62,6 +66,15 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $this->validate($request, [
+            'name'      => 'required',
+            'email'     => 'required',
+            'username'  => 'unique:users',
+            'password'  => 'required',
+            'role'      => 'required'
+        ]);
+
         $user = User::find($id);
         $user->fill($request->all());
         $user->save();

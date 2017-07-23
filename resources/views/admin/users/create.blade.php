@@ -10,7 +10,12 @@
                         {!! Form::open(['action' => 'UserController@store', 'method' => 'POST']) !!}
                         <div class="form-group">
                             {{ Form::label('name', 'Nombre') }}
-                            {{ Form::text('name', null, ['class' => 'form-control', 'required', 'placeholder' => 'Nombre Completo']) }}
+                            {{ Form::text('name', null, ['class' => 'form-control', 'required', 'placeholder' => 'Nombre y Apellido']) }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ Form::label('username', 'Nombre de Usuario') }}
+                            {{ Form::text('username', null, ['class' => 'form-control', 'required', 'placeholder' => 'Nombre de Usuario']) }}
                         </div>
 
                         <div class="form-group">

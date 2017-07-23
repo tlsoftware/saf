@@ -12,6 +12,7 @@
                         <table class="table table-striped table-bordered table-hover table-condensed">
                             <thead>
                             <th>Nombre</th>
+                            <th>Usuario</th>
                             <th>Correo</th>
                             <th>Tipo</th>
                             <th>Acción</th>
@@ -20,6 +21,7 @@
                             @foreach($users as $user)
                                 <tr>
                                     <td>{{ $user->name }}</td>
+                                    <td>{{ $user->username }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->getRole() }}</td>
                                     <td>
