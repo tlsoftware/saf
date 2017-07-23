@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $users = User::Search($request->name)
             ->orderBy('id', 'ASC')
-            ->paginate(5);
+            ->paginate(10);
 
         return view('admin.users.index')
             ->with('users', $users);

@@ -251,6 +251,7 @@ class ManagementController extends Controller
 
     public function storeDatos(Request $request, $id)
     {
+
         $this->validate($request, [
             'phone1' => [
                 'regex:/^\+56[9|2|3|7][0-9]{8}$/',
@@ -262,6 +263,7 @@ class ManagementController extends Controller
                 'regex:/^\+56[9|2|3|7][0-9]{8}$/',
             ]
         ]);
+
 
         DB::beginTransaction();
 
@@ -283,7 +285,6 @@ class ManagementController extends Controller
             // $management->product_id = null;
 
             $management->save();
-
             $phone = Phone::find($customer->contact->phone->id);
             $phone->fill($request->all());
             $phone->save();
