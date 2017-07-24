@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
 
     protected $fillable = [
         'name', 'email', 'password', 'role', 'username'
@@ -22,6 +24,8 @@ class User extends Authenticatable
       'supervisor'  => 'Supervisor',
       'user'        => 'Vendedor'
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function customers() {
         return $this->hasMany('App\Customer');
