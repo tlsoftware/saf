@@ -26,7 +26,7 @@
                 <div class="modal-footer">
                     <div class="form-group" align="center">
                         {{ Form::submit('Agregar', ['class' => 'btn btn-primary', 'id' => 'addManagement']) }}
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     </div>
 
                 </div>

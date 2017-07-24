@@ -26,7 +26,7 @@
             <hr>
             <div class="form-group" align="center">
                 {{ Form::submit('Agregar', ['class' => 'btn btn-primary']) }}
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
             {!! Form::close() !!}
         </div>
