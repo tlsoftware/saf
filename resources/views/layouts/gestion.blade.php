@@ -1,13 +1,18 @@
 @if(count($managements) != 0)
     <div class="container">
-        @foreach($managements as $management)
-                <h4><span class="glyphicon glyphicon-user"></span> <strong>{{ $management->user->name }}</strong></h4>
-                <h5><span class="glyphicon glyphicon-time"></span> <strong>{{ \Carbon\Carbon::parse($management->created_at)->format('d-m-Y h:i') }}</strong></h5>
-                <p align="justify" style="font-size: medium">
-                    {{ $management->description }}
-                </p>
+        <div class="page-header">
+            <h1>Gestiones <small> - {{ $customer->name }}</small></h1>
             <hr>
-        @endforeach
+            <br>
+        @foreach($managements as $management)
+                    <h4><span class="glyphicon glyphicon-user"></span> <strong>{{ $management->user->name }}</strong></h4>
+                    <h5><span class="glyphicon glyphicon-time"></span> <strong>{{ \Carbon\Carbon::parse($management->created_at)->format('d-m-Y h:i') }}</strong></h5>
+                    <p align="justify" style="font-size: medium">
+                        {{ $management->description }}
+                    </p>
+                    <hr>
+                @endforeach
+        </div>
         <!--
             <h3>
             <button type="button" id="btn-showmanagements" class="btn btn-info" aria-label="Left Align">
