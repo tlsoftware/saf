@@ -132,8 +132,8 @@
                         @include('managements.modals.add_datos')
                         <hr>
                         <div class="group-form" align="center">
-                            <a href="{{ URL::to( 'managements/' . $previous ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-backward"></span></a>
-                            <a href="{{ URL::to( 'managements/' . $next ) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-forward"></span></a>
+                            <a href="{{ route('managements', ['id' => $previous]) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-backward"></span></a>
+                            <a href="{{ route('managements', ['id' => $next]) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-forward"></span></a>
                         </div>
                     </div>
                 </div>

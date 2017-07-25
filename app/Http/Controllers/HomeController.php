@@ -40,7 +40,7 @@ class HomeController extends Controller
             ->whereIn('customers.status_detail_id', $status_ids)
             ->select('customers.id');
 
-        // PERFIL ADMINISTRADOR
+        // PERFIL USUARIO
         if (! Auth::user()->isAdmin()) {
             $q_customers_id->where('customers.user_id', '=', Auth::user()->id);
         }

@@ -110,14 +110,62 @@ class ManagementController extends Controller
     // MOSTRAR CLIENTES CON OPCIONES DE GESTION
     public function show($id)
     {
+        $previous_url = url()->previous();
         $customer = Customer::find($id);
         $status_id = $customer->status_detail->status->id;
-        $status_detail_ids = Detail::where('status_id', $status_id)->pluck('id')->toArray();
+
+        /*
+        $status_detail_ids = ($previous_url == route('home')) ?
+            Detail::getStatusDetailIdHome()->toArray() :
+            Detail::where('status_id', $status_id)->pluck('id')->toArray();
+        */
+
+        $status_detail_ids = Detail::getStatusDetailIdHome()->toArray();
+
         $management_id = Management::whereCustomerId($id)->pluck('id');
         $sale = (Sale::whereIn('management_id', $management_id)->whereType(1)->latest()->first()) ?: false;
 
+        $q_customers_id = DB::table('customers')
+            ->join('statuses_details', 'customers.status_detail_id', '=', 'statuses_details.id')
+            ->where('customers.next_mng', '<=', Carbon::now())
+            ->whereIn('customers.status_detail_id', $status_detail_ids)
+            ->select('customers.id');
+
+        if (! Auth::user()->isAdmin()) {
+            $q_customers_id->where('customers.user_id', '=', Auth::user()->id);
+        }
+
+        $customers_id = $q_customers_id->orderBy('statuses_details.priority' ,'ASC')
+            ->orderBy('customers.next_mng', 'ASC')
+            ->orderBy('customers.last_mng', 'DESC')
+            ->pluck('id');
+
+        $customers = collect();
+        foreach ($customers_id as $customer_id) {
+            $customers->push(Customer::find($customer_id));
+        }
+
+        $customer_array = $customers->toArray();
+
+        $keyed = $customers->keyBy('id')->all();
+        // $keyed = $customers->keyBy('id')->keys();
+        $current_key = $customers->where('id', '=', $id)->keys()->get(0);
+        $key_plus = $current_key + 1;
+        $key_minus = $current_key - 1;
+
+        // dd($customers->where('id', '<', $id)->min('id'));
+        $previous = $current_key == 0 ?
+            end($customer_array)['id'] :
+            $customer_array[$key_minus]['id'];
+
+        $next = $current_key == count($customer_array) - 1 ?
+            current($customer_array)['id'] :
+            $customer_array[$key_plus]['id'];
+
+        // $next = next($keyed)->id;
         // PERFIL ADMINISTRADOR
-        if (Auth::user()->admin) {
+        /*
+        if (Auth::user()->isAdmin()) {
             // Get Previous Customer ID
             $previous = Customer::where('id', '<', $customer->id)
                 ->whereIn('status_detail_id', $status_detail_ids)
@@ -141,6 +189,7 @@ class ManagementController extends Controller
                 ->min('id');
         }
 
+
         // Redireccionar al Primero
         if (!$next) {
             $next = Customer::first()
@@ -153,13 +202,14 @@ class ManagementController extends Controller
                 ->whereIn('status_detail_id', $status_detail_ids)
                 ->max('id');
         }
+        */
 
         $managements = Management::where('customer_id', $customer->id)
             ->orderBY('created_at', 'DESC')
             // ->limit('3')
             ->get();
 
-        if(Auth::user()->admin) {
+
             $users = User::pluck('name', 'id')->toArray();
             return View::make('managements.show')
                 ->with('previous', $previous)
@@ -168,14 +218,7 @@ class ManagementController extends Controller
                 ->with(compact('managements', $managements))
                 ->with(compact('users', $users))
                 ->with('sale', $sale);
-        }
 
-        return View::make('managements.show')
-            ->with('previous', $previous)
-            ->with('next', $next)
-            ->with('customer', $customer)
-            ->with(compact('managements', $managements))
-            ->with('sale', $sale);
     }
 
     public function showGestion($id)
