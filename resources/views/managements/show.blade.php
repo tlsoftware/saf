@@ -125,16 +125,17 @@
                         </div>
                         </fieldset>
                         <hr>
+                        <div class="group-form" align="center">
+                            <a href="{{ route('managements', ['id' => $previous]) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-backward"></span></a>
+                            <a href="{{ route('managements', ['id' => $next]) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-forward"></span></a>
+                        </div>
+                        <hr>
                         @include('layouts.gestion')
                         @include('managements.modals.add_management')
                         @include('managements.modals.add_muestra')
                         @include('managements.modals.add_venta')
                         @include('managements.modals.add_datos')
                         <hr>
-                        <div class="group-form" align="center">
-                            <a href="{{ route('managements', ['id' => $previous]) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-backward"></span></a>
-                            <a href="{{ route('managements', ['id' => $next]) }}" class="btn btn-info"><span class="glyphicon glyphicon-fast-forward"></span></a>
-                        </div>
                     </div>
                 </div>
             </div>
