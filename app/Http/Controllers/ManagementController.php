@@ -131,7 +131,7 @@ class ManagementController extends Controller
             ->whereIn('customers.status_detail_id', $status_detail_ids)
             ->select('customers.id');
 
-        if (! Auth::user()->isAdmin()) {
+        if (! Auth::user()->isAdmin() and ! Auth::user()->isSupervisor()) {
             $q_customers_id->where('customers.user_id', '=', Auth::user()->id);
         }
 

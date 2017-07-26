@@ -33,7 +33,6 @@ class HomeController extends Controller
     {
         $status_ids = Detail::getStatusDetailIdHome()->toArray();
 
-
         $q_customers_id = DB::table('customers')
             ->join('statuses_details', 'customers.status_detail_id', '=', 'statuses_details.id')
             ->where('customers.next_mng', '<=', Carbon::now())
@@ -41,7 +40,7 @@ class HomeController extends Controller
             ->select('customers.id');
 
         // PERFIL USUARIO
-        if (! Auth::user()->isAdmin()) {
+        if (! Auth::user()->isAdmin() and ! Auth::user()->isSupervisor()) {
             $q_customers_id->where('customers.user_id', '=', Auth::user()->id);
         }
 
