@@ -5,7 +5,7 @@
         <th>Persona de Contacto</th>
         <th>Teléfono</th>
         <!-- Solo mostrar en case de que sea Administrador -->
-        @if(Auth::user()->isAdmin())
+        @if(Auth::user()->isAdmin() or Auth::user()->isSupervisor())
             <th>Responsable</th>
         @endif
         <th>Última Gestión</th>
@@ -26,7 +26,7 @@
                 <td>{{ $customer->contact->name }}</td>
                 <td>{{ $customer->contact->phone->phone1 }}</td>
                 <!-- Solo mostrar en case de que sea Administrador -->
-                @if(Auth::user()->isAdmin())
+                @if(Auth::user()->isAdmin() or Auth::user()->isSupervisor())
                     <td>{{ $customer->user->name }}</td>
                 @endif
 
