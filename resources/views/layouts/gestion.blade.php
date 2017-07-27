@@ -8,7 +8,7 @@
                     <h4><span class="glyphicon glyphicon-user"></span> <strong>{{ $management->user->name }}</strong></h4>
                     <h5><span class="glyphicon glyphicon-time"></span> <strong>{{ \Carbon\Carbon::parse($management->created_at)->format('d-m-Y h:i') }}</strong></h5>
                     <h5><span class="glyphicon glyphicon-star"></span><strong>{{ $management->getStatus() }}</strong></h5>
-                <p align="justify" style="font-size: medium">
+                <p align="justify" style="font-size: medium; margin-left: 15px">
                         {{ $management->description }}
                     </p>
                     <hr>
