@@ -27,4 +27,11 @@ class Management extends Model
     public function sales() {
         return $this->hasMany('App\Sale');
     }
+
+    public function getStatus() {
+        $status_detail = Detail::find($this->status_detail_id);
+        $status = Status::find($status_detail->status_id);
+
+        return "($status->name) ". $status_detail->name;
+    }
 }

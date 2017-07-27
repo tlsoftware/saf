@@ -50,7 +50,6 @@ class ManagementController extends Controller
             }
             $management->customer_id = $id;
             $management->user_id = Auth::user()->id;
-            $management->save();
 
             if ($status_detail_id == 17 or $status_detail_id == 27) {
                 // Se esta Agregando una Muestra
@@ -79,6 +78,8 @@ class ManagementController extends Controller
                 'next_mng' => $next,
                 'last_mng' => Carbon::now()
             );
+            $management->status_detail_id = $status_detail_id;
+            $management->save();
 
             $customer->update($data);
 
@@ -327,7 +328,7 @@ class ManagementController extends Controller
             $management->description = "Se actualizaron datos de Contacto";
             // $management->st_details = $st_details;
             // $management->product_id = null;
-
+            $management->status_detail_id = $customer->status_detail_id;
             $management->save();
             $phone = Phone::find($customer->contact->phone->id);
             $phone->fill($request->all());
