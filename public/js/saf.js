@@ -78,7 +78,7 @@ $(document).ready(function() {
         if (rut === '' || bs_name === ''  || address === '' || commune === '' || city === '' || phone1 === '' || email1 === '') {
             swal(
                 'Oops...',
-                'Debe Completar toda la Informacion del Cliente para Poder Ingresar Venta!',
+                'Debe completar toda la Información del Cliente para Ingresar Venta!',
                 'error'
             );
             return false;

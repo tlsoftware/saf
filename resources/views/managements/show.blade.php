@@ -9,7 +9,7 @@
                          <span class="label label-danger pull-right">{{ $customer->status_detail->status->name }} ({{ $customer->status_detail->name }})</span>
                     </div>
                     <div class="panel-body">
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addManagement" data-id="{{ $customer->id }}">Nueva Gestion</button>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addManagement" data-id="{{ $customer->id }}">Nueva Gestión</button>
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addMuestra" data-id="{{ $customer->id }}">Entrega de Muestra</button>
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addVenta" data-id="{{ $customer->id }}" id="btn-addVenta">Agregar Venta</button>
                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addDatos" data-id="{{ $customer->id }}">Datos Adicionales</button>
@@ -23,7 +23,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {{ Form::label('bs_name', 'Razon Social', ['class' => 'col-sm-2 control-label']) }}
+                                    {{ Form::label('bs_name', 'Razón Social', ['class' => 'col-sm-2 control-label']) }}
                                     <div class="col-sm-9">
                                         {{ Form::text('bs_name', $customer->bs_name, ['class' => 'form-control']) }}
                                     </div>
@@ -47,7 +47,7 @@
                             </div>
 
                             <div class="form-group">
-                                {{ Form::label('address', 'Direccion', ['class' => 'col-sm-2 control-label']) }}
+                                {{ Form::label('address', 'Dirección', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-3">
                                     {{ Form::text('address', $customer->address, ['class' => 'form-control']) }}
                                 </div>

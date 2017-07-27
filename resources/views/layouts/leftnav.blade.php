@@ -3,7 +3,7 @@
 @if(Auth::user()->isAdmin())
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Administracion <span class="caret"></span>
+            Administración <span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
             <li><a href="{{ route('users.index') }}">Usuarios</a></li>
@@ -17,10 +17,10 @@
 @if(Auth::user()->isAdmin() or Auth::user()->isSupervisor())
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-            Supervision <span class="caret"></span>
+            Supervisión <span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ route('gestiones') }}">Gestiones del Dia</a></li>
+            <li><a href="{{ route('gestiones') }}">Gestiones del Día</a></li>
         </ul>
     </li>
 @endif

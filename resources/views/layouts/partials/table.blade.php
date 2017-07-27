@@ -8,13 +8,13 @@
         @if(Auth::user()->isAdmin() or Auth::user()->isSupervisor())
             <th>Responsable</th>
         @endif
-        <th>Última Gestión</th>
-        <th>Próxima Gestión</th>
+        <th>Fecha Última Gestión</th>
+        <th>Fecha Próxima Gestión</th>
         @if(Route::current()->getName() == 'home' or Route::current()->getName('todos.show'))
             <th>Estatus General</th>
         @endif
         <th>Estatus Detallado</th>
-        <th>Ultima Gestion</th>
+        <th>Última Gestión</th>
     </thead>
     <tbody>
         @foreach($customers as $customer)
