@@ -70,12 +70,18 @@ class UserController extends Controller
         $this->validate($request, [
             'name'      => 'required',
             'email'     => 'required',
-            'username'  => 'unique:users',
             'password'  => 'required',
             'role'      => 'required'
         ]);
 
         $user = User::find($id);
+
+        if ($user->username != $request->username) {
+            $this->validate($request, [
+                'username'  => 'unique:users',
+            ]);
+        }
+
         $user->fill($request->all());
         $user->save();
 
