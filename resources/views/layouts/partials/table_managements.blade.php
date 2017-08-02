@@ -1,5 +1,6 @@
 <table class="table table-striped table-bordered table-hover table-condensed dataTable" id="home_table">
     <thead>
+        <th>Ver Gestiones</th>
         <th>Nombre Comercial</th>
         <th>Persona de Contacto</th>
         <th>Teléfono</th>
@@ -11,6 +12,9 @@
     <tbody>
     @foreach($managements as $management)
         <tr>
+            <td class="text-center">
+                <a href="{{ route('managements', $management->customer->id) }}" class="btn btn-primary"><span class="glyphicon glyphicon-saved"></span></a>
+            </td>
             <td>{{ $management->customer->name }}</td>
             <td>{{ $management->customer->contact->name }}</td>
             <td>{{ $management->customer->contact->phone->phone1 }}</td>
