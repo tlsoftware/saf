@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Agregar Nueva Clasificación de Restaurant</div>
+                    <div class="panel-heading">Agregar Nueva Clasificación</div>
                     <div class="panel-body">
                         {!! Form::open(['action' => 'BstypeController@store', 'method' => 'POST']) !!}
                         <div class="form-group">
