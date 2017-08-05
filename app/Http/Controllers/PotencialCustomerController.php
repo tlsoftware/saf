@@ -11,78 +11,50 @@ use Laracasts\Flash\Flash;
 
 class PotencialCustomerController extends Controller
 {
-    public function index($id)
-    {
-        $customer = Customer::find($id);
-
-        $managements = Management::where('customer_id', $id)
-            ->orderBY('created_at', 'DESC')
-            ->limit('3')
-            ->get();
-
-        if(Auth::user()->admin) {
-            $users = User::pluck('name', 'id')->toArray();
-            return view('potenciales.index')
-                ->with('customer', $customer)
-                ->with(compact('managements', $managements))
-                ->with(compact('users', $users));
-        }
-
-        return view('potenciales.index')
-            ->with('customer', $customer)
-            ->with(compact('managements', $managements));
-    }
-
     public function show()
     {
         $potencial_ids = Detail::getPotentials();
-        // $status = 'Clientes Potenciales';
 
-        if (Auth::user()->isAdmin())
-        {
-            $customers = Customer::whereIn('status_detail_id', $potencial_ids)
-                //->where('next_mng', '>', Carbon::now())
-                ->orderBy('next_mng', 'asc')
-                ->orderBY('last_mng', 'asc')
-                ->get();
-
-        }
+        $q_customers_id = Customer::whereIn('status_detail_id', $potencial_ids);
 
         // Si es Vendedor carga solo los clientes pendientes de ese Vendedor
-        else {
-            $customers = Customer::where('user_id', Auth::user()->id)
-                ->whereIn('status_detail_id', $potencial_ids)
-                ->orderBy('next_mng', 'asc')
-                ->orderBY('last_mng', 'asc')
-                ->get();
+        if (! Auth::user()->isAdmin() and ! Auth::user()->isSupervisor())
+            $q_customers_id->where('user_id', Auth::user()->id);
 
-        }
+        $customers_id = $q_customers_id->orderBy('next_mng', 'asc')
+            ->orderBY('last_mng', 'asc')
+            ->pluck('id');
+
             /*
              *  Si el Vendedor no tiene Clientes Pendientes por Gestionar
-             *  Cargamos todos los clientes del Vendedor
              */
-        if($customers->count() == 0) {
+        $customers = collect();
+        if($customers_id->count() == 0) {
             Flash::error('No Posee Potenciales Clientes Asociados!!');
+        } else {
+            foreach ($customers_id as $id)
+            {
+                $customer = Customer::find($id);
+                $customer->last_mng = $this->getLastManagementDate($customer);
+                $customer->next_mng = $this->getNextManagementDate($customer);
+                $customers->push($customer);
+            }
         }
 
-        /*
-        return view('potenciales.show')
-            ->with('customers', $customers);
-        */
         return view('potenciales.show')
             ->with('customers', $customers);
     }
 
-    public function detalle($id)
+    public function getLastManagementDate($customer)
     {
-        $customer = Customer::find($id);
+        if($customer->managements->count())
+            return \Carbon\Carbon::parse($customer->managements->last()->created_at)->format('d-m-Y');
+        else
+            return  '--- ---';
+    }
 
-        $managements = Management::where('customer_id', $id)
-            ->orderBY('created_at', 'DESC')
-            ->get();
-
-        return view('potenciales.detalle')
-            ->with('customer', $customer)
-            ->with(compact('managements', $managements));
+    public function getNextManagementDate($customer)
+    {
+        return \Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y');
     }
 }
