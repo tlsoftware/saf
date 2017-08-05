@@ -14,34 +14,45 @@ class TodosCustomerController extends Controller
 {
     public function show()
     {
-        if (Auth::user()->isAdmin() or Auth::user()->isSupervisor())
-        {
-            $customers = Customer::orderBy('next_mng', 'asc')
+        $q_customers_id = Customer::where('id', '>', 0);
+        if (! Auth::user()->isAdmin() and ! Auth::user()->isSupervisor())
+            $q_customers_id = Customer::where('user_id', Auth::user()->id)
+                ->whereNotIn('status_detail_id', Detail::getLowCustomer());
+
+        $customers_id = $q_customers_id->orderBy('next_mng', 'asc')
                 ->orderBY('last_mng', 'asc')
-                ->get();
+                ->pluck('id');
 
-        }
-
-        else {
-            $customers = Customer::where('user_id', Auth::user()->id)
-                // ->where('status', '4')
-                ->whereNotIn('status_detail_id', Detail::getRejected())
-                ->whereNotIn('status_detail_id', Detail::getLowCustomer())
-                ->orderBy('next_mng', 'asc')
-                ->orderBY('last_mng', 'asc')
-                ->get();
-
-        }
+        $customers = collect();
         /*
-         *  Si el Vendedor no tiene Clientes Pendientes por Gestionar
-         *  Cargamos todos los clientes del Vendedor
+         *  Si el Vendedor no tiene Clientes
          */
-        if($customers->count() == 0) {
+        if($customers_id->count() == 0) {
             Flash::error('No Posee Clientes Asociados!!');
+        } else {
+            foreach ($customers_id as $id)
+            {
+                $customer = Customer::find($id);
+                $customer->last_mng = $this->getLastManagementDate($customer);
+                $customer->next_mng = $this->getNextManagementDate($customer);
+                $customers->push($customer);
+            }
         }
 
         return view('todos.show')
             ->with('customers', $customers);
+    }
 
+    public function getLastManagementDate($customer)
+    {
+        if($customer->managements->count())
+            return \Carbon\Carbon::parse($customer->managements->last()->created_at)->format('d-m-Y');
+        else
+            return  '--- ---';
+    }
+
+    public function getNextManagementDate($customer)
+    {
+        return \Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y');
     }
 }
