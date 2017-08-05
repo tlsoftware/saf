@@ -14,6 +14,7 @@
 
                 {!! Form::open(['route' => ['managements.storeDatos', $customer->id], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
                 {!! Field::text('rut', $customer->rut, ['class' => 'form-control'])  !!}
+                {!! Field::text('name', $customer->name, ['class' => 'form-control', 'required'])  !!}
                 {!! Field::text('bs_name', $customer->bs_name, ['class' => 'form-control']) !!}
                 {!! Field::text('address', $customer->address, ['class' => 'form-control']) !!}
                 {!! Field::text('commune', $customer->commune, ['class' => 'form-control']) !!}
