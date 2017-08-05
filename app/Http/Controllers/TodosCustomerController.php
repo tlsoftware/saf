@@ -48,7 +48,7 @@ class TodosCustomerController extends Controller
         if($customer->managements->count())
             return \Carbon\Carbon::parse($customer->managements->last()->created_at)->format('d-m-Y');
         else
-            return  '00-00-0000';
+            return  \Carbon\Carbon::parse('00-00-0000')->format('d-m-Y');
     }
 
     public function getNextManagementDate($customer)
