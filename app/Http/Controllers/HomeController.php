@@ -51,7 +51,10 @@ class HomeController extends Controller
 
         $customers = collect();
         foreach ($customers_id as $id) {
-            $customers->push(Customer::find($id));
+            $customer = Customer::find($id);
+            $customer->last_mng = $this->getLastManagementDate($customer);
+            $customer->next_mng = $this->getNextManagementDate($customer);
+            $customers->push($customer);
         }
 
         return view('home')->with('customers', $customers);
@@ -70,6 +73,19 @@ class HomeController extends Controller
 
     public static function left($string, $count){
         return substr($string, 0, $count);
+    }
+
+    public function getLastManagementDate($customer)
+    {
+        if($customer->managements->count())
+            return \Carbon\Carbon::parse($customer->managements->last()->created_at)->format('d-m-Y');
+        else
+            return  '--- ---';
+    }
+
+    public function getNextManagementDate($customer)
+    {
+        return \Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y');
     }
 
 }

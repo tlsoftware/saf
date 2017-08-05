@@ -31,13 +31,10 @@
                 @endif
 
             <!-- Validar si el Cliente Posee Gestiones -->
-                @if($customer->managements->count())
-                    <td>{{ \Carbon\Carbon::parse($customer->managements->last()->created_at)->format('d-m-Y') }}</td>
-                @else
-                    <td class="text-center"> -- -- --</td>
-                @endif
+                <td class="text-center"> {{ $customer->last_mng }}</td>
+
             <!-- PROXIMA GESTION -->
-                <td>{{ Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y') }}</td>
+                <td class="text-center"> {{ $customer->next_mng }}</td>
                 <!-- STATUS -->
                 @if(Route::current()->getName() == 'home' or Route::current()->getName('todos.show'))
                     <td> {{ $customer->status_detail->status->name }}</td>
