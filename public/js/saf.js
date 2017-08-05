@@ -32,10 +32,6 @@ $(document).ready(function() {
         });
     });
 
-    $('#home_table').DataTable();
-    $('#migrate_table').DataTable();
-
-    $.fn.dataTable.moment( 'DD-MM-YYYY' );
 
     $.extend( true, $.fn.dataTable.defaults, {
         "oLanguage": {
@@ -63,6 +59,11 @@ $(document).ready(function() {
             }
         }
     });
+
+    $.fn.dataTable.moment( 'D-M-Y' );
+
+    $('#home_table').DataTable();
+    $('#migrate_table').DataTable();
 
     $('#btn-addVenta').click(function (e) {
         var rut = $('#rut').val();
