@@ -160,7 +160,7 @@ namespace App{
  * @property int $bstype_id
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property-read \App\Bstype $bstype
+ * @property-read \App\Bstype $bstypes
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Management[] $managements
  * @property-read \App\Detail $status_detail
  * @property-read \App\User $user

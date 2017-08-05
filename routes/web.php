@@ -72,6 +72,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('import', 'ImportController@uploadFile')->name('import');
         Route::get('import', 'ImportController@import')->name('import');
 
+        Route::resource('bstypes', 'BstypeController');
+
     });
     // Fin vistas de Administracion
 
