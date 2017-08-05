@@ -26,7 +26,7 @@ class PotencialCustomerController extends Controller
             ->pluck('id');
 
             /*
-             *  Si el Vendedor no tiene Clientes Pendientes por Gestionar
+             *  Si el Vendedor no posee Potenciales Clientes
              */
         $customers = collect();
         if($customers_id->count() == 0) {
