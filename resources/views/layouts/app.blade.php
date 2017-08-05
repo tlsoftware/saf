@@ -91,13 +91,13 @@
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/js/moment.min.js"></script>
     <!-- Datepicker Files -->
     <link rel="stylesheet" href="/datePicker/css/bootstrap-datepicker3.css">
     <link rel="stylesheet" href="/datePicker/css/bootstrap-datepicker.standalone.css">
     <script src="/datePicker/js/bootstrap-datepicker.js"></script>
     <!-- Languaje -->
     <script src="/datePicker/locales/bootstrap-datepicker.es.min.js"></script>
-    <script type="text/javascript" src="/js/moment.min.js"></script>
     <script type="text/javascript" src="/js/datetime-moment.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.5/sweetalert2.min.js"></script>
     <script type="text/javascript" src="/js/saf.js"></script>

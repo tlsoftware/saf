@@ -60,7 +60,7 @@ $(document).ready(function() {
         }
     });
 
-    $.fn.dataTable.moment( 'D-M-Y' );
+    $.fn.dataTable.moment( 'DD-MM-YYYY' );
 
     $('#home_table').DataTable();
     $('#migrate_table').DataTable();
