@@ -80,7 +80,7 @@ class HomeController extends Controller
         if($customer->managements->count())
             return \Carbon\Carbon::parse($customer->managements->last()->created_at)->format('d-m-Y');
         else
-            return  '--- ---';
+            return  '00-00-0000';
     }
 
     public function getNextManagementDate($customer)
