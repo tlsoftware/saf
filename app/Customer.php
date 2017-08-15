@@ -9,7 +9,8 @@ class Customer extends Model
 {
     protected $fillable = [
         'rut', 'bs_name', 'name', 'web', 'status_detail_id', 'next_mng',
-        'user_id', 'created_at', 'bstype_id', 'address', 'commune', 'city'
+        'user_id', 'created_at', 'bstype_id', 'address', 'commune', 'city',
+        'ctype'
     ];
 
     public function user() {

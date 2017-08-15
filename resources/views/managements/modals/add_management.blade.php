@@ -22,6 +22,9 @@
                             {!! Field::select('status_id', \App\Status::pluck('name', 'id')->toArray(), array('class' => 'form-control', 'style' => 'width:200px', 'required')) !!}
                             {!! Field::select('status_detail_id', null, array('class' => 'form-control', 'style' => 'width:200px', 'required')) !!}
                         </div>
+                    <div class="form-group">
+                        {!! Field::select('ctype', array('Llamada telefónica' => 'Llamada telefónica', 'Vía mail' => 'Vía mail', 'Vía WhatsApp' => 'Vía WhatsApp', 'Otros' => 'Otros'), array('class' => 'form-control', 'style' => 'width:200px', 'required')) !!}
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="form-group" align="center">

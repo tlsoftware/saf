@@ -22,6 +22,9 @@
                 {!! Field::text('dispatch_date', null, ['class' => 'datepickerventa', 'required', 'readonly']) !!}
                 {!! Field::time('dispatch_time', null, ['class' => 'form-control']) !!}
                 {!! Field::text('next_mng', null, ['class' => 'datepicker', 'required', 'readonly']) !!}
+                <div class="form-group">
+                    {!! Field::select('ctype', array('Llamada telefónica' => 'Llamada telefónica', 'Vía mail' => 'Vía mail', 'Vía WhatsApp' => 'Vía WhatsApp', 'Otros' => 'Otros'), array('class' => 'form-control', 'style' => 'width:200px', 'required')) !!}
+                </div>
             </div>
             <hr>
             <div class="form-group" align="center">

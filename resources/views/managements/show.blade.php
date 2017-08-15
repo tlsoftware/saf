@@ -114,8 +114,15 @@
                                 </div>
                             <div class="form-group">
                                 {{ Form::label('next_mng', 'Próxima Gestión', ['class' => 'col-sm-2 control-label']) }}
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     {{ Form::text('next_mng', Carbon\Carbon::parse($customer->next_mng)->format('d-m-Y'), ['class' => 'form-control']) }}
+                                </div>
+                                <div class="col-sm-2">
+                                    @if($customer->ctype)
+                                        <h4><span class="label label-danger">{{ $customer->ctype }} </span></h4>
+                                    @else
+                                        <h4><span class="label label-danger">No indicado</span></h4>
+                                    @endif
                                 </div>
                                 {{ Form::label('dias', 'Días en Gestión', ['class' => 'col-sm-3 control-label']) }}
                                 <div class="col-sm-3">

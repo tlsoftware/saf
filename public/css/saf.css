@@ -1,6 +1,10 @@
 body {
     margin-left: 50px;
+    background: url(../images/Logo_WM.png) no-repeat fixed;
+    background-size: cover;
+    /* box-shadow: inset 1000px 1000px 1000px 1000px rgba(0,0,0,.2); */
 }
+
 
 #left-heading {
     font-size: 24px;

@@ -1,5 +1,5 @@
 <div class="modal fade" id="addDatos" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->
         <div class="modal-content">
@@ -10,16 +10,18 @@
             </div>
             -->
             <div class="modal-body" style="padding:40px 50px;">
+                {!! Form::open(['route' => ['managements.storeDatos', $customer->id], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
                 {{ Form::hidden('status_detail_id', $customer->status_detail_id) }}
 
-                {!! Form::open(['route' => ['managements.storeDatos', $customer->id], 'method' => 'PUT', 'class' => 'form-horizontal']) !!}
                 {!! Field::text('rut', $customer->rut, ['class' => 'form-control'])  !!}
                 {!! Field::text('name', $customer->name, ['class' => 'form-control', 'required'])  !!}
                 {!! Field::text('bs_name', $customer->bs_name, ['class' => 'form-control']) !!}
                 {!! Field::text('address', $customer->address, ['class' => 'form-control']) !!}
                 {!! Field::text('commune', $customer->commune, ['class' => 'form-control']) !!}
                 {!! Field::text('city', $customer->city, ['class' => 'form-control']) !!}
-                {!! Field::text('phone1', $customer->contact->phone->phone1, ['class' => 'form-control']) !!}
+                {!! Field::text('contact', $customer->contact->name, ['class' => 'form-control', 'required'])  !!}
+                {!! Field::text('position', $customer->contact->position, ['class' => 'form-control'])  !!}
+                {!! Field::text('phone1', $customer->contact->phone->phone1, ['class' => 'form-control', 'required']) !!}
                 {!! Field::text('phone2', $customer->contact->phone->phone2, ['class' => 'form-control', 'placeholder' => '+56912341234']) !!}
                 {!! Field::text('phone3', $customer->contact->phone->phone3, ['class' => 'form-control', 'placeholder' => '+56912341234']) !!}
                 {!! Field::email('email1', $customer->contact->email->email1, ['class' => 'form-control']) !!}

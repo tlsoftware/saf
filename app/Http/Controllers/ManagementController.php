@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bstype;
+use App\Contact;
 use App\Detail;
 use App\Email;
 use App\Phone;
@@ -78,7 +79,8 @@ class ManagementController extends Controller
             $data = array(
                 'status_detail_id' => $status_detail_id,
                 'next_mng' => $next,
-                'last_mng' => Carbon::now()
+                'last_mng' => Carbon::now(),
+                'ctype'    => $request->ctype
             );
 
             $customer->update($data);
@@ -330,6 +332,12 @@ class ManagementController extends Controller
             // $management->product_id = null;
             $management->status_detail_id = $customer->status_detail_id;
             $management->save();
+
+            $contact = Contact::find($customer->contact->id);
+            $contact->name = $request->contact;
+            $contact->position = $request->position;
+            $contact->save();
+
             $phone = Phone::find($customer->contact->phone->id);
             $phone->fill($request->all());
             $phone->save();
