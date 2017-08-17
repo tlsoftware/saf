@@ -14,7 +14,7 @@ class AddCtypeColumnToCustomersTable extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->addColumn('string', 'ctype')->default(null);
+            $table->addColumn('string', 'ctype')->nullable()->default(null);
         });
     }
 
@@ -26,6 +26,7 @@ class AddCtypeColumnToCustomersTable extends Migration
     public function down()
     {
         Schema::table('customers', function (Blueprint $table) {
+            $table->dropColumn('ctype');
         });
     }
 }
