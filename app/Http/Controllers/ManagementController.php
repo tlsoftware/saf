@@ -440,15 +440,43 @@ class ManagementController extends Controller
         return $usDate[2]."-".$usDate[1]."-".$usDate[0];
     }
 
-    public function dailyManagement()
+    public function DateConvertUsToEs($date)
     {
-        $today = date('Y-m-d');
-        $fecha1 = $today . ' 00:00:00';
-        $fecha2 = $today . ' 23:59:59';
-        $managements = Management::whereBetween('created_at', [$fecha1, $fecha2])->get();
+        $esDate = explode( '-', $date );
+
+        return $esDate[2]."/".$esDate[1]."/".$esDate[0];
+    }
+
+
+    public function dailyManagement(Request $request)
+    {
+        $date_from = $request->get('date_from');
+        $date_to = $request->get('date_to');
+        $vendor = intval($request->get('vendor'));
+
+        if ($date_from == '' or $date_to == '') {
+            $today = date('Y-m-d');
+            $fecha1 = $today;
+            $fecha2 = $today;
+        } else {
+            $fecha1 = $this->DateConvertEsToUs($date_from);
+            $fecha2 = $this->DateConvertEsToUs($date_to);
+        }
+        $query = Management::whereBetween('created_at', [$fecha1 . ' 00:00:00', $fecha2 . ' 23:59:59']);
+
+        $managements = $vendor == '' || $vendor == 0 ? $query->get() : $query->whereUserId($vendor)->get();
+
+        $vendors = collect([0 => '-- Todos --']);
+        $users = User::pluck('name', 'id');
+
+        $vendors->push($users);
 
         return view('supervisor.gestiones.index')
-            ->with('managements', $managements);
+            ->with('managements', $managements)
+            ->with('users', $vendors->toArray())
+            ->with('date_from', $this->DateConvertUsToEs($fecha1))
+            ->with('date_to', $this->DateConvertUsToEs($fecha2))
+            ->with('vendor', $vendor);
     }
 
 }

@@ -21,7 +21,7 @@
             Supervisión <span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
-            <li><a href="{{ route('gestiones') }}">Gestiones del Día</a></li>
+            <li><a href="{{ route('gestiones') }}">Gestiones</a></li>
         </ul>
     </li>
 @endif

@@ -117,6 +117,15 @@ $(document).ready(function() {
         autoclose: true
     }).css('width', '200px');
 
+    $('.datepickerfilter').datepicker({
+        format: "dd/mm/yyyy",
+        todayBtn: true,
+        language: "es",
+        daysOfWeekDisabled: "0,6",
+        todayHighlight: true,
+        autoclose: true
+    }).css('width', '200px');
+
     $('#loadFile').click(function () {
         $('#loadingModal').modal('show');
     });
@@ -124,6 +133,20 @@ $(document).ready(function() {
     $('#select_all').click(function() {
         var c = this.checked;
         $(':checkbox').prop('checked',c);
+    });
+
+    $('#managements-filters').click(function (e) {
+        var date_from = $('#date_from').val();
+        var date_to = $('#date_to').val();
+        if (date_from == '' || date_to == '') {
+            e.preventDefault();
+            swal(
+                'Oops...',
+                'Debe seleccionar ambas fechas!',
+                'error'
+            );
+        return false;
+        }
     });
 
 });
