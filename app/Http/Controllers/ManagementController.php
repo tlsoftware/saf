@@ -143,27 +143,32 @@ class ManagementController extends Controller
             ->orderBy('customers.last_mng', 'DESC')
             ->pluck('id');
 
-        $customers = collect();
-        foreach ($customers_id as $customer_id) {
-            $customers->push(Customer::find($customer_id));
+        if (count($customers_id) > 1) {
+            $customers = collect();
+            foreach ($customers_id as $customer_id) {
+                $customers->push(Customer::find($customer_id));
+            }
+
+            $customer_array = $customers->toArray();
+
+            $keyed = $customers->keyBy('id')->all();
+            // $keyed = $customers->keyBy('id')->keys();
+            $current_key = $customers->where('id', '=', $id)->keys()->get(0);
+            $key_plus = $current_key + 1;
+            $key_minus = $current_key - 1;
+
+            // dd($customers->where('id', '<', $id)->min('id'));
+            $previous = $current_key == 0 ?
+                end($customer_array)['id'] :
+                $customer_array[$key_minus]['id'];
+
+            $next = $current_key == count($customer_array) - 1 ?
+                current($customer_array)['id'] :
+                $customer_array[$key_plus]['id'];
+        } else {
+            $previous = $customers_id[0];
+            $next = $customers_id[0];
         }
-
-        $customer_array = $customers->toArray();
-
-        $keyed = $customers->keyBy('id')->all();
-        // $keyed = $customers->keyBy('id')->keys();
-        $current_key = $customers->where('id', '=', $id)->keys()->get(0);
-        $key_plus = $current_key + 1;
-        $key_minus = $current_key - 1;
-
-        // dd($customers->where('id', '<', $id)->min('id'));
-        $previous = $current_key == 0 ?
-            end($customer_array)['id'] :
-            $customer_array[$key_minus]['id'];
-
-        $next = $current_key == count($customer_array) - 1 ?
-            current($customer_array)['id'] :
-            $customer_array[$key_plus]['id'];
 
         // $next = next($keyed)->id;
         // PERFIL ADMINISTRADOR
@@ -453,6 +458,7 @@ class ManagementController extends Controller
         $date_from = $request->get('date_from');
         $date_to = $request->get('date_to');
         $vendor = intval($request->get('vendor'));
+        $status = intval($request->get('status_detail'));
 
         if ($date_from == '' or $date_to == '') {
             $today = date('Y-m-d');
@@ -464,19 +470,32 @@ class ManagementController extends Controller
         }
         $query = Management::whereBetween('created_at', [$fecha1 . ' 00:00:00', $fecha2 . ' 23:59:59']);
 
-        $managements = $vendor == '' || $vendor == 0 ? $query->get() : $query->whereUserId($vendor)->get();
+        if ($vendor != 0)
+            $query->whereUserId($vendor);
+
+        if ($status != 0) {
+            $customers_id = Customer::whereStatusDetailId($status)->pluck('id')->toArray();
+            $query->whereIn('customer_id', $customers_id);
+        }
+
+        $managements = $query->get();
 
         $vendors = collect([0 => '-- Todos --']);
         $users = User::pluck('name', 'id');
-
         $vendors->push($users);
+
+        $statuses_detail = collect([0 => '-- Todos --']);
+        $statuses = Detail::pluck('name', 'id');
+        $statuses_detail->push($statuses);
 
         return view('supervisor.gestiones.index')
             ->with('managements', $managements)
             ->with('users', $vendors->toArray())
             ->with('date_from', $this->DateConvertUsToEs($fecha1))
             ->with('date_to', $this->DateConvertUsToEs($fecha2))
-            ->with('vendor', $vendor);
+            ->with('vendor', $vendor)
+            ->with('statuses_detail', $statuses_detail->toArray())
+            ->with('status', $status);
     }
 
 }

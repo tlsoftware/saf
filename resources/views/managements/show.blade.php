@@ -124,9 +124,11 @@
                                         <h4><span class="label label-danger">No indicado</span></h4>
                                     @endif
                                 </div>
-                                {{ Form::label('dias', 'Días en Gestión', ['class' => 'col-sm-3 control-label']) }}
-                                <div class="col-sm-3">
-                                    {{ Form::text('dias', Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($customer->created_at)), ['class' => 'form-control']) }}
+                                <div class="col-sm-4">
+                                    {{ Form::label('dias', 'Días en Gestión', ['class' => 'col-sm-4 control-label']) }}
+                                    <div class="col-sm-3">
+                                        {{ Form::text('dias', Carbon\Carbon::now()->diffInDays(Carbon\Carbon::parse($customer->created_at)), ['class' => 'form-control']) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>

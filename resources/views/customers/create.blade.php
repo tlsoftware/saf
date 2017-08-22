@@ -15,6 +15,14 @@
                                     {{ Form::text('rut', null, ['class' => 'form-control', 'placeholder' => 'Escriba Rut del Cliente']) }}
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                {{ Form::label('name', 'Nombre', ['class' => 'col-sm-2 control-label']) }}
+                                <div class="col-sm-9">
+                                    {{ Form::text('name', null, ['class' => 'form-control', 'required', 'placeholder' => 'Escriba Nombre Comercial del Cliente']) }}
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                     {{ Form::label('bs_name', 'Razon Social', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-9">
@@ -23,16 +31,23 @@
                             </div>
 
                             <div class="form-group">
-                                {{ Form::label('name', 'Nombre Comercial', ['class' => 'col-sm-2 control-label']) }}
+                                {{ Form::label('address', 'Dirección ', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-9">
-                                    {{ Form::text('name', null, ['class' => 'form-control', 'required', 'placeholder' => 'Escriba Nombre Comercial del Cliente']) }}
+                                    {{ Form::text('address', null, ['class' => 'form-control', 'placeholder' => 'Dirección']) }}
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                {{ Form::label('web', 'Pagina Web', ['class' => 'col-sm-2 control-label']) }}
+                                {{ Form::label('commune', 'Comuna ', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-9">
-                                    {{ Form::text('web', null, ['class' => 'form-control', 'placeholder' => 'Pagina Web del Cliente']) }}
+                                    {{ Form::text('commune', null, ['class' => 'form-control', 'placeholder' => 'Comuna']) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {{ Form::label('city', 'Ciudad ', ['class' => 'col-sm-2 control-label']) }}
+                                <div class="col-sm-9">
+                                    {{ Form::text('city', null, ['class' => 'form-control', 'placeholder' => 'Ciudad']) }}
                                 </div>
                             </div>
 
@@ -40,6 +55,11 @@
                                 {{ Form::label('bstype_id', 'Tipo de Empresa', ['class' => 'col-sm-2 control-label']) }}
                                 <div class="col-sm-3">
                                     {{ Form::select('bstype_id', $bstypes, null, ['class' => 'form-control']) }}
+                                </div>
+
+                                {{ Form::label('web', 'Página  Web', ['class' => 'col-sm-2 control-label']) }}
+                                <div class="col-sm-4">
+                                    {{ Form::text('web', null, ['class' => 'form-control']) }}
                                 </div>
                             </div>
 

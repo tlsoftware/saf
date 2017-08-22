@@ -70,7 +70,6 @@ class CustomerController extends Controller
 
         try {
             $customer = new Customer($request->all());
-
             $customer->next_mng = Carbon::now();
 
             if(!$request->user_id)
@@ -102,7 +101,7 @@ class CustomerController extends Controller
         } catch (\Exception $exception) {
             DB::rollBack();
 
-            Flash::Error("No se ha podido crear el Cliente de forma Exitosa!");
+            Flash::Error("No se ha podido crear el Cliente de forma Exitosa! " . $exception);
 
             return redirect()->back();
         }
