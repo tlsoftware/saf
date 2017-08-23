@@ -63,8 +63,14 @@ class CustomerController extends Controller
             ],
             'phone3' => [
                 'regex:/^\+56[9|2|3|7][0-9]{8}$/',
-            ]
+            ],
+            'name' => 'required|unique:customers'
         ]);
+
+        if ($this->customer_exist(trim($request->name)) || $this->customer_exist(trim($this->stripAccents($request->name)))) {
+            Flash::Error("Cliente Existente! No Se ha registrado el cliente!!");
+            return redirect()->back();
+        }
 
         DB::beginTransaction();
 
@@ -105,6 +111,15 @@ class CustomerController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    public function customer_exist($new_customer)
+    {
+        return Customer::whereName($new_customer)->count() > 0 ? true : false;
+    }
+
+    public function stripAccents($str) {
+        return strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
     }
 
     /**
