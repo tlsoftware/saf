@@ -478,7 +478,7 @@ class ManagementController extends Controller
             $query->whereIn('customer_id', $customers_id);
         }
 
-        $managements = $query->get();
+        $managements = $query->orderBy('created_at', 'desc')->get();
 
         $vendors = collect([0 => '-- Todos --']);
         $users = User::pluck('name', 'id');
