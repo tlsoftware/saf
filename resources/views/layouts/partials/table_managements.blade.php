@@ -21,7 +21,7 @@
             <td>{{ $management->customer->contact->phone->phone1 }}</td>
             <td>{{ $management->user->name }}
             <td>{{ $management->customer->user()->first()->name }}</td>
-            <td>{{ Carbon\Carbon::parse($management->created_at)->format('d-m-Y H:i') }}</td>
+            <td>{{ Carbon\Carbon::parse($management->created_at)->format('d-m-Y h:i') }}</td>
             <td> {{ $management->customer->status_detail->status->name }}</td>
             <td> {{ $management->customer->status_detail->name }}</td>
         </tr>
