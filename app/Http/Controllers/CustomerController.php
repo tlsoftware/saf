@@ -67,7 +67,14 @@ class CustomerController extends Controller
             'name' => 'required|unique:customers'
         ]);
 
-        if ($this->customer_exist(trim($request->name)) || $this->customer_exist(trim($this->stripAccents($request->name)))) {
+
+
+        $customer_ws = $this->remove_spaces($request->name);
+        $customer_exists = count(DB::select("select * from customers where replace(name, ' ', '') like '$customer_ws'")) > 0 ? true : false;
+        $customer_wa = $this->stripAccents($request->name);
+        $customer_wa = $this->remove_spaces($customer_wa);
+
+        if ($this->customer_exist($customer_ws) or $this->customer_exist($customer_wa) or $customer_exists) {
             Flash::Error("Cliente Existente! No Se ha registrado el cliente!!");
             return redirect()->back();
         }
@@ -115,6 +122,7 @@ class CustomerController extends Controller
 
     public function customer_exist($new_customer)
     {
+
         return Customer::whereName($new_customer)->count() > 0 ? true : false;
     }
 
@@ -177,6 +185,17 @@ class CustomerController extends Controller
         Flash::warning('EL Cliente ha sido editado con Exito!!');
 
         return redirect()->route('customers.show', ['id' => $id]);
+    }
+
+    public function remove_spaces($new_customer) {
+
+        $new_customer = str_replace(["\r", "\n", "\t"], " ", $new_customer);
+        while (strpos($new_customer, " ") !== false)
+        {
+            $new_customer = str_replace(" ", "", $new_customer);
+        }
+
+        return $new_customer;
     }
 
     /**
