@@ -45,8 +45,6 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-        dd($product->toArray());
-
         $product->fill($request->all());
         $product->save();
 
